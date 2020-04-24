@@ -4,10 +4,11 @@
 namespace App\Controller;
 
 
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ActaController
+class ActaController extends AbstractController
 {
     /**
      * @Route("/")
@@ -22,9 +23,10 @@ class ActaController
      */
     public function show($slug)
     {
-        return new Response(sprintf('show acta numero: %s',
-        $slug
-        ));
+      return $this->render('acta/show.html.twig',
+          [
+              'acta'=>$slug
+          ]);
     }
 
 }
