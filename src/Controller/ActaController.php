@@ -11,15 +11,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ActaController extends AbstractController
 {
     /**
-     * @Route("/")
+     * @Route("/" , name="app_homepage")
      */
     public function homepage()
     {
-        return new Response('home acta');
+        return $this->render('acta/homepage.html.twig');
     }
 
     /**
-     * @Route("/show/{slug}")
+     * @Route("/show/{slug}", name="acta_show")
      */
     public function show($slug)
     {
