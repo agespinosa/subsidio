@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 
+use App\Entity\Acta;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,6 +31,22 @@ class ActaController extends AbstractController
           [
               'acta'=>$slug
           ]);
+    }
+
+    /**
+     * @Route("/admin/acta/new", name="acta_new")
+     */
+    public function new(EntityManagerInterface $em)
+    {
+        $acta= new Acta();
+        $acta->setBovinosVacunadosContraFiebreAftosaVacas(10);
+        $acta->setSistematica(true);
+        $acta->setVacunaAntiAftosaMarca("Roche");
+        $acta->setVacunaAntiAftosaVencimiento(new \DateTime());
+
+        $em->persist($acta);
+        $em->flush();
+        return new Response(sprintf("Se genero un nuevo acta nùmero: %s", $acta->getId()));
     }
 
 }
