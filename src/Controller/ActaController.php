@@ -16,20 +16,31 @@ class ActaController extends AbstractController
     /**
      * @Route("/" , name="app_homepage")
      */
-    public function homepage(LoggerInterface $logger)
+    public function homepage(LoggerInterface $logger, EntityManagerInterface $em)
     {
         $logger->info("ingresa al home de la aplicacion");
-        return $this->render('acta/homepage.html.twig');
+        $repository= $em->getRepository(Acta::class);
+        $actas= $repository->findAll();
+        return $this->render('acta/homepage.html.twig',[
+            'actas'=>$actas
+        ]);
     }
 
     /**
      * @Route("/show/{slug}", name="acta_show")
      */
-    public function show($slug)
+    public function show($slug, EntityManagerInterface $em)
     {
+        $repository= $em->getRepository(Acta::class);
+        /** @var Acta $acta */
+        $acta= $repository->findOneBy(['id'=>$slug]);
+        
+        if (!$acta) {
+            throw $this->createNotFoundException(sprintf('No existe acta "%s"', $slug));
+        }
       return $this->render('acta/show.html.twig',
           [
-              'acta'=>$slug
+              'acta'=>$acta
           ]);
     }
 
