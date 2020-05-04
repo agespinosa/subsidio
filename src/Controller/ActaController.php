@@ -20,7 +20,7 @@ class ActaController extends AbstractController
     {
         $logger->info("ingresa al home de la aplicacion");
         $repository= $em->getRepository(Acta::class);
-        $actas= $repository->findAll();
+        $actas= $repository->findAllActasOrderedByFechaVencimiento();
         return $this->render('acta/homepage.html.twig',[
             'actas'=>$actas
         ]);

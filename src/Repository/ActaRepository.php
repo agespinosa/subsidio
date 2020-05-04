@@ -19,22 +19,20 @@ class ActaRepository extends ServiceEntityRepository
         parent::__construct($registry, Acta::class);
     }
 
-    // /**
-    //  * @return Acta[] Returns an array of Acta objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+     * @return Acta[] Returns an array of Acta objects
+     */
+
+    public function findAllActasOrderedByFechaVencimiento()
     {
         return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('a.vacunaAntiAftosaVencimiento IS NOT NULL')
+            ->orderBy('a.vacunaAntiAftosaVencimiento', 'DESC')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Acta
