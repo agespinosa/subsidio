@@ -1,4 +1,7 @@
 {
+    "behat/transliterator": {
+        "version": "v1.3.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -20,6 +23,9 @@
     "doctrine/common": {
         "version": "2.12.0"
     },
+    "doctrine/data-fixtures": {
+        "version": "1.4.3"
+    },
     "doctrine/dbal": {
         "version": "2.10.2"
     },
@@ -36,6 +42,18 @@
             "config/packages/prod/doctrine.yaml",
             "src/Entity/.gitignore",
             "src/Repository/.gitignore"
+        ]
+    },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "fc52d86631a6dfd9fdf3381d0b7e3df2069e51b3"
+        },
+        "files": [
+            "src/DataFixtures/AppFixtures.php"
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -75,8 +93,17 @@
     "doctrine/reflection": {
         "version": "1.2.1"
     },
+    "fzaninotto/faker": {
+        "version": "v1.9.1"
+    },
+    "gedmo/doctrine-extensions": {
+        "version": "v2.4.41"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "knplabs/knp-time-bundle": {
+        "version": "v1.11.0"
     },
     "monolog/monolog": {
         "version": "1.25.3"
@@ -124,6 +151,18 @@
         },
         "files": [
             "config/packages/security_checker.yaml"
+        ]
+    },
+    "stof/doctrine-extensions-bundle": {
+        "version": "1.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "1.2",
+            "ref": "6c1ceb662f8997085f739cd089bfbef67f245983"
+        },
+        "files": [
+            "config/packages/stof_doctrine_extensions.yaml"
         ]
     },
     "symfony/asset": {
@@ -306,6 +345,22 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.7"
+    },
+    "symfony/templating": {
+        "version": "v4.4.9"
+    },
+    "symfony/translation": {
+        "version": "3.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.3",
+            "ref": "2ad9d2545bce8ca1a863e50e92141f0b9d87ffcd"
+        },
+        "files": [
+            "config/packages/translation.yaml",
+            "translations/.gitignore"
+        ]
     },
     "symfony/translation-contracts": {
         "version": "v2.0.1"
