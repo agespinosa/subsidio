@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
@@ -54,6 +56,16 @@ class Propietario
      * @Gedmo\Slug(fields={"cuit"})
      */
     private $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Establecimiento", mappedBy="propietario")
+     */
+    private $establecimientos;
+
+    public function __construct()
+    {
+        $this->establecimientos = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -153,5 +165,37 @@ class Propietario
     {
         $this->cuit = $cuit;
     }
+
+    /**
+     * @return Collection|Establecimiento[]
+     */
+    public function getEstablecimientos(): Collection
+    {
+        return $this->establecimientos;
+    }
+
+    public function addEstablecimiento(Establecimiento $establecimiento): self
+    {
+        if (!$this->establecimientos->contains($establecimiento)) {
+            $this->establecimientos[] = $establecimiento;
+            $establecimiento->setPropietario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEstablecimiento(Establecimiento $establecimiento): self
+    {
+        if ($this->establecimientos->contains($establecimiento)) {
+            $this->establecimientos->removeElement($establecimiento);
+            // set the owning side to null (unless already changed)
+            if ($establecimiento->getPropietario() === $this) {
+                $establecimiento->setPropietario(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 }

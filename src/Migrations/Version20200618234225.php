@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20200618195726 extends AbstractMigration
+final class Version20200618234225 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,11 +22,10 @@ final class Version20200618195726 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('CREATE TABLE establecimiento (id INT AUTO_INCREMENT NOT NULL, propietario_id INT NOT NULL, nombre VARCHAR(255) NOT NULL, cantidad_hectareas INT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, INDEX IDX_94A4D17E53C8D32C (propietario_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE acta (id INT AUTO_INCREMENT NOT NULL, sistematica TINYINT(1) NOT NULL, bovinos_vacunados_contra_fiebre_aftosa_vacas INT NOT NULL, vacuna_anti_aftosa_marca VARCHAR(255) DEFAULT NULL, vacuna_anti_aftosa_vencimiento DATETIME DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE propietario (id INT AUTO_INCREMENT NOT NULL, renspa VARCHAR(50) NOT NULL, razon_social VARCHAR(255) NOT NULL, domicilio VARCHAR(255) DEFAULT NULL, codigo_postal VARCHAR(10) NOT NULL, telefono VARCHAR(50) DEFAULT NULL, cuit VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE regimen_tenencia (id INT AUTO_INCREMENT NOT NULL, tipo VARCHAR(50) NOT NULL, UNIQUE INDEX UNIQ_DD5320B6702D1D47 (tipo), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('UPDATE propietario SET created_at = NOW(), updated_at = NOW()');
-
+        $this->addSql('ALTER TABLE establecimiento ADD CONSTRAINT FK_94A4D17E53C8D32C FOREIGN KEY (propietario_id) REFERENCES propietario (id)');
     }
 
     public function down(Schema $schema) : void
@@ -34,8 +33,9 @@ final class Version20200618195726 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
+        $this->addSql('ALTER TABLE establecimiento DROP FOREIGN KEY FK_94A4D17E53C8D32C');
+        $this->addSql('DROP TABLE establecimiento');
         $this->addSql('DROP TABLE acta');
         $this->addSql('DROP TABLE propietario');
-        $this->addSql('DROP TABLE regimen_tenencia');
     }
 }
