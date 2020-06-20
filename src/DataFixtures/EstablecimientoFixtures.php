@@ -16,6 +16,7 @@ class EstablecimientoFixtures extends BaseFixtures implements DependentFixtureIn
             $establecimiento->setNombre($this->faker->name);
             $establecimiento->setCantidadHectareas($this->faker->numberBetween(1,1000));
             $establecimiento->setPropietario($this->getRandomReference(Propietario::class));
+            $establecimiento->setIsDeleted($this->faker->boolean(20));
 
         });
 
