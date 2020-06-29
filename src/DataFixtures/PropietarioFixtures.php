@@ -9,7 +9,7 @@ class PropietarioFixtures extends BaseFixtures
 {
     public function loadData(ObjectManager $manager)
     {
-        $this->createMany(Propietario::class, 10, function (Propietario $propietario) {
+        $this->createMany(Propietario::class, 100, function (Propietario $propietario) {
             $propietario->setRenspa($this->faker->numerify('##.###.#.#.#####/##'));
             $propietario->setRazonSocial($this->faker->company);
             $propietario->setCuit($this->faker->numerify('##-########-#'));

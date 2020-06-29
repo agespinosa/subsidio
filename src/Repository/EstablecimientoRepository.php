@@ -47,4 +47,22 @@ class EstablecimientoRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * @param null |string $term
+     * @return Establecimiento[]
+     */
+    public function findAllWithSearch(?string $term){
+        $qb= $this->createQueryBuilder('e')
+            ->innerJoin('e.propietario', 'p');
+        if($term){
+            $qb->andWhere('e.nombre LIKE :term OR e.cantidadHectareas LIKE :term OR p.razonSocial LIKE :term')
+                ->setParameter('term', '%' . $term . '%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('e.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

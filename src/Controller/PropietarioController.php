@@ -4,8 +4,9 @@ namespace App\Controller;
 use App\Entity\Propietario;
 use App\Repository\PropietarioRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -14,11 +15,20 @@ class PropietarioController extends AbstractController
     /**
      * @Route("/propietario/list")
      */
-    public function list(PropietarioRepository $repository){
-        $propietarios= $repository->findAllPropietarioOrderedByRazonSocial();
+    public function list(PropietarioRepository $repository, Request $request, PaginatorInterface $paginator)
+    {
+
+        $q = $request->query->get('q');
+
+        $queryBuilder = $repository->getWithSearchQueryBuilder($q);
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
+        );
 
         return $this->render('propietario/list.html.twig', [
-            'propietarios'=> $propietarios
+            'pagination' => $pagination,
         ]);
     }
     /**

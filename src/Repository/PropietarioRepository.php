@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Propietario;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -31,6 +32,22 @@ class PropietarioRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+     * @param null|string $term
+     */
+   public function getWithSearchQueryBuilder(?string $term):QueryBuilder
+   {
+        $qb= $this->createQueryBuilder('p');
+        if($term){
+            $qb->andWhere('p.cuit LIKE :term OR p.razonSocial LIKE :term')
+                ->setParameter('term', '%' . $term . '%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('p.createdAt', 'DESC');
+   }
 
 
     /*
