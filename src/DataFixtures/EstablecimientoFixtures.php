@@ -11,13 +11,13 @@ class EstablecimientoFixtures extends BaseFixtures implements DependentFixtureIn
 {
     public function loadData(ObjectManager $manager)
     {
-        $this->createMany(Establecimiento::class, 100, function (Establecimiento $establecimiento){
-
+        $this->createMany(100, 'main_establecimientos', function() {
+            $establecimiento= new Establecimiento();
             $establecimiento->setNombre($this->faker->name);
             $establecimiento->setCantidadHectareas($this->faker->numberBetween(1,1000));
-            $establecimiento->setPropietario($this->getRandomReference(Propietario::class));
+            $establecimiento->setPropietario($this->getRandomReference('main_propietarios'));
             $establecimiento->setIsDeleted($this->faker->boolean(20));
-
+            return $establecimiento;
         });
 
         $manager->flush();

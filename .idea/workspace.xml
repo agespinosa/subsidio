@@ -2,26 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/symfony2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/symfony2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uel.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sanimal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sanimal.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/EstablecimientoAdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/EstablecimientoAdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PropietarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PropietarioController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegimenTenenciaAdminController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/packages/doctrine.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/doctrine.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/BaseFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/BaseFixtures.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/EstablecimientoFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/EstablecimientoFixtures.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DataFixtures/PropietarioFixtures.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DataFixtures/PropietarioFixtures.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/EstablecimientoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/EstablecimientoRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PropietarioRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PropietarioRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/propietario/list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/propietario/list.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/regimenTenencia/show.html.twig" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,6 +113,13 @@
       <path value="$PROJECT_DIR$/vendor/sensio/framework-extra-bundle" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-components" />
+      <path value="$PROJECT_DIR$/vendor/symfony/inflector" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-guard" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-core" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-bundle" />
+      <path value="$PROJECT_DIR$/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/vendor/symfony/security-http" />
     </include_path>
   </component>
   <component name="ProjectId" id="1dld9oWkXF3dCPV2TLZLpYmgnRg" />
@@ -151,6 +149,8 @@
       <workItem from="1593003930626" duration="1768000" />
       <workItem from="1593177001050" duration="596000" />
       <workItem from="1593455816627" duration="5646000" />
+      <workItem from="1593554943304" duration="1514000" />
+      <workItem from="1593557359013" duration="4500000" />
     </task>
     <servers />
   </component>
