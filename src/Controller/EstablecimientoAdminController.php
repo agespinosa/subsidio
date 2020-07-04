@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EstablecimientoAdminController extends AbstractController
 {
     /**
-     * @Route("/mono/establecimiento", name="establecimiento_admin")
+     * @Route("/admin/establecimiento", name="establecimiento_admin")
      */
     public function index()
     {
@@ -21,7 +21,7 @@ class EstablecimientoAdminController extends AbstractController
         ]);
     }
     /**
-     * @Route("/mono/establecimiento/list")
+     * @Route("/admin/establecimiento/list")
      */
     public function list(EstablecimientoRepository $repository, Request $request)
     {
