@@ -23,7 +23,7 @@ class EstablecimientoAdminController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin/establecimiento/list")
+     * @Route("/admin/establecimiento/list", name="admin_list_establecimiento")
      */
     public function list(EstablecimientoRepository $repository, Request $request)
     {
