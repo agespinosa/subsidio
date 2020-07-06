@@ -12,7 +12,7 @@ security:
                 property: email
 
     role_hierarchy:
-        R OLE_ADMIN: [ROLE_ADMIN_PROPIETARIO, ROLE_ADMIN_ESTABLECIMIENTO]
+        ROLE_ADMIN: [ROLE_ADMIN_PROPIETARIO, ROLE_ADMIN_ESTABLECIMIENTO]
 
     firewalls:
         dev:
