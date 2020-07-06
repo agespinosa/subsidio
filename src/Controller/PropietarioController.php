@@ -5,6 +5,7 @@ use App\Entity\Propietario;
 use App\Repository\PropietarioRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,6 +34,7 @@ class PropietarioController extends AbstractController
     }
     /**
      * @Route("/propietario/new")
+     * @IsGranted("ROLE_ADMIN_PROPIETARIO")
      */
     public function new( EntityManagerInterface $em){
         /*
@@ -61,6 +63,15 @@ class PropietarioController extends AbstractController
         return $this->render('propietario/show.html.twig', [
             'propietario' => $propietario
         ]);
+    }
+
+    /**
+     * @Route("/propietario/{id}/edit")
+     * @IsGranted("MANAGE", subject="propietario")
+     */
+    public function edit( Propietario $propietario ){
+        //$this->denyAccessUnlessGranted('MANAGE', $propietario);
+        dd($propietario);
     }
 
 }
