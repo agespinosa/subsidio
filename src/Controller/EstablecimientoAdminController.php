@@ -14,7 +14,7 @@ class EstablecimientoAdminController extends AbstractController
 {
     /**
      * @Route("/admin/establecimiento", name="establecimiento_admin")
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ADMIN_ESTABLECIMIENTO")
      */
     public function index()
     {
