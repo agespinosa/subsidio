@@ -11,7 +11,7 @@ html {height:100%}
 
 .navbar-bg {
     background: url('../images/barra-bg.jpeg');
-    background-size: 80%;
+    background-size: 180%;
 }
 
 .dropdown-menu, .dropdown-menu.show {
