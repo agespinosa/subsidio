@@ -20,9 +20,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PropietarioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/PropietarioController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ActaController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/EstablecimientoAdminController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/PropietarioController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/EstablecimientoFixtures.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/PropietarioFixtures.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Acta.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Establecimiento.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Propietario.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200618234225.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200620214727.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200630230423.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200704135403.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200706170907.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ActaRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/EstablecimientoRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/PropietarioRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Security/Voter/PropietarioVoter.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +169,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/security" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
     <property name="settings.editor.selected.configurable" value="Symfony2.SettingsForm" />
   </component>
@@ -184,6 +201,8 @@
       <workItem from="1593868177197" duration="1972000" />
       <workItem from="1593870181736" duration="7923000" />
       <workItem from="1594041859433" duration="22588000" />
+      <workItem from="1594226414878" duration="307000" />
+      <workItem from="1594728360602" duration="2156000" />
     </task>
     <servers />
   </component>
@@ -200,6 +219,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="455" y="46" width="449" height="642" key="#com.intellij.ide.util.MemberChooser" timestamp="1593780262313">
@@ -210,10 +230,18 @@
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="416" y="125" width="528" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1594064879860" />
+    <state x="281" y="0" width="794" height="723" key="CommitChangelistDialog2" timestamp="1594728496656">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="281" y="0" width="794" height="723" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1594728496656" />
     <state x="466" y="125" key="FileChooserDialogImpl" timestamp="1593779028079">
       <screen x="0" y="0" width="1366" height="768" />
     </state>
     <state x="466" y="125" key="FileChooserDialogImpl/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593779028079" />
+    <state x="421" y="92" width="513" height="537" key="NewPhpClassDialog" timestamp="1594729362211">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="421" y="92" width="513" height="537" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1594729362211" />
     <state x="149" y="2" width="1100" height="730" key="SettingsEditor" timestamp="1593457415923">
       <screen x="0" y="0" width="1366" height="768" />
     </state>

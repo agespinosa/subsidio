@@ -27,8 +27,7 @@ class ActaController extends AbstractController
     }
 
     /**
-     * @Route("/show/{slug}", name="acta_show")
-     */
+     * @Route("/show/{slug}", name="acta_show")     */
     public function show($slug, EntityManagerInterface $em)
     {
         $repository= $em->getRepository(Acta::class);
