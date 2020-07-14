@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Requisito{% endblock %}
+
+{% block body %}
+    <h1>Create new Requisito</h1>
+
+    {{ include('requisito/_form.html.twig') }}
+
+    <a href="{{ path('requisito_index') }}">back to list</a>
+{% endblock %}

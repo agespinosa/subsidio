@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Requisito{% endblock %}
+
+{% block body %}
+    <h1>Edit Requisito</h1>
+
+    {{ include('requisito/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('requisito_index') }}">back to list</a>
+
+    {{ include('requisito/_delete_form.html.twig') }}
+{% endblock %}
