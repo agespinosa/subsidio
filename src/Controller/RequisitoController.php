@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Requisito;
 use App\Form\RequisitoType;
 use App\Repository\RequisitoRepository;
+use App\Services\ExcelReaderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +17,17 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RequisitoController extends AbstractController
 {
+    
+    /**
+     * @var ExcelReaderService
+     */
+    private $excelReaderService;
+    
+    public function __construct(ExcelReaderService $excelReaderService)
+    {
+        $this->excelReaderService = $excelReaderService;
+    }
+    
     /**
      * @Route("/", name="requisito_index", methods={"GET"})
      */
@@ -35,10 +48,33 @@ class RequisitoController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $file */
+            $file = $form->get('filename')->getData();
+            if ($file) {
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+                
+                try {
+                    $file->move(
+                        $this->getParameter('files_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+                
+                $requisito->setFileName($newFilename);
+    
+                $filePath =  $this->getParameter('files_directory').'/'.$newFilename;
+                $this->excelReaderService->readFile($filePath);
+            }
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($requisito);
             $entityManager->flush();
 
+            
             return $this->redirectToRoute('requisito_index');
         }
 

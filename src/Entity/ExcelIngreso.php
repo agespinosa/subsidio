@@ -12,6 +12,10 @@ class ExcelIngreso
 {
     use TimestampableEntity;
     
+    const ESTADO_PENDIENTE = 'PENDIENTE';
+    const ESTADO_PROCESADO = 'PROCESADO';
+    const ESTADO_ERROR = 'ERROR';
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -30,12 +34,12 @@ class ExcelIngreso
     private $apellido;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string",length=8, nullable=true)
      */
     private $dni;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string",length=11, nullable=true)
      */
     private $cuit;
 
@@ -88,7 +92,12 @@ class ExcelIngreso
      * @ORM\Column(type="string", length=100)
      */
     private $estado;
-
+    
+    public function __construct()
+    {
+        $this->setEstado(self::ESTADO_PENDIENTE);
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -118,29 +127,7 @@ class ExcelIngreso
         return $this;
     }
 
-    public function getDni(): ?int
-    {
-        return $this->dni;
-    }
-
-    public function setDni(int $dni): self
-    {
-        $this->dni = $dni;
-
-        return $this;
-    }
-
-    public function getCuit(): ?int
-    {
-        return $this->cuit;
-    }
-
-    public function setCuit(int $cuit): self
-    {
-        $this->cuit = $cuit;
-
-        return $this;
-    }
+   
 
     public function getRegimenIva(): ?string
     {
@@ -261,4 +248,38 @@ class ExcelIngreso
 
         return $this;
     }
+    
+    /**
+     * @return mixed
+     */
+    public function getDni()
+    {
+        return $this->dni;
+    }
+    
+    /**
+     * @param mixed $dni
+     */
+    public function setDni($dni): void
+    {
+        $this->dni = $dni;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getCuit()
+    {
+        return $this->cuit;
+    }
+    
+    /**
+     * @param mixed $cuit
+     */
+    public function setCuit($cuit): void
+    {
+        $this->cuit = $cuit;
+    }
+    
+    
 }

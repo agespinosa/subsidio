@@ -32,9 +32,9 @@ class Requisito
     private $tipoFormaPago;
 
     /**
-     * @ORM\Column(type="blob")
+     * @ORM\Column(type="string")
      */
-    private $file;
+    private $fileName;
 
     public function getId(): ?int
     {
@@ -76,16 +76,16 @@ class Requisito
 
         return $this;
     }
-
-    public function getFile()
+    
+    public function getFileName()
     {
-        return $this->file;
+        return $this->fileName;
     }
 
-    public function setFile($file): self
+    public function setFileName($fileName): void
     {
-        $this->file = $file;
-
-        return $this;
+        $this->fileName = $fileName;
     }
+    
+    
 }

@@ -18,6 +18,16 @@ class ExcelIngresoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, ExcelIngreso::class);
     }
+    
+    public function persist(ExcelIngreso $excelIngreso){
+        $em = $this->getEntityManager();
+        return $em->persist($excelIngreso);
+    }
+    
+    public function flush(ExcelIngreso $excelIngreso){
+        $em = $this->getEntityManager();
+        return $em->flush($excelIngreso);
+    }
 
     // /**
     //  * @return ExcelIngreso[] Returns an array of ExcelIngreso objects

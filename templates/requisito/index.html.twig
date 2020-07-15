@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Requisito index{% endblock %}
+{% block title %}Listado Subsidios Generados{% endblock %}
 
 {% block body %}
-    <h1>Requisito index</h1>
+    <h1>Listado Subsidios Generados</h1>
 
     <table class="table">
         <thead>
@@ -23,7 +23,7 @@
                 <td>{{ requisito.fechaDesde ? requisito.fechaDesde|date('Y-m-d') : '' }}</td>
                 <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
                 <td>{{ requisito.tipoFormaPago }}</td>
-                <td>{{ requisito.file }}</td>
+                <td>{{ requisito.fileName }}</td>
                 <td>
                     <a href="{{ path('requisito_show', {'id': requisito.id}) }}">show</a>
                     <a href="{{ path('requisito_edit', {'id': requisito.id}) }}">edit</a>
@@ -31,11 +31,11 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6">no records found</td>
+                <td colspan="6">sin registros</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('requisito_new') }}">Create new</a>
+    <a href="{{ path('requisito_new') }}">Nuevo</a>
 {% endblock %}

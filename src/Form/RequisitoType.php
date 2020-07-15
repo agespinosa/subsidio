@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Requisito;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -39,9 +40,18 @@ class RequisitoType extends AbstractType
                 // add a class that can be selected in JavaScript
                 'attr' => ['class' => 'js-datepicker']
             ))
-            ->add('tipoFormaPago')
-            ->add('file', FileType::class, [
+            ->add('tipoFormaPago', ChoiceType::class, [
+                'required' => true,
+                'choices'  => [
+                    'Pago Proveedores' => 'Pago_Proveedores',
+                    'Punta Caja' => 'Punta_Caja',
+                    
+                ]
+            ])
+            ->add('filename', FileType::class, [
                 'label' => 'Excel Beneficiarios',
+    
+                'attr' => ['class' => 'file-upload-button'],
     
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
@@ -59,6 +69,7 @@ class RequisitoType extends AbstractType
                             'application/xls',
                             'application/xlsx',
                             'application/ods',
+                            'application/vnd.ms-excel'
                         ],
                         'mimeTypesMessage' => 'Por favor adjuntar formato excel o libre office',
                     ])
