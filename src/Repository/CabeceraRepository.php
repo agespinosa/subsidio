@@ -18,6 +18,15 @@ class CabeceraRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Cabecera::class);
     }
+    public function persist(Cabecera $object){
+        $em = $this->getEntityManager();
+        return $em->persist($object);
+    }
+    
+    public function flush(Cabecera $object){
+        $em = $this->getEntityManager();
+        return $em->flush($object);
+    }
 
     // /**
     //  * @return Cabecera[] Returns an array of Cabecera objects

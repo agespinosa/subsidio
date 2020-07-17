@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\ExcelIngreso;
 use App\Entity\Requisito;
 use App\Form\RequisitoType;
+use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
 use App\Services\ExcelReaderService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/requisito")
+ * @Route("/")
  */
 class RequisitoController extends AbstractController
 {
@@ -22,14 +24,19 @@ class RequisitoController extends AbstractController
      * @var ExcelReaderService
      */
     private $excelReaderService;
+    /**
+     * @var ExcelIngresoRepository
+     */
+    private $excelIngresoRepository;
     
-    public function __construct(ExcelReaderService $excelReaderService)
+    public function __construct(ExcelReaderService $excelReaderService, ExcelIngresoRepository $excelIngresoRepository)
     {
         $this->excelReaderService = $excelReaderService;
+        $this->excelIngresoRepository = $excelIngresoRepository;
     }
     
     /**
-     * @Route("/", name="requisito_index", methods={"GET"})
+     *  @Route("/" , name="requisito_index", methods={"GET"})
      */
     public function index(RequisitoRepository $requisitoRepository): Response
     {
@@ -65,11 +72,18 @@ class RequisitoController extends AbstractController
                 }
                 
                 $requisito->setFileName($newFilename);
-    
                 $filePath =  $this->getParameter('files_directory').'/'.$newFilename;
-                $this->excelReaderService->readFile($filePath);
+                
+                // Leo el excel y genero el/los ExcelIngreso, uno por cada fila del Excel
+                $excelIngresos = $this->excelReaderService->readFile($filePath);
+                /** @var ExcelIngreso $excelIngreso */
+                foreach ($excelIngresos as $excelIngreso) {
+                    $excelIngreso->setRequisito($requisito);
+                    $this->excelIngresoRepository->persist($excelIngreso);
+                }
             }
             
+            // Persiste Requisito y ExcelIngreso
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($requisito);
             $entityManager->flush();

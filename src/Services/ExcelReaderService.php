@@ -43,13 +43,14 @@ class ExcelReaderService
             $cellIterator->setIterateOnlyExistingCells(FALSE);
     
             $this->logger->info('Genero Fila ExcelIngreso para fila '.$row->getRowIndex());
-            $excelIngreso = $this->createExcelIngreso($cellIterator);
+            $excelIngresos[] = $this->createExcelIngreso($cellIterator);
             $filasProcesadas++;
         }
     
-        if($filasProcesadas>0){
-          //  $this->excelIngresoRepository->flush($excelIngreso);
-        }
+        $this->logger->info('Cantidad de Filas Procesadas '.$filasProcesadas);
+        $this->logger->info('Cantidad de ExcelIngreso Creados '.count($excelIngresos));
+        
+        return $excelIngresos;
     }
     
     public function createExcelIngreso(RowCellIterator $cellIterator){
@@ -96,8 +97,7 @@ class ExcelReaderService
                     break;
             }
         }
-    
-        $this->excelIngresoRepository->persist($excelIngreso);
+        
         return $excelIngreso;
     }
 }

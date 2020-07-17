@@ -3,11 +3,17 @@
 {% block title %}Edit Requisito{% endblock %}
 
 {% block body %}
-    <h1>Edit Requisito</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Editar Subsidio</h5>
+        <div class="row col-12 mt-2">
+            <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
+               href="{{ path('requisito_index') }}">Volver</a>
+        </div>
 
-    {{ include('requisito/_form.html.twig', {'button_label': 'Actualizar'}) }}
+        {{ include('requisito/_form.html.twig', {'button_label': 'Actualizar'}) }}
 
-    <a href="{{ path('requisito_index') }}">Volver</a>
-
-    {{ include('requisito/_delete_form.html.twig') }}
+        {{ include('requisito/_delete_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}

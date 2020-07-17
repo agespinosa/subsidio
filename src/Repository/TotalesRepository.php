@@ -18,6 +18,16 @@ class TotalesRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Totales::class);
     }
+    
+    public function persist(Totales $object){
+        $em = $this->getEntityManager();
+        return $em->persist($object);
+    }
+    
+    public function flush(Totales $object){
+        $em = $this->getEntityManager();
+        return $em->flush($object);
+    }
 
     // /**
     //  * @return Totales[] Returns an array of Totales objects

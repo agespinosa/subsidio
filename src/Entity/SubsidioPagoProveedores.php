@@ -26,10 +26,10 @@ class SubsidioPagoProveedores
     private $cabecera;
     
     /**
-     * @var ExcelIngreso| null
-     * @ORM\ManyToOne(targetEntity="ExcelIngreso")
+     * @var Requisito| null
+     * @ORM\ManyToOne(targetEntity="Requisito")
      */
-    private $excelIngreso;
+    private $requsito;
     
     /**
      * @var Totales| null
@@ -535,20 +535,22 @@ class SubsidioPagoProveedores
     }
     
     /**
-     * @return ExcelIngreso| null
+     * @return Requisito|null
      */
-    public function getExcelIngreso(): ?ExcelIngreso
+    public function getRequsito(): ?Requisito
     {
-        return $this->excelIngreso;
+        return $this->requsito;
     }
     
     /**
-     * @param ExcelIngreso| null $excelIngreso
+     * @param Requisito|null $requsito
      */
-    public function setExcelIngreso(?ExcelIngreso $excelIngreso): void
+    public function setRequsito(?Requisito $requsito): void
     {
-        $this->excelIngreso = $excelIngreso;
+        $this->requsito = $requsito;
     }
+    
+   
     
     /**
      * @return Totales| null

@@ -3,36 +3,46 @@
 {% block title %}Requisito{% endblock %}
 
 {% block body %}
-    <h1>Requisito</h1>
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Subsidio</h5>
+            <div class="row col-12 mt-2">
+                <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
+                   href="{{ path('requisito_index') }}">Volver</a>
+            </div>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Id</th>
+                        <td>{{ requisito.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha Desde</th>
+                        <td>{{ requisito.fechaDesde ? requisito.fechaDesde|date('Y-m-d') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Fecha Hasta</th>
+                        <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
+                    </tr>
+                    <tr>
+                        <th>Tipo Forma Pago</th>
+                        <td>{{ requisito.tipoFormaPago }}</td>
+                    </tr>
+                    <tr>
+                        <th>File</th>
+                        <td>{{ requisito.fileName }}</td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ requisito.id }}</td>
-            </tr>
-            <tr>
-                <th>FechaDesde</th>
-                <td>{{ requisito.fechaDesde ? requisito.fechaDesde|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>FechaHasta</th>
-                <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
-            </tr>
-            <tr>
-                <th>TipoFormaPago</th>
-                <td>{{ requisito.tipoFormaPago }}</td>
-            </tr>
-            <tr>
-                <th>File</th>
-                <td>{{ requisito.fileName }}</td>
-            </tr>
-        </tbody>
-    </table>
 
-    <a href="{{ path('requisito_index') }}">back to list</a>
 
-    <a href="{{ path('requisito_edit', {'id': requisito.id}) }}">edit</a>
+            <div class="row">
+                <button class="btn btn-primary btn-sm btn-block"
+                        href="{{ path('requisito_edit', {'id': requisito.id}) }}">Editar</button>
+            </div>
 
-    {{ include('requisito/_delete_form.html.twig') }}
+            {{ include('requisito/_delete_form.html.twig') }}
+    </div>
+</div>
 {% endblock %}

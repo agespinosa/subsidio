@@ -22,6 +22,12 @@ class ExcelIngreso
      * @ORM\Column(type="integer")
      */
     private $id;
+    
+    /**
+     * @var Requisito | null
+     * @ORM\ManyToOne(targetEntity="Requisito")
+     */
+    private $requisito;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -279,6 +285,22 @@ class ExcelIngreso
     public function setCuit($cuit): void
     {
         $this->cuit = $cuit;
+    }
+    
+    /**
+     * @return Requisito|null
+     */
+    public function getRequisito(): ?Requisito
+    {
+        return $this->requisito;
+    }
+    
+    /**
+     * @param Requisito|null $requisito
+     */
+    public function setRequisito(?Requisito $requisito): void
+    {
+        $this->requisito = $requisito;
     }
     
     

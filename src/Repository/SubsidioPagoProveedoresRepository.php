@@ -18,6 +18,16 @@ class SubsidioPagoProveedoresRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, SubsidioPagoProveedores::class);
     }
+    
+    public function persist(SubsidioPagoProveedores $object){
+        $em = $this->getEntityManager();
+        return $em->persist($object);
+    }
+    
+    public function flush(SubsidioPagoProveedores $object){
+        $em = $this->getEntityManager();
+        return $em->flush($object);
+    }
 
     // /**
     //  * @return SubsidioPagoProveedores[] Returns an array of SubsidioPagoProveedores objects

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\ExcelIngreso;
+use App\Entity\Requisito;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -29,22 +30,20 @@ class ExcelIngresoRepository extends ServiceEntityRepository
         return $em->flush($excelIngreso);
     }
 
-    // /**
-    //  * @return ExcelIngreso[] Returns an array of ExcelIngreso objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return ExcelIngreso[] Returns an array of ExcelIngreso objects
+     */
+   
+    public function findByRequisito(Requisito $requisito)
     {
         return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('e.requisito = :requisito')
+            ->setParameter('requisito', $requisito)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+   
 
     /*
     public function findOneBySomeField($value): ?ExcelIngreso
