@@ -79,7 +79,7 @@ class RequisitoController extends AbstractController
                     );
                 } catch (FileException $e) {
                     $message = "Error Subiendo Excel , nuevo subsidio ".$e->getMessage();
-                    $this->logger->error();
+                    $this->logger->error($message);
                     $this->addFlash('errorMessage', $message);
                 }
                 

@@ -70,7 +70,13 @@ class SubsidioController extends AbstractController
             if(!is_null($subsidioPagoProveedores)){
                 $archivoGenerado = $this->subsidioService->generarArchivoTxtSubsidio($subsidioPagoProveedores);
             }
+            // Persiste
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
 
+            $message = "Termino de generar archivo de Subsidio - Requisito: ".$requisito->getId();
+            $this->logger->info($message);
+            $this->addFlash('successMessage', $message);
         }catch (\Exception | FatalError | \RuntimeException $exception){
             $message = "Error formateando archivo ".$exception->getMessage();
             $this->logger->error($message);
@@ -82,12 +88,7 @@ class SubsidioController extends AbstractController
             $this->addFlash('errorMessage', $message);
             $this->redirectToRoute('requisito_index');
         }
-        // Persiste
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->flush();
-    
-        
-        $this->logger->info("Termino de generar archivo de Subsidio - Requisito: ".$requisito->getId());
+
         return $this->redirectToRoute('requisito_index');
         
     }

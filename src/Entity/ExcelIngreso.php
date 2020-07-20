@@ -302,6 +302,14 @@ class ExcelIngreso
     {
         $this->requisito = $requisito;
     }
-    
+
+    /**
+     * @return string|null
+     */
+    public function getFullName(): ?string
+    {
+        return $this->getNombre().' '.$this->getApellido();
+    }
+
     
 }

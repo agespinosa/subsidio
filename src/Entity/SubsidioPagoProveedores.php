@@ -567,6 +567,7 @@ class SubsidioPagoProveedores
     {
         $this->totales = $totales;
     }
-    
+
+
     
 }

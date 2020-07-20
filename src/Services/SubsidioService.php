@@ -17,6 +17,7 @@ use App\Repository\TotalesRepository;
 use App\Entity\AtributoConfiguracion;
 use App\Repository\AtributoConfiguracionRepository;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class SubsidioService
 {
@@ -44,11 +45,16 @@ class SubsidioService
      * @var AtributoConfiguracionRepository
      */
     private $atributoConfiguracionRepository;
-    
+    /**
+     * @var ParameterBagInterface
+     */
+    private $params;
+
     public function __construct(LoggerInterface $logger, ExcelIngresoRepository $excelIngresoRepository,
                                 SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
                                 CabeceraRepository $cabeceraRepository, TotalesRepository $totalesRepository,
-                                AtributoConfiguracionRepository $atributoConfiguracionRepository)
+                                AtributoConfiguracionRepository $atributoConfiguracionRepository,
+                                ParameterBagInterface $params)
     {
         $this->logger = $logger;
         $this->excelIngresoRepository = $excelIngresoRepository;
@@ -56,40 +62,82 @@ class SubsidioService
         $this->cabeceraRepository = $cabeceraRepository;
         $this->totalesRepository = $totalesRepository;
         $this->atributoConfiguracionRepository = $atributoConfiguracionRepository;
+        $this->params = $params;
     }
     
-    public function generarSubsidioPagoProveedores(Requisito $requisito): SubsidioPagoProveedores {
+    public function generarSubsidioPagoProveedores(Requisito $requisito): array {
 
+        $subsidiosPagoProveedores = array();
         $this->logger->debug("Formateando filas excel ingreso");
-        $subsidioPagoProveedores = new SubsidioPagoProveedores();
-        
+
         $excelIngresos =
             $this->excelIngresoRepository->findByRequisito($requisito);
 
         $this->logger->debug("Cantidad de filas excel ingreso". count($excelIngresos) .", para requisito id ".$requisito->getId());
 
-        $cabecera =
-            $this->generarCabeceraPagoProveedores($excelIngresos);
-    
-        $totales =
-            $this->generarTotalesPagoProveedores($excelIngresos);
+        /** @var AtributoConfiguracion $lastNumeroArchivoConfig */
+        $lastNumeroArchivoConfig =
+            $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('lastNumeroArchivo_Pago_Proveedores');
 
-        $subsidioPagoProveedores->setCabecera($cabecera);
-        $subsidioPagoProveedores->setTotales($totales);
-        $subsidioPagoProveedores->setRequsito($requisito);
-
+        $moneda = 'ARS';
         foreach ($excelIngresos as $excelIngreso) {
-        
-            
-        }
-    
-        $this->cabeceraRepository->persist($cabecera);
-        $this->totalesRepository->persist($totales);
-        $this->subsidioPagoProveedoresRepository->persist($subsidioPagoProveedores);
+            $subsidioPagoProveedores = new SubsidioPagoProveedores();
 
-        return $subsidioPagoProveedores;
+            // Cabecera y Totales
+            $cabecera =
+                $this->generarCabeceraPagoProveedores($excelIngresos);
+
+            $totales =
+                $this->generarTotalesPagoProveedores($excelIngresos);
+
+            $subsidioPagoProveedores->setCabecera($cabecera);
+            $subsidioPagoProveedores->setTotales($totales);
+            $subsidioPagoProveedores->setRequsito($requisito);
+            $this->cabeceraRepository->persist($cabecera);
+            $this->totalesRepository->persist($totales);
+            // Cabecera y Totales
+
+            $subsidioPagoProveedores->setRegistroId('PR');
+            $subsidioPagoProveedores->setTipoPago('003');
+            $subsidioPagoProveedores->setReferenciaCliente('REF#'.$lastNumeroArchivoConfig->getValor());
+            $subsidioPagoProveedores->setImporteAPagar($excelIngreso->getMonto());
+            $subsidioPagoProveedores->setMonedaPago($moneda);
+            $subsidioPagoProveedores->setFechaEjecucionPago(new \DateTime());
+            $subsidioPagoProveedores->setNumeroProveedor('123456');
+            $subsidioPagoProveedores->setNombreBeneficiario($excelIngreso->getFullName());
+            $subsidioPagoProveedores->setCuit($excelIngreso->getCuit());
+            $subsidioPagoProveedores->setDomicilio('');
+            $subsidioPagoProveedores->setLocalidad('');
+            $subsidioPagoProveedores->setCodigoPostal('');
+            $subsidioPagoProveedores->setMedioComunicacion($excelIngreso->getEmail());
+            $subsidioPagoProveedores->setBanco($excelIngreso->getBanco());
+            $subsidioPagoProveedores->setSucursal($excelIngreso->getBanco());
+            $subsidioPagoProveedores->setTipoCuenta($this->getTipoCuenta($excelIngreso));
+            $subsidioPagoProveedores->setMonedaCuenta($moneda);
+            $subsidioPagoProveedores->setNumeroCuenta($excelIngreso->getNumeroCuentaBancaria());
+            $subsidioPagoProveedores->setMonedaCuentaDebito($moneda);
+            $subsidioPagoProveedores->setMotivoPago('PagoRef#'.$requisito->getId());
+            $subsidioPagoProveedores->setCodigoNovedadOrden(1);
+            $subsidiosPagoProveedores[] = $subsidioPagoProveedores;
+            $this->subsidioPagoProveedoresRepository->persist($subsidioPagoProveedores);
+
+        }
+
+        return $subsidiosPagoProveedores;
     }
-    
+
+    private function getTipoCuenta(ExcelIngreso $excelIngreso){
+        $tipoCuenta = 'CA';
+        if(strpos($excelIngreso->getTipoCuenta(), 'Cte') === TRUE ||
+            strpos($excelIngreso->getTipoCuenta(), 'Cta') === TRUE ||
+            strpos($excelIngreso->getTipoCuenta(), 'Corriente') === TRUE){
+            $tipoCuenta = 'CC';
+        }
+
+        return $tipoCuenta;
+    }
+
+
     /**
      * @var ExcelIngreso[] $excelIngresos
      * @param ExcelIngreso[] $excelIngresos
@@ -160,7 +208,66 @@ class SubsidioService
         return $totalAPagar;
     }
 
-    public function generarArchivoTxtSubsidio(SubsidioPagoProveedores $subsidioPagoProveedores){
+    public function generarArchivoTxtSubsidio(array $subsidiosPagoProveedores){
+        $directorioToSaveFile = $this->params->get('subsidio_directory');
+        $subsidioFileName =  'requisito.'. $subsidiosPagoProveedores[0]->getRequsito()->getId() .'-file-'.uniqid().'.txt';
+
+        $this->logger->debug("Creando TXT File ".$subsidioFileName);
+        $handle = null;
+        try {
+            $handle = fopen($directorioToSaveFile.'/'.$subsidioFileName, 'w');
+        } catch (FileException | \RuntimeException $e) {
+            $message = "Error Creando TXT File ".$e->getMessage();
+            $this->logger->error($message);
+            $this->addFlash('errorMessage', $message);
+        }
+
+        if(!$handle || is_null($handle))
+        {
+            throw new SimpleMessageException("No se pudo generar el archivo txt de salida. ".$subsidioFileName);
+        }
+        try{
+            $newLine = "\n";
+
+            /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
+            foreach ($subsidiosPagoProveedores as $subsidioPagoProveedores) {
+                fwrite($handle, $this->getStringLine($subsidioPagoProveedores));
+                fwrite($handle,$newLine);
+            }
+        }catch (\Exception | \RuntimeException $exception){
+            fclose($handle);
+            $message = "Error procesando TXT File ".$e->getMessage();
+            $this->logger->error($message);
+            $this->addFlash('errorMessage', $message);
+        }
+
+        fclose($handle);
+    }
+
+    public function getStringLine(SubsidioPagoProveedores $subsidioPagoProveedores){
+        return
+            $subsidioPagoProveedores->getTipoCuenta()." ".
+            $subsidioPagoProveedores->getBanco()." ".
+            $subsidioPagoProveedores->getCuit()." ".
+            $subsidioPagoProveedores->getCodigoPostal()." ".
+            $subsidioPagoProveedores->getConRecurso()." ".
+            $subsidioPagoProveedores->getCuentaDebito()." ".
+            $subsidioPagoProveedores->getDomicilio()." ".
+            $subsidioPagoProveedores->getFormaEntregaCheque()." ".
+            $subsidioPagoProveedores->getIndicacionesAdicionales()." ".
+            $subsidioPagoProveedores->getLocalidad()." ".
+            $subsidioPagoProveedores->getMedioComunicacion()." ".
+            $subsidioPagoProveedores->getMonedaCuenta()." ".
+            $subsidioPagoProveedores->getMonedaCuentaDebito()." ".
+            $subsidioPagoProveedores->getMonedaPago()." ".
+            $subsidioPagoProveedores->getMotivoPago()." ".
+            $subsidioPagoProveedores->getNombreBeneficiario()." ".
+            $subsidioPagoProveedores->getNumeroCuenta()." ".
+            $subsidioPagoProveedores->getNumeroInstrumentoPago()." ".
+            $subsidioPagoProveedores->getNumeroProveedor()." ".
+            $subsidioPagoProveedores->getRegistroId()." ".
+            $subsidioPagoProveedores->getSucursal()." ";
+
 
     }
     
