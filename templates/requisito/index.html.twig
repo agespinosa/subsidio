@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado Subsidios Generados{% endblock %}
+{% block title %}Listado Subsidios a Generar{% endblock %}
 
 {% block body %}
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Listado Subsidios Generados</h5>
+        <h5 class="card-title">Listado Subsidios a Generar</h5>
             <div class="row">
                 <div class="col-12">
                     <a type="button" role="button" class="btn btn-success btn-sm btn-block"
@@ -38,7 +38,7 @@
                                 <td>{{ requisito.fileName }}</td>
                                 <td>
                                     <a type="button" role="button" class="btn btn-sm btn-success"
-                                       href="{{ path('generar_archivo_subsidio', {'id': requisito.id}) }}">Generar</a>
+                                       href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">Generar</a>
 
                                     <a type="button" role="button" class="btn btn-sm btn-primary"
                                        href="{{ path('requisito_show', {'id': requisito.id}) }}">Ver</a>

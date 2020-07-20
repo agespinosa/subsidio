@@ -5,11 +5,12 @@ namespace App\Services;
 
 
 use App\Entity\ExcelIngreso;
+use App\Exception\SimpleMessageException;
 use App\Repository\ExcelIngresoRepository;
 use PhpOffice\PhpSpreadsheet\Worksheet\RowCellIterator;
 use Psr\Log\LoggerInterface;
 
-class ExcelReaderService
+class ExcelService
 {
     
     /**
@@ -43,7 +44,10 @@ class ExcelReaderService
             $cellIterator->setIterateOnlyExistingCells(FALSE);
     
             $this->logger->info('Genero Fila ExcelIngreso para fila '.$row->getRowIndex());
-            $excelIngresos[] = $this->createExcelIngreso($cellIterator);
+            if($this->isValidFile($cellIterator)){
+                $excelIngresos[] = $this->createExcelIngreso($cellIterator);
+            }
+
             $filasProcesadas++;
         }
     
@@ -51,6 +55,22 @@ class ExcelReaderService
         $this->logger->info('Cantidad de ExcelIngreso Creados '.count($excelIngresos));
         
         return $excelIngresos;
+    }
+
+    private function isValidFile(RowCellIterator $cellIterator){
+        foreach ($cellIterator as $cell) {
+            $value = $cell->getValue();
+            $columnName = $cell->getColumn();
+            $rowNumber = $cell->getRow();
+            $message = 'Columna ' . $columnName . " fila ".$rowNumber ." valor " . $value;
+
+            if($columnName !== 'F' && ($value === null || empty($value))) {
+                $this->logger->info($message);
+                throw new SimpleMessageException($message . 'Value is null or empty');
+            }
+        }
+
+        return true;
     }
     
     public function createExcelIngreso(RowCellIterator $cellIterator){

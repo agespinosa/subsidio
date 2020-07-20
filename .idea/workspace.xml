@@ -21,36 +21,46 @@
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/ActaController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/EstablecimientoAdminController.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/PropietarioController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f19575a866.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f19793ea8d.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f1c5f6cff0.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f1cadcf3b6.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f1cba73fc9.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f1cd8ea67e.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f2021ab252.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f20b66c993.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f239ac27d6.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f23d58f7a0.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f247a13a50.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f25bfb492d.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f25da1fc52.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f25f314de2.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f29e6c21a1.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f2c8a41a76.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f2cd3ef260.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f0f2d5f4d2da.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f11913b2d4cf.xls" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/files/1primerpagofinaljuan-5f11a3dc7af36.xls" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/RequisitoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RequisitoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Acta.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Establecimiento.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/ExcelIngreso.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/ExcelIngreso.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Propietario.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/SubsidioPagoProveedores.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/SubsidioPagoProveedores.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/CabeceraRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CabeceraRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ExcelIngresoRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ExcelIngresoRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/SubsidioPagoProveedoresRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SubsidioPagoProveedoresRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/TotalesRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/TotalesRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/ExcelReaderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ExcelReaderService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/acta/homepage.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/acta/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SubsidioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SubsidioController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/AtributoConfiguracion.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/AtributoConfiguracion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200618234225.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200620214727.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200630230423.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200704135403.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200706170907.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200714130224.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200714155429.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200714164456.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200715145745.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200715161903.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200717113717.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200717131524.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/AtributoConfiguracionRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/AtributoConfiguracionRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/ExcelReaderService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ExcelService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/SubsidioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/SubsidioService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/establecimiento_admin/index.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/establecimiento_admin/list.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/establecimiento_admin/show.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/establecimiento_base.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/propietario/list.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/propietario/show.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/edit.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/requisito/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/show.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +218,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Repository" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -216,15 +226,15 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="php.override.implement.member.chooser.php.doc" value="NONE" />
-    <property name="settings.editor.selected.configurable" value="reference.settings.php.debug.xdebug.proxy" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php.debug" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/src/Repository" />
       <recent name="$PROJECT_DIR$/src/Entity" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/src/Controller" />
-      <recent name="$PROJECT_DIR$/public/css" />
     </key>
   </component>
   <component name="RunManager">
@@ -295,89 +305,89 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="226" y="0" width="894" height="723" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1366.728@0.0.1366.728" timestamp="1594992151289" />
-    <state x="416" y="118" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1594993131627">
+    <state x="416" y="118" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1595250417776">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="416" y="118" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1594993131627" />
+    <state x="416" y="118" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1595250417776" />
     <state x="416" y="125" width="528" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1594064879860" />
     <state x="441" y="110" width="770" height="505" key="#xdebugger.evaluate" timestamp="1594830060059">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="441" y="110" width="770" height="505" key="#xdebugger.evaluate/0.0.1366.728@0.0.1366.728" timestamp="1594830060059" />
-    <state width="713" height="453" key="DebuggerActiveHint" timestamp="1594829346032">
+    <state width="713" height="453" key="DebuggerActiveHint" timestamp="1595250631941">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="713" height="453" key="DebuggerActiveHint/0.0.1366.728@0.0.1366.728" timestamp="1594829346032" />
+    <state width="713" height="453" key="DebuggerActiveHint/0.0.1366.728@0.0.1366.728" timestamp="1595250631941" />
     <state x="466" y="118" width="424" height="479" key="FileChooserDialogImpl" timestamp="1594826059267">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="466" y="118" width="424" height="479" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1594826059267" />
     <state x="466" y="125" key="FileChooserDialogImpl/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593779028079" />
-    <state width="1324" height="129" key="GridCell.Tab.0.bottom" timestamp="1594830890375">
+    <state width="1324" height="131" key="GridCell.Tab.0.bottom" timestamp="1595250877875">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1594830890375" />
-    <state width="1324" height="129" key="GridCell.Tab.0.center" timestamp="1594830890375">
+    <state width="1324" height="131" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595250877875" />
+    <state width="1324" height="131" key="GridCell.Tab.0.center" timestamp="1595250877874">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1594830890375" />
-    <state width="1324" height="129" key="GridCell.Tab.0.left" timestamp="1594830890375">
+    <state width="1324" height="131" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1595250877874" />
+    <state width="1324" height="131" key="GridCell.Tab.0.left" timestamp="1595250877873">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1594830890375" />
-    <state width="1324" height="129" key="GridCell.Tab.0.right" timestamp="1594830890375">
+    <state width="1324" height="131" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1595250877873" />
+    <state width="1324" height="131" key="GridCell.Tab.0.right" timestamp="1595250877875">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1594830890375" />
-    <state width="1324" height="129" key="GridCell.Tab.1.bottom" timestamp="1594830890377">
+    <state width="1324" height="131" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595250877875" />
+    <state width="1324" height="131" key="GridCell.Tab.1.bottom" timestamp="1595250877879">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1594830890377" />
-    <state width="1324" height="129" key="GridCell.Tab.1.center" timestamp="1594830890376">
+    <state width="1324" height="131" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595250877879" />
+    <state width="1324" height="131" key="GridCell.Tab.1.center" timestamp="1595250877877">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1594830890376" />
-    <state width="1324" height="129" key="GridCell.Tab.1.left" timestamp="1594830890376">
+    <state width="1324" height="131" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1595250877877" />
+    <state width="1324" height="131" key="GridCell.Tab.1.left" timestamp="1595250877876">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1594830890376" />
-    <state width="1324" height="129" key="GridCell.Tab.1.right" timestamp="1594830890377">
+    <state width="1324" height="131" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1595250877876" />
+    <state width="1324" height="131" key="GridCell.Tab.1.right" timestamp="1595250877878">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1594830890377" />
-    <state width="1324" height="129" key="GridCell.Tab.2.bottom" timestamp="1594830890377">
+    <state width="1324" height="131" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1595250877878" />
+    <state width="1324" height="131" key="GridCell.Tab.2.bottom" timestamp="1595250877882">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.2.bottom/0.0.1366.728@0.0.1366.728" timestamp="1594830890377" />
-    <state width="1324" height="129" key="GridCell.Tab.2.center" timestamp="1594830890377">
+    <state width="1324" height="131" key="GridCell.Tab.2.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595250877882" />
+    <state width="1324" height="131" key="GridCell.Tab.2.center" timestamp="1595250877880">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.2.center/0.0.1366.728@0.0.1366.728" timestamp="1594830890377" />
-    <state width="1324" height="129" key="GridCell.Tab.2.left" timestamp="1594830890377">
+    <state width="1324" height="131" key="GridCell.Tab.2.center/0.0.1366.728@0.0.1366.728" timestamp="1595250877880" />
+    <state width="1324" height="131" key="GridCell.Tab.2.left" timestamp="1595250877879">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.2.left/0.0.1366.728@0.0.1366.728" timestamp="1594830890377" />
-    <state width="1324" height="129" key="GridCell.Tab.2.right" timestamp="1594830890377">
+    <state width="1324" height="131" key="GridCell.Tab.2.left/0.0.1366.728@0.0.1366.728" timestamp="1595250877879" />
+    <state width="1324" height="131" key="GridCell.Tab.2.right" timestamp="1595250877881">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1324" height="129" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1594830890377" />
+    <state width="1324" height="131" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1595250877881" />
     <state x="421" y="92" width="513" height="537" key="NewPhpClassDialog" timestamp="1594991877049">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="421" y="92" width="513" height="537" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1594991877049" />
-    <state x="149" y="2" width="1100" height="725" key="SettingsEditor" timestamp="1594824022379">
+    <state x="149" y="2" width="1100" height="725" key="SettingsEditor" timestamp="1595247797835">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="149" y="2" width="1100" height="725" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1594824022379" />
+    <state x="149" y="2" width="1100" height="725" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1595247797835" />
     <state x="149" y="2" width="1100" height="730" key="SettingsEditor/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593457415923" />
     <state x="412" y="99" width="540" height="524" key="StructurePopup" timestamp="1594983844548">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="412" y="99" width="540" height="524" key="StructurePopup/0.0.1366.728@0.0.1366.728" timestamp="1594983844548" />
-    <state x="352" y="60" width="694" height="577" key="find.popup" timestamp="1594985525404">
+    <state x="352" y="60" width="694" height="577" key="find.popup" timestamp="1595250813903">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="352" y="60" width="694" height="577" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1594985525404" />
+    <state x="352" y="60" width="694" height="577" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1595250813903" />
     <state x="352" y="63" width="694" height="608" key="find.popup/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593457459147" />
     <state x="345" y="12" width="672" height="641" key="search.everywhere.popup" timestamp="1594742753798">
       <screen x="0" y="0" width="1366" height="728" />
@@ -390,18 +400,23 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Controller/SubsidioController.php</url>
-          <line>57</line>
+          <line>60</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/src/Repository/ExcelIngresoRepository.php</url>
-          <line>38</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/src/Services/SubsidioService.php</url>
+          <line>65</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/src/Controller/RequisitoController.php</url>
+          <line>112</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Services/SubsidioService.php</url>
-          <line>63</line>
-          <option name="timeStamp" value="3" />
+          <line>102</line>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

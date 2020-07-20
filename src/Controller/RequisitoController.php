@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use App\Entity\ExcelIngreso;
 use App\Entity\Requisito;
+use App\Exception\SimpleMessageException;
 use App\Form\RequisitoType;
 use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
-use App\Services\ExcelReaderService;
+use App\Services\ExcelService;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,16 +26,22 @@ class RequisitoController extends AbstractController
     /**
      * @var ExcelReaderService
      */
-    private $excelReaderService;
+    private $excelService;
     /**
      * @var ExcelIngresoRepository
      */
     private $excelIngresoRepository;
-    
-    public function __construct(ExcelReaderService $excelReaderService, ExcelIngresoRepository $excelIngresoRepository)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(ExcelService $excelService, ExcelIngresoRepository $excelIngresoRepository,
+                                LoggerInterface $logger)
     {
-        $this->excelReaderService = $excelReaderService;
+        $this->excelService = $excelService;
         $this->excelIngresoRepository = $excelIngresoRepository;
+        $this->logger = $logger;
     }
     
     /**
@@ -54,6 +63,7 @@ class RequisitoController extends AbstractController
         $form = $this->createForm(RequisitoType::class, $requisito);
         $form->handleRequest($request);
 
+        $this->logger->debug("RequisitoController, generar nuevo subsidio ");
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $file */
             $file = $form->get('filename')->getData();
@@ -61,21 +71,44 @@ class RequisitoController extends AbstractController
                 $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                 $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
-                
+                $this->logger->debug("Subiendo Excel , nuevo subsidio ".$newFilename);
                 try {
                     $file->move(
                         $this->getParameter('files_directory'),
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
+                    $message = "Error Subiendo Excel , nuevo subsidio ".$e->getMessage();
+                    $this->logger->error();
+                    $this->addFlash('errorMessage', $message);
                 }
                 
                 $requisito->setFileName($newFilename);
                 $filePath =  $this->getParameter('files_directory').'/'.$newFilename;
-                
-                // Leo el excel y genero el/los ExcelIngreso, uno por cada fila del Excel
-                $excelIngresos = $this->excelReaderService->readFile($filePath);
+
+                $excelIngresos = array();
+                try{
+                    // Leo el excel y genero el/los ExcelIngreso, uno por cada fila del Excel
+                    $excelIngresos = $this->excelService->readFile($filePath);
+
+                }catch (\Exception | FatalError | \RuntimeException $exception){
+                    $message = "Error Leyendo Excel ".$exception->getMessage();
+                    $this->logger->error($message);
+                    $this->addFlash('errorMessage', $message);
+                    return $this->render('requisito/new.html.twig', [
+                        'requisito' => $requisito,
+                        'form' => $form->createView()
+                    ]);
+                }catch (SimpleMessageException $sm){
+                    $message = "Error Leyendo Excel ".$sm->getMessage();
+                    $this->logger->error($message);
+                    $this->addFlash('errorMessage', $message);
+                    return $this->render('requisito/new.html.twig', [
+                        'requisito' => $requisito,
+                        'form' => $form->createView()
+                    ]);
+                }
+
                 /** @var ExcelIngreso $excelIngreso */
                 foreach ($excelIngresos as $excelIngreso) {
                     $excelIngreso->setRequisito($requisito);
@@ -88,7 +121,8 @@ class RequisitoController extends AbstractController
             $entityManager->persist($requisito);
             $entityManager->flush();
 
-            
+            $this->logger->debug('Archivo subido y procesado correctamente '.$newFilename);
+            $this->addFlash('successMessage','Archivo subido y procesado correctamente');
             return $this->redirectToRoute('requisito_index');
         }
 

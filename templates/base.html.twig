@@ -87,6 +87,24 @@
 
     <div class="container-fluid">
         <div style="margin-top: 55px !important;">
+
+            {% if app.session.flashBag.has('successMessage') %}
+                <div class="alert alert-success">
+                    {% for msg in app.session.flashBag.get('successMessage') %}
+                        {{ msg }}
+                    {% endfor %}
+
+                </div>
+            {% endif %}
+
+            {% if app.session.flashBag.has('errorMessage') %}
+                <div class="alert alert-danger">
+                    {% for msg in app.session.flashBag.get('errorMessage') %}
+                        {{ msg }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             {% block body %}{% endblock %}
         </div>
     </div>

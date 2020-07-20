@@ -1,11 +1,9 @@
 <?php
 
-namespace AppBundle\Repository;
+namespace App\Repository;
 
-use App\Entity\Cabecera;
-use AppBundle\Entity\AtributoConfiguracion;
+use App\Entity\AtributoConfiguracion;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -46,7 +44,7 @@ class AtributoConfiguracionRepository extends ServiceEntityRepository
             ->andWhere('ac.fechaBaja is null')
             ->setParameter('clave', $clave)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
             ;
     }
 }

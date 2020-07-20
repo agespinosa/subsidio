@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\ExcelIngreso;
 use App\Entity\Requisito;
+use App\Entity\SubsidioPagoProveedores;
+use App\Exception\SimpleMessageException;
 use App\Form\RequisitoType;
 use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
@@ -11,6 +13,7 @@ use App\Services\ExcelReaderService;
 use App\Services\SubsidioService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,16 +54,34 @@ class SubsidioController extends AbstractController
     }
     
     /**
-     * @Route("/generar/{id}", name="generar_archivo_subsidio", methods={"GET","POST"})
+     * @Route("/generarPagoProveedores/{id}", name="generar_archivo_subsidio_proveedores", methods={"GET","POST"})
      */
-    public function generar(Requisito $requisito): Response
+    public function generarPagoProveedores(Requisito $requisito): Response
     {
         $this->logger->info("Entro a generar archivo de Subsidio - Requisito: ".$requisito->getId());
         $this->logger->info("Requisito:".$requisito->getId(). " TipoFormaPago:". $requisito->getTipoFormaPago());
-    
-        $subsidioPagoProveedores =
-            $this->subsidioService->formatearArchivoTxtSubsidio($requisito);
-    
+
+        /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
+        try{
+            $subsidioPagoProveedores =
+                $this->subsidioService->generarSubsidioPagoProveedores($requisito);
+
+            $archivoGenerado = null;
+            if(!is_null($subsidioPagoProveedores)){
+                $archivoGenerado = $this->subsidioService->generarArchivoTxtSubsidio($subsidioPagoProveedores);
+            }
+
+        }catch (\Exception | FatalError | \RuntimeException $exception){
+            $message = "Error formateando archivo ".$exception->getMessage();
+            $this->logger->error($message);
+            $this->addFlash('errorMessage', $message);
+            $this->redirectToRoute('requisito_index');
+        }catch (SimpleMessageException $sm){
+            $message = "Error formateando archivo ".$sm->getMessage();
+            $this->logger->error($message);
+            $this->addFlash('errorMessage', $message);
+            $this->redirectToRoute('requisito_index');
+        }
         // Persiste
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->flush();
