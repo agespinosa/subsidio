@@ -69,6 +69,7 @@ class SubsidioController extends AbstractController
             $archivoGenerado = null;
             if(!is_null($subsidioPagoProveedores)){
                 $archivoGenerado = $this->subsidioService->generarArchivoTxtSubsidio($subsidioPagoProveedores);
+                $requisito->setFileSubsidioName($archivoGenerado);
             }
             // Persiste
             $entityManager = $this->getDoctrine()->getManager();

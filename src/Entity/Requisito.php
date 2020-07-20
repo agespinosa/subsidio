@@ -36,6 +36,12 @@ class Requisito
      */
     private $fileName;
 
+    /**
+     * @var string |null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $fileSubsidioName;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +92,24 @@ class Requisito
     {
         $this->fileName = $fileName;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getFileSubsidioName(): ?string
+    {
+        return $this->fileSubsidioName;
+    }
+
+    /**
+     * @param string|null $fileSubsidioName
+     */
+    public function setFileSubsidioName(?string $fileSubsidioName): void
+    {
+        $this->fileSubsidioName = $fileSubsidioName;
+    }
+
+
     
     
 }

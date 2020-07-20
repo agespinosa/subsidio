@@ -24,7 +24,8 @@
                                 <th>Fecha Desde</th>
                                 <th>Fecha Hasta</th>
                                 <th>Tipo Forma Pago</th>
-                                <th>File</th>
+                                <th>Excel</th>
+                                <th>Subsidio</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -36,6 +37,7 @@
                                 <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
                                 <td>{{ requisito.tipoFormaPago }}</td>
                                 <td>{{ requisito.fileName }}</td>
+                                <td>{{ requisito.fileSubsidioName }}</td>
                                 <td>
                                     <a type="button" role="button" class="btn btn-sm btn-success"
                                        href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">Generar</a>

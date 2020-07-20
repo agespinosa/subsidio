@@ -211,11 +211,12 @@ class SubsidioService
     public function generarArchivoTxtSubsidio(array $subsidiosPagoProveedores){
         $directorioToSaveFile = $this->params->get('subsidio_directory');
         $subsidioFileName =  'requisito.'. $subsidiosPagoProveedores[0]->getRequsito()->getId() .'-file-'.uniqid().'.txt';
+        $fullPath = $directorioToSaveFile.'/'.$subsidioFileName;
 
         $this->logger->debug("Creando TXT File ".$subsidioFileName);
         $handle = null;
         try {
-            $handle = fopen($directorioToSaveFile.'/'.$subsidioFileName, 'w');
+            $handle = fopen($fullPath, 'w');
         } catch (FileException | \RuntimeException $e) {
             $message = "Error Creando TXT File ".$e->getMessage();
             $this->logger->error($message);
@@ -242,6 +243,7 @@ class SubsidioService
         }
 
         fclose($handle);
+        return $fullPath;
     }
 
     public function getStringLine(SubsidioPagoProveedores $subsidioPagoProveedores){
