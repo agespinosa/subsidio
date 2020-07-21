@@ -78,46 +78,63 @@ class SubsidioService
         /** @var AtributoConfiguracion $lastNumeroArchivoConfig */
         $lastNumeroArchivoConfig =
             $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('lastNumeroArchivo_Pago_Proveedores');
+    
+        /** @var AtributoConfiguracion $numeroProveedorConfig */
+        $numeroProveedorConfig =
+            $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('numeroProveedor_Pago_Proveedores');
 
         $moneda = 'ARS';
+        // Cabecera y Totales
+        $cabecera =
+            $this->generarCabeceraPagoProveedores($excelIngresos);
+    
+        $totales =
+            $this->generarTotalesPagoProveedores($excelIngresos);
+    
+        $this->cabeceraRepository->persist($cabecera);
+        $this->totalesRepository->persist($totales);
+        
+        $index = 0;
         foreach ($excelIngresos as $excelIngreso) {
             $subsidioPagoProveedores = new SubsidioPagoProveedores();
-
-            // Cabecera y Totales
-            $cabecera =
-                $this->generarCabeceraPagoProveedores($excelIngresos);
-
-            $totales =
-                $this->generarTotalesPagoProveedores($excelIngresos);
+            $index++;
 
             $subsidioPagoProveedores->setCabecera($cabecera);
             $subsidioPagoProveedores->setTotales($totales);
             $subsidioPagoProveedores->setRequsito($requisito);
-            $this->cabeceraRepository->persist($cabecera);
-            $this->totalesRepository->persist($totales);
-            // Cabecera y Totales
-
+    
+            $subsidioPagoProveedores->setCuentaDebito($requisito->getCuantaOrigenFodos());
+            $subsidioPagoProveedores->setMotivoPago($requisito->getMotivoPago());
+            
             $subsidioPagoProveedores->setRegistroId('PR');
-            $subsidioPagoProveedores->setTipoPago('003');
-            $subsidioPagoProveedores->setReferenciaCliente('REF#'.$lastNumeroArchivoConfig->getValor());
+            $subsidioPagoProveedores->setTipoPago('004');
+            $subsidioPagoProveedores->setConRecurso('N');
+            $subsidioPagoProveedores->setRequiereReciboImpreso('N');
+            
+            $subsidioPagoProveedores->setReferenciaCliente($index);
             $subsidioPagoProveedores->setImporteAPagar($excelIngreso->getMonto());
             $subsidioPagoProveedores->setMonedaPago($moneda);
-            $subsidioPagoProveedores->setFechaEjecucionPago(new \DateTime());
-            $subsidioPagoProveedores->setNumeroProveedor('123456');
+            $subsidioPagoProveedores->setFechaEjecucionPago($requisito->getFechaDesde());
+            $subsidioPagoProveedores->setNumeroProveedor($excelIngreso->getCuit());
             $subsidioPagoProveedores->setNombreBeneficiario($excelIngreso->getFullName());
             $subsidioPagoProveedores->setCuit($excelIngreso->getCuit());
             $subsidioPagoProveedores->setDomicilio('');
             $subsidioPagoProveedores->setLocalidad('');
             $subsidioPagoProveedores->setCodigoPostal('');
             $subsidioPagoProveedores->setMedioComunicacion($excelIngreso->getEmail());
-            $subsidioPagoProveedores->setBanco($excelIngreso->getBanco());
-            $subsidioPagoProveedores->setSucursal($excelIngreso->getBanco());
             $subsidioPagoProveedores->setTipoCuenta($this->getTipoCuenta($excelIngreso));
             $subsidioPagoProveedores->setMonedaCuenta($moneda);
             $subsidioPagoProveedores->setNumeroCuenta($excelIngreso->getNumeroCuentaBancaria());
             $subsidioPagoProveedores->setMonedaCuentaDebito($moneda);
             $subsidioPagoProveedores->setMotivoPago('PagoRef#'.$requisito->getId());
             $subsidioPagoProveedores->setCodigoNovedadOrden(1);
+    
+            $banco = str_pad(substr($excelIngreso->getCbu(),0,3),5, "0", STR_PAD_LEFT);
+            $sucursal = str_pad(substr($excelIngreso->getCbu(),3,4),35, "0", STR_PAD_LEFT);
+            $subsidioPagoProveedores->setBanco($banco);
+            $subsidioPagoProveedores->setSucursal($sucursal);
+    
+            
             $subsidiosPagoProveedores[] = $subsidioPagoProveedores;
             $this->subsidioPagoProveedoresRepository->persist($subsidioPagoProveedores);
 
@@ -210,8 +227,10 @@ class SubsidioService
 
     public function generarArchivoTxtSubsidio(array $subsidiosPagoProveedores){
         $directorioToSaveFile = $this->params->get('subsidio_directory');
+        $subsidioDirectoryRelativePath = $this->params->get('subsidio_directory_relative_path');
         $subsidioFileName =  'requisito.'. $subsidiosPagoProveedores[0]->getRequsito()->getId() .'-file-'.uniqid().'.txt';
         $fullPath = $directorioToSaveFile.'/'.$subsidioFileName;
+        $relativePath = $subsidioDirectoryRelativePath.'/'.$subsidioFileName;
 
         $this->logger->debug("Creando TXT File ".$subsidioFileName);
         $handle = null;
@@ -243,34 +262,48 @@ class SubsidioService
         }
 
         fclose($handle);
-        return $fullPath;
+        return $relativePath;
     }
 
     public function getStringLine(SubsidioPagoProveedores $subsidioPagoProveedores){
+        $domicilioBeneficiario="";
+        $cuentaBancariaDelBeneficiario="";
+        $formaDeEntregaDeCheque="";
+        $sucursalDelNBSFoDelPrestadorPostalALaCualEnviarSobre="";
+        $indicacionesAdicionalesalCustomerServicedeBSF = "";
+        $nrodelinstrumentodepago = "";
+        
         return
-            $subsidioPagoProveedores->getTipoCuenta()." ".
-            $subsidioPagoProveedores->getBanco()." ".
-            $subsidioPagoProveedores->getCuit()." ".
-            $subsidioPagoProveedores->getCodigoPostal()." ".
-            $subsidioPagoProveedores->getConRecurso()." ".
-            $subsidioPagoProveedores->getCuentaDebito()." ".
-            $subsidioPagoProveedores->getDomicilio()." ".
-            $subsidioPagoProveedores->getFormaEntregaCheque()." ".
-            $subsidioPagoProveedores->getIndicacionesAdicionales()." ".
-            $subsidioPagoProveedores->getLocalidad()." ".
-            $subsidioPagoProveedores->getMedioComunicacion()." ".
-            $subsidioPagoProveedores->getMonedaCuenta()." ".
-            $subsidioPagoProveedores->getMonedaCuentaDebito()." ".
-            $subsidioPagoProveedores->getMonedaPago()." ".
-            $subsidioPagoProveedores->getMotivoPago()." ".
-            $subsidioPagoProveedores->getNombreBeneficiario()." ".
-            $subsidioPagoProveedores->getNumeroCuenta()." ".
-            $subsidioPagoProveedores->getNumeroInstrumentoPago()." ".
-            $subsidioPagoProveedores->getNumeroProveedor()." ".
-            $subsidioPagoProveedores->getRegistroId()." ".
-            $subsidioPagoProveedores->getSucursal()." ";
+            $subsidioPagoProveedores->getRegistroId().
+            $subsidioPagoProveedores->getTipoPago().
+            $subsidioPagoProveedores->getReferenciaCliente().
+            $subsidioPagoProveedores->getImporteAPagarString().
+            $subsidioPagoProveedores->getMonedaPago().
+            $subsidioPagoProveedores->getFechaEjecucionPagoStr().
+            $subsidioPagoProveedores->getNumeroProveedor().
+            $subsidioPagoProveedores->getNombreBeneficiario().
+            $subsidioPagoProveedores->getCuitStr().
+            str_pad($domicilioBeneficiario, 150, " ", STR_PAD_LEFT).
+            $subsidioPagoProveedores->getMedioComunicacionStr().
+            $subsidioPagoProveedores->getBanco().
+            $subsidioPagoProveedores->getSucursal().
+            $subsidioPagoProveedores->getTipoCuenta().
+            $subsidioPagoProveedores->getMonedaCuenta().
+            str_pad($formaDeEntregaDeCheque, 3, " ", STR_PAD_LEFT).
+            str_pad($sucursalDelNBSFoDelPrestadorPostalALaCualEnviarSobre, 8, " ", STR_PAD_LEFT).
+            $subsidioPagoProveedores->getMonedaCuentaDebito().
+            $subsidioPagoProveedores->getCuentaDebito().
+            str_pad($indicacionesAdicionalesalCustomerServicedeBSF, 80, " ", STR_PAD_LEFT).
+            $subsidioPagoProveedores->getConRecurso().
+            $subsidioPagoProveedores->getRequiereReciboImpreso().
+            str_pad($nrodelinstrumentodepago, 15, " ", STR_PAD_LEFT).
+            $subsidioPagoProveedores->getCodigoNovedadOrden();
+            
+            
 
 
     }
+    
+   
     
 }

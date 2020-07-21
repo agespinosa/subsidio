@@ -41,7 +41,21 @@ class Requisito
      * @ORM\Column(type="string", nullable=true)
      */
     private $fileSubsidioName;
-
+    
+    
+    /**
+     * @var string |null
+     * @ORM\Column(type="string", nullable=true, length=105)
+     */
+    private $motivoPago;
+    
+    
+    /**
+     * @var string |null
+     * @ORM\Column(type="string", nullable=true, length=17)
+     */
+    private $cuantaOrigenFodos;
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -108,8 +122,42 @@ class Requisito
     {
         $this->fileSubsidioName = $fileSubsidioName;
     }
-
-
     
+    /**
+     * @return string|null
+     */
+    public function getMotivoPago(): ?string
+    {
+        return $this->motivoPago;
+    }
+    
+    /**
+     * @param string|null $motivoPago
+     */
+    public function setMotivoPago(?string $motivoPago): void
+    {
+        $this->motivoPago = $motivoPago;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getCuantaOrigenFodos(): ?string
+    {
+        return $this->cuantaOrigenFodos;
+    }
+    
+    /**
+     * @param string|null $cuantaOrigenFodos
+     */
+    public function setCuantaOrigenFodos(?string $cuantaOrigenFodos): void
+    {
+        $this->cuantaOrigenFodos = $cuantaOrigenFodos;
+    }
+    
+    public function getMotivoPagoStr(): ?string
+    {
+        return $this->motivoPago;
+    }
     
 }

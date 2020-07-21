@@ -38,52 +38,52 @@ class SubsidioPagoProveedores
     private $totales;
 
     /**
-     * @ORM\Column(type="string", length=2)
+     * @ORM\Column(type="string", length=2, nullable=true)
      */
     private $registroId;
 
     /**
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=3, nullable=true)
      */
     private $tipoPago;
 
     /**
-     * @ORM\Column(type="string", length=5)
+     * @ORM\Column(type="string", length=16, nullable=true)
      */
     private $referenciaCliente;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @ORM\Column(type="decimal", precision=13, scale=2, nullable=true)
      */
     private $importeAPagar;
 
     /**
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=3, nullable=true)
      */
     private $monedaPago;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $fechaEjecucionPago;
 
     /**
-     * @ORM\Column(type="string", length=47, nullable=true)
+     * @ORM\Column(type="string", length=18, nullable=true)
      */
     private $numeroProveedor;
 
     /**
-     * @ORM\Column(type="string", length=65)
+     * @ORM\Column(type="string", length=60, nullable=true)
      */
     private $nombreBeneficiario;
 
     /**
-     * @ORM\Column(type="string", length=11)
+     * @ORM\Column(type="string", length=11, nullable=true)
      */
     private $cuit;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=120, nullable=true)
      */
     private $domicilio;
 
@@ -118,7 +118,7 @@ class SubsidioPagoProveedores
     private $tipoCuenta;
 
     /**
-     * @ORM\Column(type="string", length=3)
+     * @ORM\Column(type="string", length=3, nullable=true)
      */
     private $monedaCuenta;
 
@@ -173,9 +173,15 @@ class SubsidioPagoProveedores
     private $numeroInstrumentoPago;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", nullable=true, length=3)
      */
     private $codigoNovedadOrden;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true, length=35 )
+     */
+    private $cuentaBancariaBeneficiario;
+    
 
     public function getId(): ?int
     {
@@ -213,7 +219,7 @@ class SubsidioPagoProveedores
 
     public function setReferenciaCliente(string $referenciaCliente): self
     {
-        $this->referenciaCliente = $referenciaCliente;
+        $this->referenciaCliente = str_pad($referenciaCliente, 16, "0", STR_PAD_LEFT);;
 
         return $this;
     }
@@ -225,11 +231,12 @@ class SubsidioPagoProveedores
 
     public function setImporteAPagar(string $importeAPagar): self
     {
-        $this->importeAPagar = $importeAPagar;
+        setlocale(LC_MONETARY, 'es_AR');
+        $this->importeAPagar = money_format('%2n', $importeAPagar);
 
         return $this;
     }
-
+    
     public function getMonedaPago(): ?string
     {
         return $this->monedaPago;
@@ -261,7 +268,7 @@ class SubsidioPagoProveedores
 
     public function setNumeroProveedor(?string $numeroProveedor): self
     {
-        $this->numeroProveedor = $numeroProveedor;
+        $this->numeroProveedor = str_pad($numeroProveedor, 18, " ", STR_PAD_RIGHT);
 
         return $this;
     }
@@ -273,9 +280,21 @@ class SubsidioPagoProveedores
 
     public function setNombreBeneficiario(string $nombreBeneficiario): self
     {
-        $this->nombreBeneficiario = $nombreBeneficiario;
+        $this->nombreBeneficiario = substr(
+                                        str_pad($this->clearString($nombreBeneficiario), 60, " ", STR_PAD_RIGHT),
+                                        0,
+                                            60);
 
         return $this;
+    }
+    private function clearString($string){
+        $string = str_replace(array('[\', \']'), '', $string);
+        $string = preg_replace('/\[.*\]/U', '', $string);
+        $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $string);
+        $string = htmlentities($string, ENT_COMPAT, 'utf-8');
+        $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $string );
+        $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , ' ', $string);
+        return strtoupper(trim($string, ' '));
     }
 
     public function getCuit(): ?string
@@ -285,7 +304,9 @@ class SubsidioPagoProveedores
 
     public function setCuit(string $cuit): self
     {
-        $this->cuit = $cuit;
+        $cuitTmp = str_replace("-","",$cuit);
+        $cuitTmp = str_replace(".","",$cuitTmp);
+        $this->cuit = $cuitTmp;
 
         return $this;
     }
@@ -441,7 +462,7 @@ class SubsidioPagoProveedores
 
     public function setCuentaDebito(?string $cuentaDebito): self
     {
-        $this->cuentaDebito = $cuentaDebito;
+        $this->cuentaDebito = str_pad($cuentaDebito, 17, "0", STR_PAD_LEFT);
 
         return $this;
     }
@@ -453,7 +474,7 @@ class SubsidioPagoProveedores
 
     public function setMotivoPago(?string $motivoPago): self
     {
-        $this->motivoPago = $motivoPago;
+        $this->motivoPago = strtoupper(str_pad($motivoPago, 105, " ", STR_PAD_RIGHT));
 
         return $this;
     }
@@ -506,14 +527,14 @@ class SubsidioPagoProveedores
         return $this;
     }
 
-    public function getCodigoNovedadOrden(): ?int
+    public function getCodigoNovedadOrden(): ?string
     {
         return $this->codigoNovedadOrden;
     }
 
-    public function setCodigoNovedadOrden(?int $codigoNovedadOrden): self
+    public function setCodigoNovedadOrden(?string $codigoNovedadOrden): self
     {
-        $this->codigoNovedadOrden = $codigoNovedadOrden;
+        $this->codigoNovedadOrden = str_pad($codigoNovedadOrden,3, "0", STR_PAD_LEFT);
 
         return $this;
     }
@@ -567,7 +588,44 @@ class SubsidioPagoProveedores
     {
         $this->totales = $totales;
     }
+    
+    /**
+     * @return mixed
+     */
+    public function getCuentaBancariaBeneficiario()
+    {
+        return $this->cuentaBancariaBeneficiario;
+    }
+    
+    /**
+     * @param mixed $cuentaBancariaBeneficiario
+     */
+    public function setCuentaBancariaBeneficiario($cuentaBancariaBeneficiario): void
+    {
+        $this->cuentaBancariaBeneficiario = $cuentaBancariaBeneficiario;
+    }
+    
+    
+    public function getImporteAPagarString(): string
+    {
+        return str_pad(
+            str_replace(".","", $this->getImporteAPagar()),
+            15, "0", STR_PAD_LEFT);
+    }
 
-
+    public function getFechaEjecucionPagoStr(): string {
+        return $this->getFechaEjecucionPago()->format('yymd');
+    }
+    
+    public function getCuitStr(): ?string
+    {
+        return str_pad($this->getCuit(),11, "0", STR_PAD_LEFT);
+    }
+    
+    public function getMedioComunicacionStr(): ?string
+    {
+        return str_pad("E:".$this->medioComunicacion, 150, " ", STR_PAD_RIGHT);
+    }
+    
     
 }

@@ -75,7 +75,7 @@ class ExcelIngreso
     private $tipoCuenta;
 
     /**
-     * @ORM\Column(type="string", length=100, nullable=true)
+     * @ORM\Column(type="string", length=5, nullable=true)
      */
     private $banco;
 
@@ -308,7 +308,7 @@ class ExcelIngreso
      */
     public function getFullName(): ?string
     {
-        return $this->getNombre().' '.$this->getApellido();
+        return $this->getApellido().' '.$this->getNombre();
     }
 
     

@@ -10,6 +10,7 @@ use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
 use App\Services\ExcelService;
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -82,8 +83,10 @@ class RequisitoController extends AbstractController
                     $this->logger->error($message);
                     $this->addFlash('errorMessage', $message);
                 }
-                
-                $requisito->setFileName($newFilename);
+    
+                $excelIngresosPath = $this->getParameter('excel_directory_relative_path');
+                $relativePath = $excelIngresosPath.'/'.$newFilename;
+                $requisito->setFileName($relativePath);
                 $filePath =  $this->getParameter('files_directory').'/'.$newFilename;
 
                 $excelIngresos = array();
@@ -131,19 +134,10 @@ class RequisitoController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
+    
+    
     /**
-     * @Route("/{id}", name="requisito_show", methods={"GET"})
-     */
-    public function show(Requisito $requisito): Response
-    {
-        return $this->render('requisito/show.html.twig', [
-            'requisito' => $requisito,
-        ]);
-    }
-
-    /**
-     * @Route("/{id}/edit", name="requisito_edit", methods={"GET","POST"})
+     * @Route("edit/{id}", name="requisito_edit", methods={"GET","POST"})
      */
     public function edit(Request $request, Requisito $requisito): Response
     {
@@ -163,7 +157,7 @@ class RequisitoController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="requisito_delete", methods={"DELETE"})
+     * @Route("delete/{id}", name="requisito_delete", methods={"DELETE"})
      */
     public function delete(Request $request, Requisito $requisito): Response
     {
@@ -175,4 +169,17 @@ class RequisitoController extends AbstractController
 
         return $this->redirectToRoute('requisito_index');
     }
+    
+    /**
+     * @Route("show/{id}", name="requisito_show", methods={"GET"})
+     * @param Requisito $requisito
+     * @return Response
+     */
+    public function show(Requisito $requisito): Response
+    {
+        return $this->render('requisito/show.html.twig', [
+            'requisito' => $requisito,
+        ]);
+    }
+    
 }

@@ -114,6 +114,12 @@ class ExcelService
                     break;
                 case 'K':
                     $excelIngreso->setCbu($value);
+                    $excelIngreso->setNumeroCuentaBancaria($value);
+                    break;
+                case 'L':
+                    if(!is_null($value) && !empty($value)){
+                        $excelIngreso->setNumeroCuentaBancaria($value);
+                    }
                     break;
             }
         }

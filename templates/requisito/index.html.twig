@@ -36,8 +36,23 @@
                                 <td>{{ requisito.fechaDesde ? requisito.fechaDesde|date('Y-m-d') : '' }}</td>
                                 <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
                                 <td>{{ requisito.tipoFormaPago }}</td>
-                                <td>{{ requisito.fileName }}</td>
-                                <td>{{ requisito.fileSubsidioName }}</td>
+                                <td>
+                                    {% if  requisito.fileName is not null %}
+
+                                        <a type="button" role="button" class="btn btn-sm btn-secondary" target="_blank"
+                                           href="{{ relative_path(requisito.fileName) }}">Descargar</a>
+
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if  requisito.fileSubsidioName is not null %}
+
+                                    <a type="button" role="button" class="btn btn-sm btn-secondary" target="_blank"
+                                       href="{{ relative_path(requisito.fileSubsidioName) }}">Descargar</a>
+
+                                    {% endif %}
+                                </td>
+
                                 <td>
                                     <a type="button" role="button" class="btn btn-sm btn-success"
                                        href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">Generar</a>
