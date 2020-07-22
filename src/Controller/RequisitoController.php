@@ -4,13 +4,17 @@ namespace App\Controller;
 
 use App\Entity\ExcelIngreso;
 use App\Entity\Requisito;
+use App\Entity\SubsidioPagoProveedores;
 use App\Exception\SimpleMessageException;
 use App\Form\RequisitoType;
 use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
+use App\Repository\SubsidioPagoProveedoresRepository;
 use App\Services\ExcelService;
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -20,6 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/")
+ * @IsGranted("ROLE_ADMIN")
  */
 class RequisitoController extends AbstractController
 {
@@ -36,22 +41,38 @@ class RequisitoController extends AbstractController
      * @var LoggerInterface
      */
     private $logger;
-
+    /**
+     * @var RequisitoRepository
+     */
+    private $requisitoRepository;
+    /**
+     * @var SubsidioPagoProveedoresRepository
+     */
+    private $subsidioPagoProveedoresRepository;
+    
     public function __construct(ExcelService $excelService, ExcelIngresoRepository $excelIngresoRepository,
-                                LoggerInterface $logger)
+                                LoggerInterface $logger,
+                                RequisitoRepository $requisitoRepository,
+                                SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository)
     {
         $this->excelService = $excelService;
         $this->excelIngresoRepository = $excelIngresoRepository;
         $this->logger = $logger;
+        $this->requisitoRepository = $requisitoRepository;
+        $this->subsidioPagoProveedoresRepository = $subsidioPagoProveedoresRepository;
     }
     
     /**
      *  @Route("/" , name="requisito_index", methods={"GET"})
      */
-    public function index(RequisitoRepository $requisitoRepository): Response
+    public function index(): Response
     {
+        
+        $requisitos = $this->requisitoRepository->findAll();
+        
+    
         return $this->render('requisito/index.html.twig', [
-            'requisitos' => $requisitoRepository->findAll(),
+            'requisitos' => $requisitos
         ]);
     }
 
@@ -142,6 +163,7 @@ class RequisitoController extends AbstractController
     public function edit(Request $request, Requisito $requisito): Response
     {
         $form = $this->createForm(RequisitoType::class, $requisito);
+        $form->remove('filename');
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

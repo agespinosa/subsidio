@@ -12,6 +12,7 @@ use App\Repository\RequisitoRepository;
 use App\Services\ExcelReaderService;
 use App\Services\SubsidioService;
 use Psr\Log\LoggerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -21,6 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/subsidio")
+ * @IsGranted("ROLE_ADMIN")
  */
 class SubsidioController extends AbstractController
 {
@@ -67,9 +69,13 @@ class SubsidioController extends AbstractController
                 $this->subsidioService->generarSubsidioPagoProveedores($requisito);
 
             $archivoGenerado = null;
-            if(!is_null($subsidioPagoProveedores)){
-                $archivoGenerado = $this->subsidioService->generarArchivoTxtSubsidio($subsidioPagoProveedores);
+            if(!is_null($subsidioPagoProveedores) && count($subsidioPagoProveedores)>0){
+                /** @var SubsidioPagoProveedores $subsidio */
+                $subsidio = $subsidioPagoProveedores[0];
+                $archivoGenerado = $this->subsidioService->generarArchivoTxtSubsidio($subsidioPagoProveedores,$requisito);
                 $requisito->setFileSubsidioName($archivoGenerado);
+                $requisito->setTotalBeneficiarios($subsidio->getTotales()->getTotalRegistros());
+                $requisito->setTotalMontoPesos($subsidio->getTotales()->getTotalAPagar());
             }
             // Persiste
             $entityManager = $this->getDoctrine()->getManager();

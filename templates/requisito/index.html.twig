@@ -1,81 +1,113 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Listado Subsidios a Generar{% endblock %}
+{% block title %}Subsidios Pago a Proveedores{% endblock %}
 
 {% block body %}
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Listado Subsidios a Generar</h5>
+        <h5 class="card-title">Subsidios Pago a Proveedores</h5>
+        <hr/>
             <div class="row">
                 <div class="col-12">
-                    <a type="button" role="button" class="btn btn-success btn-sm btn-block"
-                       href="{{ path('requisito_new') }}">Nuevo</a>
 
-                    <div class="col-12 text-right">
-                        <button type="button" class="btn btn-primary mt-2 mb-2">
-                            Cantidad Registros <span class="badge badge-light">{{ requisitos |length }}</span>
-                        </button>
+                    <div class="col-12">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <a type="button" role="button" class="btn btn-success btn-sm"
+                                   href="{{ path('requisito_new') }}">Nuevo Pago Proveedores</a>
+                            </div>
+                            <div class="col-6"></div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary mt-2 mb-2">
+                                    Cantidad Registros <span class="badge badge-light">{{ requisitos |length }}</span>
+                                </button>
+                            </div>
+                        </div>
+
                     </div>
+                    <div class="col-12">
+                        <table class="table">
+                            <thead>
+                                <tr >
+                                    <th>Fecha Desde</th>
+                                    <th>Fecha Hasta</th>
+                                    <th>Tipo Forma Pago</th>
+                                    <th>Motivo</th>
+                                    <th>Cuenta Origen</th>
+                                    <th>Total Beneficiarios</th>
+                                    <th>Total Monto</th>
+                                    <th>Excel</th>
+                                    <th>Subsidio</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for requisito in requisitos %}
+                                <tr >
+                                    <td>{{ requisito.fechaDesde ? requisito.fechaDesde|date('Y-m-d') : '' }}</td>
+                                    <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
+                                    <td>{{ requisito.tipoFormaPago }}</td>
+                                    <td data-toggle="tooltip" data-placement="top" title="{{ requisito.motivoPago }}">{{ requisito.motivoPago|slice(0,5) }}</td>
+                                    <td>{{ requisito.cuantaOrigenFodos }}</td>
+                                    <td>
+                                        <span class="badge badge-info"> {{ requisito.totalBeneficiarios }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {{ requisito.totalMontoPesos|format_currency('ARS', locale='es') }}
+                                        </td>
+                                    <td>
+                                        {% if  requisito.fileName is not null %}
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Id</th>
-                                <th>Fecha Desde</th>
-                                <th>Fecha Hasta</th>
-                                <th>Tipo Forma Pago</th>
-                                <th>Excel</th>
-                                <th>Subsidio</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {% for requisito in requisitos %}
-                            <tr>
-                                <td>{{ requisito.id }}</td>
-                                <td>{{ requisito.fechaDesde ? requisito.fechaDesde|date('Y-m-d') : '' }}</td>
-                                <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
-                                <td>{{ requisito.tipoFormaPago }}</td>
-                                <td>
-                                    {% if  requisito.fileName is not null %}
+                                            <a type="button" role="button" class="btn btn-sm btn-primary" target="_blank"
+                                               data-toggle="tooltip" data-placement="top" title="Descargar Excel"
+                                               href="{{ relative_path(requisito.fileName) }}">
+                                                <i class="fas fa-file-excel"></i>
+                                            </a>
 
-                                        <a type="button" role="button" class="btn btn-sm btn-secondary" target="_blank"
-                                           href="{{ relative_path(requisito.fileName) }}">Descargar</a>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if  requisito.fileSubsidioName is not null %}
 
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    {% if  requisito.fileSubsidioName is not null %}
 
-                                    <a type="button" role="button" class="btn btn-sm btn-secondary" target="_blank"
-                                       href="{{ relative_path(requisito.fileSubsidioName) }}">Descargar</a>
+                                        <a type="button" role="button" class="btn btn-sm btn-success" target="_blank"
+                                           data-toggle="tooltip" data-placement="top" title="Descargar Archivo Subsidio"
+                                           href="{{ relative_path(requisito.fileSubsidioName) }}">
+                                            <i class="fas fa-download"></i></a>
 
-                                    {% endif %}
-                                </td>
+                                        {% endif %}
+                                    </td>
 
-                                <td>
-                                    <a type="button" role="button" class="btn btn-sm btn-success"
-                                       href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">Generar</a>
+                                    <td colspan="4" style="width: 200px !important;">
+                                        <a type="button" role="button" class="btn btn-sm btn-success"
+                                           data-toggle="tooltip" data-placement="top" title="Generar Archivo Subsidio"
+                                           href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">
+                                            <i class="fas fa-file-invoice-dollar"></i>
+                                        </a>
 
-                                    <a type="button" role="button" class="btn btn-sm btn-primary"
-                                       href="{{ path('requisito_show', {'id': requisito.id}) }}">Ver</a>
-                                    <a type="button" role="button" class="btn btn-sm btn-warning"
-                                       href="{{ path('requisito_edit', {'id': requisito.id}) }}">Editar</a>
+                                        <a type="button" role="button" class="btn btn-sm btn-primary"
+                                           data-toggle="tooltip" data-placement="top" title="Ver"
+                                           href="{{ path('requisito_show', {'id': requisito.id}) }}"><i class="fas fa-eye"></i></a>
+                                        <a type="button" role="button" class="btn btn-sm btn-warning"
+                                           data-toggle="tooltip" data-placement="top" title="Editar"
+                                           href="{{ path('requisito_edit', {'id': requisito.id}) }}">
+                                            <i class="fas fa-pen-square"></i>
+                                        </a>
 
-                                </td>
-                            </tr>
-                        {% else %}
-                            <tr>
-                                <td colspan="6">
-                                    <div class="alert alert-secondary" role="alert">
-                                        Sin Registros
-                                    </div>
-                                </td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% if  requisitos|length == 0 %}
+                        <div class="row" >
+                            <div class="col-12 alert alert-secondary" role="alert">
+                                Sin Registros
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

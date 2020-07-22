@@ -29,22 +29,20 @@ class SubsidioPagoProveedoresRepository extends ServiceEntityRepository
         return $em->flush($object);
     }
 
-    // /**
-    //  * @return SubsidioPagoProveedores[] Returns an array of SubsidioPagoProveedores objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return SubsidioPagoProveedores[] Returns an array of SubsidioPagoProveedores objects
+    */
+   
+    public function findAllDistinct()
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('s.id', 'DESC')
+            ->distinct('s.requsito')
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+   
 
     /*
     public function findOneBySomeField($value): ?SubsidioPagoProveedores

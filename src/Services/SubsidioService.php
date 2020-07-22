@@ -225,7 +225,7 @@ class SubsidioService
         return $totalAPagar;
     }
 
-    public function generarArchivoTxtSubsidio(array $subsidiosPagoProveedores){
+    public function generarArchivoTxtSubsidio(array $subsidiosPagoProveedores, Requisito $requisito){
         $directorioToSaveFile = $this->params->get('subsidio_directory');
         $subsidioDirectoryRelativePath = $this->params->get('subsidio_directory_relative_path');
         $subsidioFileName =  'requisito.'. $subsidiosPagoProveedores[0]->getRequsito()->getId() .'-file-'.uniqid().'.txt';
@@ -248,12 +248,21 @@ class SubsidioService
         }
         try{
             $newLine = "\n";
-
+    
+            fwrite($handle,
+                $this->getCabeceraStringLine($subsidiosPagoProveedores[0]->getCabecera(), $requisito));
+            fwrite($handle,$newLine);
+            
             /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
             foreach ($subsidiosPagoProveedores as $subsidioPagoProveedores) {
                 fwrite($handle, $this->getStringLine($subsidioPagoProveedores));
                 fwrite($handle,$newLine);
             }
+    
+            fwrite($handle,
+                $this->getTotalesStringLine($subsidioPagoProveedores->getTotales(), $requisito));
+            fwrite($handle,$newLine);
+            
         }catch (\Exception | \RuntimeException $exception){
             fclose($handle);
             $message = "Error procesando TXT File ".$e->getMessage();
@@ -298,10 +307,36 @@ class SubsidioService
             $subsidioPagoProveedores->getRequiereReciboImpreso().
             str_pad($nrodelinstrumentodepago, 15, " ", STR_PAD_LEFT).
             $subsidioPagoProveedores->getCodigoNovedadOrden();
-            
-            
 
-
+    }
+    public function getTotalesStringLine(Totales $totales, Requisito $requisito){
+        $totalAPagar = number_format($totales->getTotalAPagar(),2,'','');
+        return $totales->getRegistroId().
+            str_pad($totalAPagar, 25, "0", STR_PAD_LEFT).
+            str_pad($totales->getTotalRegistros(), 10, "0", STR_PAD_LEFT);
+    }
+    
+    public function getCabeceraStringLine(Cabecera $cabecera, Requisito $requisito){
+        
+        $today = new \DateTime();
+        /** @var AtributoConfiguracion $lastNumeroArchivoConfig */
+        $lastNumeroArchivoConfig =
+            $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('lastNumeroArchivo_Pago_Proveedores');
+            
+        /** @var AtributoConfiguracion $numeroClienteOrdenanteAnteBSFConfig */
+        $numeroClienteOrdenanteAnteBSFConfig =
+            $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('numeroClienteOrdenante_Pago_Proveedores');
+        
+        
+        return
+            $cabecera->getRegistroId().
+            $today->format('yymd').
+            $today->format('His').
+            str_pad($lastNumeroArchivoConfig->getValor(),3, "0", STR_PAD_LEFT).
+            str_pad($numeroClienteOrdenanteAnteBSFConfig->getValor(),7, "0", STR_PAD_LEFT).
+            $cabecera->getIdentificacionArchivo().
+            $requisito->getFechaDesde()->format('yymd');
+        
     }
     
    

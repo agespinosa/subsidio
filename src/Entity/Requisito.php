@@ -56,6 +56,16 @@ class Requisito
      */
     private $cuantaOrigenFodos;
     
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $totalBeneficiarios;
+    
+    /**
+     * @ORM\Column(type="decimal", precision=23, scale=2, nullable=true)
+     */
+    private $totalMontoPesos;
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -158,6 +168,38 @@ class Requisito
     public function getMotivoPagoStr(): ?string
     {
         return $this->motivoPago;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getTotalBeneficiarios()
+    {
+        return $this->totalBeneficiarios;
+    }
+    
+    /**
+     * @param mixed $totalBeneficiarios
+     */
+    public function setTotalBeneficiarios($totalBeneficiarios): void
+    {
+        $this->totalBeneficiarios = $totalBeneficiarios;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getTotalMontoPesos()
+    {
+        return $this->totalMontoPesos;
+    }
+    
+    /**
+     * @param mixed $totalMontoPesos
+     */
+    public function setTotalMontoPesos($totalMontoPesos): void
+    {
+        $this->totalMontoPesos = $totalMontoPesos;
     }
     
 }

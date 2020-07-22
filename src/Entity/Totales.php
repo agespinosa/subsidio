@@ -50,18 +50,24 @@ class Totales
 
         return $this;
     }
-
-    public function getTotalAPagar(): ?string
+    
+    /**
+     * @return mixed
+     */
+    public function getTotalAPagar()
     {
         return $this->totalAPagar;
     }
-
-    public function setTotalAPagar(string $totalAPagar): self
+    
+    /**
+     * @param mixed $totalAPagar
+     */
+    public function setTotalAPagar($totalAPagar): void
     {
         $this->totalAPagar = $totalAPagar;
-
-        return $this;
     }
+
+   
 
     public function getTotalRegistros(): ?int
     {
