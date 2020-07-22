@@ -310,10 +310,11 @@ class SubsidioService
 
     }
     public function getTotalesStringLine(Totales $totales, Requisito $requisito){
+        // total de registros suma 2 por que cuenta la fila de cabecera y totales
         $totalAPagar = number_format($totales->getTotalAPagar(),2,'','');
         return $totales->getRegistroId().
             str_pad($totalAPagar, 25, "0", STR_PAD_LEFT).
-            str_pad($totales->getTotalRegistros(), 10, "0", STR_PAD_LEFT);
+            str_pad($totales->getTotalRegistros()+2, 10, "0", STR_PAD_LEFT);
     }
     
     public function getCabeceraStringLine(Cabecera $cabecera, Requisito $requisito){

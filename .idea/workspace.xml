@@ -21,10 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RequisitoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RequisitoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/ExcelIngreso.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/ExcelIngreso.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Services/ExcelService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ExcelService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/SubsidioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/SubsidioService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -239,7 +237,7 @@
       <workItem from="1594983217674" duration="10761000" />
       <workItem from="1595327762174" duration="1189000" />
       <workItem from="1595329431481" duration="18926000" />
-      <workItem from="1595414379150" duration="13918000" />
+      <workItem from="1595414379150" duration="14918000" />
     </task>
     <servers />
   </component>
