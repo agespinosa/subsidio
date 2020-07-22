@@ -68,7 +68,9 @@ class RequisitoController extends AbstractController
     public function index(): Response
     {
         
-        $requisitos = $this->requisitoRepository->findAll();
+        $requisitos = $this->requisitoRepository->findBy( array(),
+            array('id' => 'DESC')
+        );
         
     
         return $this->render('requisito/index.html.twig', [

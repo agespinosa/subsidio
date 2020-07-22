@@ -20,26 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sanimal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sanimal.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/RequisitoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RequisitoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SubsidioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SubsidioController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Cabecera.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Cabecera.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Requisito.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Requisito.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Totales.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Totales.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/SubsidioPagoProveedoresRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/SubsidioPagoProveedoresRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/SubsidioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/SubsidioService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/_delete_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/subsidioPagoProveedores/_delete_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/subsidioPagoProveedores/_form.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/subsidioPagoProveedores/edit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/subsidioPagoProveedores/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/subsidioPagoProveedores/new.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/subsidioPagoProveedores/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/ExcelIngreso.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/ExcelIngreso.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/ExcelService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ExcelService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/requisito/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -254,7 +239,7 @@
       <workItem from="1594983217674" duration="10761000" />
       <workItem from="1595327762174" duration="1189000" />
       <workItem from="1595329431481" duration="18926000" />
-      <workItem from="1595414379150" duration="12294000" />
+      <workItem from="1595414379150" duration="13918000" />
     </task>
     <servers />
   </component>
@@ -292,10 +277,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="141" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1594824100841" />
-    <state x="455" y="44" width="425" height="557" key="#com.intellij.ide.util.MemberChooser" timestamp="1595425697496">
+    <state x="455" y="44" width="425" height="557" key="#com.intellij.ide.util.MemberChooser" timestamp="1595428605441">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="455" y="44" width="425" height="557" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1595425697496" />
+    <state x="455" y="44" width="425" height="557" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1595428605441" />
     <state x="455" y="46" width="449" height="642" key="#com.intellij.ide.util.MemberChooser/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593780262313" />
     <state x="366" y="102" width="624" height="517" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1595329404484">
       <screen x="0" y="0" width="1366" height="728" />
@@ -389,10 +374,10 @@
     </state>
     <state x="352" y="60" width="694" height="577" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1595422752180" />
     <state x="352" y="63" width="694" height="608" key="find.popup/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593457459147" />
-    <state x="345" y="12" width="672" height="641" key="search.everywhere.popup" timestamp="1595337011812">
+    <state x="345" y="12" width="672" height="641" key="search.everywhere.popup" timestamp="1595428249745">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="345" y="12" width="672" height="641" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1595337011812" />
+    <state x="345" y="12" width="672" height="641" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1595428249745" />
     <state x="345" y="13" width="672" height="676" key="search.everywhere.popup/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1594064503451" />
   </component>
   <component name="XDebuggerManager">

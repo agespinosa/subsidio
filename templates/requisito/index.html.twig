@@ -29,9 +29,9 @@
                         <table class="table">
                             <thead>
                                 <tr >
+                                    <th>Id</th>
                                     <th>Fecha Desde</th>
                                     <th>Fecha Hasta</th>
-                                    <th>Tipo Forma Pago</th>
                                     <th>Motivo</th>
                                     <th>Cuenta Origen</th>
                                     <th>Total Beneficiarios</th>
@@ -44,14 +44,17 @@
                             <tbody>
                             {% for requisito in requisitos %}
                                 <tr >
+                                    <td>{{ requisito.id }} </td>
                                     <td>{{ requisito.fechaDesde ? requisito.fechaDesde|date('Y-m-d') : '' }}</td>
                                     <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
-                                    <td>{{ requisito.tipoFormaPago }}</td>
-                                    <td data-toggle="tooltip" data-placement="top" title="{{ requisito.motivoPago }}">{{ requisito.motivoPago|slice(0,5) }}</td>
+                                    <td data-toggle="tooltip" data-placement="top"
+                                        title="{{ requisito.motivoPago }}">{{ requisito.motivoPago|slice(0,10) }}</td>
                                     <td>{{ requisito.cuantaOrigenFodos }}</td>
                                     <td>
-                                        <span class="badge badge-info"> {{ requisito.totalBeneficiarios }}
-                                        </span>
+                                        {% if  requisito.totalBeneficiarios > 0 %}
+                                            <span class="badge badge-info"> {{ requisito.totalBeneficiarios }}
+                                            </span>
+                                        {% endif %}
                                     </td>
                                     <td>
                                         {{ requisito.totalMontoPesos|format_currency('ARS', locale='es') }}

@@ -30,51 +30,61 @@ class ExcelIngreso
     private $requisito;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string|null
+     * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $apellido;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string",length=8, nullable=true)
      */
     private $dni;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string",length=11, nullable=true)
      */
     private $cuit;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $regimenIva;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=2, nullable=true)
      */
     private $categoriaIva;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $cbu;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $tipoCuenta;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=5, nullable=true)
      */
     private $banco;
@@ -85,16 +95,19 @@ class ExcelIngreso
     private $monto;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=100, nullable=true)
      */
     private $rubro;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $numeroCuentaBancaria;
 
     /**
+     * @var string|null
      * @ORM\Column(type="string", length=100)
      */
     private $estado;
@@ -107,184 +120,6 @@ class ExcelIngreso
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getNombre(): ?string
-    {
-        return $this->nombre;
-    }
-
-    public function setNombre(string $nombre): self
-    {
-        $this->nombre = $nombre;
-
-        return $this;
-    }
-
-    public function getApellido(): ?string
-    {
-        return $this->apellido;
-    }
-
-    public function setApellido(string $apellido): self
-    {
-        $this->apellido = $apellido;
-
-        return $this;
-    }
-
-   
-
-    public function getRegimenIva(): ?string
-    {
-        return $this->regimenIva;
-    }
-
-    public function setRegimenIva(?string $regimenIva): self
-    {
-        $this->regimenIva = $regimenIva;
-
-        return $this;
-    }
-
-    public function getCategoriaIva(): ?string
-    {
-        return $this->categoriaIva;
-    }
-
-    public function setCategoriaIva(?string $categoriaIva): self
-    {
-        $this->categoriaIva = $categoriaIva;
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(?string $email): self
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function getCbu(): ?string
-    {
-        return $this->cbu;
-    }
-
-    public function setCbu(?string $cbu): self
-    {
-        $this->cbu = $cbu;
-
-        return $this;
-    }
-
-    public function getTipoCuenta(): ?string
-    {
-        return $this->tipoCuenta;
-    }
-
-    public function setTipoCuenta(?string $tipoCuenta): self
-    {
-        $this->tipoCuenta = $tipoCuenta;
-
-        return $this;
-    }
-
-    public function getBanco(): ?string
-    {
-        return $this->banco;
-    }
-
-    public function setBanco(?string $banco): self
-    {
-        $this->banco = $banco;
-
-        return $this;
-    }
-
-    public function getMonto(): ?string
-    {
-        return $this->monto;
-    }
-
-    public function setMonto(string $monto): self
-    {
-        $this->monto = $monto;
-
-        return $this;
-    }
-
-    public function getRubro(): ?string
-    {
-        return $this->rubro;
-    }
-
-    public function setRubro(?string $rubro): self
-    {
-        $this->rubro = $rubro;
-
-        return $this;
-    }
-
-    public function getNumeroCuentaBancaria(): ?string
-    {
-        return $this->numeroCuentaBancaria;
-    }
-
-    public function setNumeroCuentaBancaria(?string $numeroCuentaBancaria): self
-    {
-        $this->numeroCuentaBancaria = $numeroCuentaBancaria;
-
-        return $this;
-    }
-
-    public function getEstado(): ?string
-    {
-        return $this->estado;
-    }
-
-    public function setEstado(string $estado): self
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-    
-    /**
-     * @return mixed
-     */
-    public function getDni()
-    {
-        return $this->dni;
-    }
-    
-    /**
-     * @param mixed $dni
-     */
-    public function setDni($dni): void
-    {
-        $this->dni = $dni;
-    }
-    
-    /**
-     * @return mixed
-     */
-    public function getCuit()
-    {
-        return $this->cuit;
-    }
-    
-    /**
-     * @param mixed $cuit
-     */
-    public function setCuit($cuit): void
-    {
-        $this->cuit = $cuit;
     }
     
     /**
@@ -302,6 +137,232 @@ class ExcelIngreso
     {
         $this->requisito = $requisito;
     }
+    
+    /**
+     * @return string|null
+     */
+    public function getNombre(): ?string
+    {
+        return $this->nombre;
+    }
+    
+    /**
+     * @param string|null $nombre
+     */
+    public function setNombre(?string $nombre): void
+    {
+        $this->nombre = $nombre;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getApellido(): ?string
+    {
+        return $this->apellido;
+    }
+    
+    /**
+     * @param string|null $apellido
+     */
+    public function setApellido(?string $apellido): void
+    {
+        $this->apellido = $apellido;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getDni(): ?string
+    {
+        return $this->dni;
+    }
+    
+    /**
+     * @param string|null $dni
+     */
+    public function setDni(?string $dni): void
+    {
+        $this->dni = $dni;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getCuit(): ?string
+    {
+        return $this->cuit;
+    }
+    
+    /**
+     * @param string|null $cuit
+     */
+    public function setCuit(?string $cuit): void
+    {
+        $this->cuit = $cuit;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getRegimenIva(): ?string
+    {
+        return $this->regimenIva;
+    }
+    
+    /**
+     * @param string|null $regimenIva
+     */
+    public function setRegimenIva(?string $regimenIva): void
+    {
+        $this->regimenIva = $regimenIva;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getCategoriaIva(): ?string
+    {
+        return $this->categoriaIva;
+    }
+    
+    /**
+     * @param string|null $categoriaIva
+     */
+    public function setCategoriaIva(?string $categoriaIva): void
+    {
+        $this->categoriaIva = $categoriaIva;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+    
+    /**
+     * @param string|null $email
+     */
+    public function setEmail(?string $email): void
+    {
+        $this->email = $email;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getCbu(): ?string
+    {
+        return $this->cbu;
+    }
+    
+    /**
+     * @param string|null $cbu
+     */
+    public function setCbu(?string $cbu): void
+    {
+        $this->cbu = $cbu;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getTipoCuenta(): ?string
+    {
+        return $this->tipoCuenta;
+    }
+    
+    /**
+     * @param string|null $tipoCuenta
+     */
+    public function setTipoCuenta(?string $tipoCuenta): void
+    {
+        $this->tipoCuenta = $tipoCuenta;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getBanco(): ?string
+    {
+        return $this->banco;
+    }
+    
+    /**
+     * @param string|null $banco
+     */
+    public function setBanco(?string $banco): void
+    {
+        $this->banco = $banco;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getMonto()
+    {
+        return $this->monto;
+    }
+    
+    /**
+     * @param mixed $monto
+     */
+    public function setMonto($monto): void
+    {
+        $this->monto = $monto;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getRubro(): ?string
+    {
+        return $this->rubro;
+    }
+    
+    /**
+     * @param string|null $rubro
+     */
+    public function setRubro(?string $rubro): void
+    {
+        $this->rubro = $rubro;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getNumeroCuentaBancaria(): ?string
+    {
+        return $this->numeroCuentaBancaria;
+    }
+    
+    /**
+     * @param string|null $numeroCuentaBancaria
+     */
+    public function setNumeroCuentaBancaria(?string $numeroCuentaBancaria): void
+    {
+        $this->numeroCuentaBancaria = $numeroCuentaBancaria;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getEstado(): ?string
+    {
+        return $this->estado;
+    }
+    
+    /**
+     * @param string|null $estado
+     */
+    public function setEstado(?string $estado): void
+    {
+        $this->estado = $estado;
+    }
+
+   
 
     /**
      * @return string|null

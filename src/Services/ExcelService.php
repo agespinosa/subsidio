@@ -64,13 +64,17 @@ class ExcelService
             $rowNumber = $cell->getRow();
             $message = 'Columna ' . $columnName . " fila ".$rowNumber ." valor " . $value;
 
-            if($columnName !== 'F' && ($value === null || empty($value))) {
+            if(!in_array($columnName, $this->columnsAcceptNull()) && ($value === null || empty($value))) {
                 $this->logger->info($message);
                 throw new SimpleMessageException($message . 'Value is null or empty');
             }
         }
 
         return true;
+    }
+    
+    public function columnsAcceptNull():array {
+        return array('A','B','C','E','F','I');
     }
     
     public function createExcelIngreso(RowCellIterator $cellIterator){
