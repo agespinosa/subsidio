@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -20,20 +21,9 @@ class RequisitoType extends AbstractType
         $builder
             ->add('fechaDesde',DateType::class,  array(
                 'constraints' => null,
+                'label' => 'Fecha Pago',
                 'data' => (isset($options['data']) &&
                     $options['data']->getFechaDesde() !== null) ? $options['data']->getFechaDesde() : new \DateTime(),
-                // render as a single text box
-                'widget' => 'single_text',
-                'format' => 'dd/MM/yyyy',
-                // do not render as type="date", to avoid HTML5 date pickers
-                // 'html5' => false,
-                // add a class that can be selected in JavaScript
-                'attr' => ['class' => 'js-datepicker']
-            ))
-            ->add('fechaHasta',DateType::class,  array(
-                'constraints' => null,
-                'data' => (isset($options['data']) &&
-                    $options['data']->getFechaHasta() !== null) ? $options['data']->getFechaHasta() : new \DateTime(),
                 // render as a single text box
                 'widget' => 'single_text',
                 'format' => 'dd/MM/yyyy',
@@ -53,7 +43,7 @@ class RequisitoType extends AbstractType
             ->add('motivoPago', TextType::class, [
                 'required' => true
             ])
-            ->add('cuantaOrigenFodos', TextType::class, [
+            ->add('numeroArchivoPago', NumberType::class, [
                 'required' => true
             ])
             ->add('filename', FileType::class, [
@@ -77,7 +67,8 @@ class RequisitoType extends AbstractType
                             'application/xls',
                             'application/xlsx',
                             'application/ods',
-                            'application/vnd.ms-excel'
+                            'application/vnd.ms-excel',
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                         ],
                         'mimeTypesMessage' => 'Por favor adjuntar formato excel o libre office',
                     ])

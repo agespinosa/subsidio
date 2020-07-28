@@ -22,7 +22,7 @@ class Requisito
     private $fechaDesde;
 
     /**
-     * @ORM\Column(type="date")
+     * @ORM\Column(type="date", nullable=true)
      */
     private $fechaHasta;
 
@@ -65,6 +65,11 @@ class Requisito
      * @ORM\Column(type="decimal", precision=23, scale=2, nullable=true)
      */
     private $totalMontoPesos;
+    
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $numeroArchivoPago;
     
     public function getId(): ?int
     {
@@ -200,6 +205,22 @@ class Requisito
     public function setTotalMontoPesos($totalMontoPesos): void
     {
         $this->totalMontoPesos = $totalMontoPesos;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getNumeroArchivoPago()
+    {
+        return $this->numeroArchivoPago;
+    }
+    
+    /**
+     * @param mixed $numeroArchivoPago
+     */
+    public function setNumeroArchivoPago($numeroArchivoPago): void
+    {
+        $this->numeroArchivoPago = $numeroArchivoPago;
     }
     
 }

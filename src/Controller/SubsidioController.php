@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\AtributoConfiguracion;
 use App\Entity\ExcelIngreso;
 use App\Entity\Requisito;
 use App\Entity\SubsidioPagoProveedores;
 use App\Exception\SimpleMessageException;
 use App\Form\RequisitoType;
+use App\Repository\AtributoConfiguracionRepository;
 use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
 use App\Services\ExcelReaderService;
@@ -43,16 +45,22 @@ class SubsidioController extends AbstractController
      * @var SubsidioService
      */
     private $subsidioService;
+    /**
+     * @var AtributoConfiguracionRepository
+     */
+    private $atributoConfiguracionRepository;
     
     public function __construct(RequisitoRepository $requisitoRepository,
                                 ExcelIngresoRepository $excelIngresoRepository,
                                 LoggerInterface $logger,
+                                AtributoConfiguracionRepository $atributoConfiguracionRepository,
                                 SubsidioService $subsidioService)
     {
         $this->excelIngresoRepository = $excelIngresoRepository;
         $this->requisitoRepository = $requisitoRepository;
         $this->logger = $logger;
         $this->subsidioService = $subsidioService;
+        $this->atributoConfiguracionRepository = $atributoConfiguracionRepository;
     }
     
     /**
@@ -62,7 +70,14 @@ class SubsidioController extends AbstractController
     {
         $this->logger->info("Entro a generar archivo de Subsidio - Requisito: ".$requisito->getId());
         $this->logger->info("Requisito:".$requisito->getId(). " TipoFormaPago:". $requisito->getTipoFormaPago());
-
+    
+        /** @var AtributoConfiguracion $cuentaOrigenFondosConfig */
+        $cuentaOrigenFondosConfig =
+            $this->atributoConfiguracionRepository
+                ->findAtributoConfiguracionByClave('cuentaOrigenFondos');
+                
+        $requisito->setCuantaOrigenFodos($cuentaOrigenFondosConfig->getValor());
+        
         /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
         try{
             $subsidioPagoProveedores =
@@ -72,6 +87,7 @@ class SubsidioController extends AbstractController
             if(!is_null($subsidioPagoProveedores) && count($subsidioPagoProveedores)>0){
                 /** @var SubsidioPagoProveedores $subsidio */
                 $subsidio = $subsidioPagoProveedores[0];
+                
                 $archivoGenerado = $this->subsidioService->generarArchivoTxtSubsidio($subsidioPagoProveedores,$requisito);
                 $requisito->setFileSubsidioName($archivoGenerado);
                 $requisito->setTotalBeneficiarios($subsidio->getTotales()->getTotalRegistros());

@@ -4,11 +4,14 @@
 namespace App\Services;
 
 
+use App\Entity\AtributoConfiguracion;
 use App\Entity\ExcelIngreso;
 use App\Exception\SimpleMessageException;
+use App\Repository\AtributoConfiguracionRepository;
 use App\Repository\ExcelIngresoRepository;
 use PhpOffice\PhpSpreadsheet\Worksheet\RowCellIterator;
 use Psr\Log\LoggerInterface;
+use function GuzzleHttp\Psr7\str;
 
 class ExcelService
 {
@@ -21,11 +24,17 @@ class ExcelService
      * @var ExcelIngresoRepository
      */
     private $excelIngresoRepository;
+    /**
+     * @var AtributoConfiguracionRepository
+     */
+    private $atributoConfiguracionRepository;
     
-    public function __construct(LoggerInterface $logger, ExcelIngresoRepository $excelIngresoRepository)
+    public function __construct(LoggerInterface $logger, ExcelIngresoRepository $excelIngresoRepository,
+                                AtributoConfiguracionRepository $atributoConfiguracionRepository)
     {
         $this->logger = $logger;
         $this->excelIngresoRepository = $excelIngresoRepository;
+        $this->atributoConfiguracionRepository = $atributoConfiguracionRepository;
     }
     
     public function readFile($filePath){
@@ -80,10 +89,15 @@ class ExcelService
     public function createExcelIngreso(RowCellIterator $cellIterator){
         $excelIngreso = new ExcelIngreso();
         foreach ($cellIterator as $cell) {
-            $value =  $cell->getValue() ;
+            $value = trim($cell->getValue());
             $columnName = $cell->getColumn();
             $this->logger->info('ExcelIngreso para columna '.$columnName. " valor ".$value);
+            $filaNumber = $cell->getRow();
     
+            //if($filaNumber === 144 || $filaNumber === 143){
+            //    $this->logger->debug('ExcelIngreso para columna '.$columnName. " valor ".$value);
+            // }
+            
             switch ($columnName) {
                 case 'A':
                     $excelIngreso->setApellido($value);
@@ -92,10 +106,16 @@ class ExcelService
                     $excelIngreso->setNombre($value);
                     break;
                 case 'C':
-                    $excelIngreso->setDni($value);
+                    $dni = str_replace("-","", $value);
+                    $dni = str_replace("/","", $dni);
+                    $dni = str_replace(".","", $dni);
+                    $excelIngreso->setDni(preg_replace("/[^0-9]/", "",$dni));
                     break;
                 case 'D':
-                    $excelIngreso->setCuit($value);
+                    $cuit = str_replace("-","", $value);
+                    $cuit = str_replace("/","", $cuit);
+                    $cuit = str_replace(".","", $cuit);
+                    $excelIngreso->setCuit(preg_replace("/[^0-9]/", "",$cuit));
                     break;
                 case 'E':
                     $excelIngreso->setRegimenIva($value);
@@ -107,7 +127,17 @@ class ExcelService
                     $excelIngreso->setMonto($value);
                     break;
                 case 'H':
-                    $excelIngreso->setEmail($value);
+                    $email = $value;
+                    if(is_null($email) || empty($email)){
+                        /** @var AtributoConfiguracion $emailDefaultPagoProveedoresConfig */
+                        $emailDefaultPagoProveedoresConfig =
+                            $this->atributoConfiguracionRepository
+                                ->findAtributoConfiguracionByClave('emailDefault_Pago_Proveedores');
+                        if(!is_null($emailDefaultPagoProveedoresConfig)){
+                            $email = $emailDefaultPagoProveedoresConfig->getValor();
+                        }
+                    }
+                    $excelIngreso->setEmail($email);
                     break;
                     
                 case 'I':
@@ -117,12 +147,19 @@ class ExcelService
                     $excelIngreso->setTipoCuenta($value);
                     break;
                 case 'K':
-                    $excelIngreso->setCbu($value);
-                    $excelIngreso->setNumeroCuentaBancaria($value);
+                    $cbu = str_replace("-","", $value);
+                    $cbu = str_replace("/","", $cbu);
+                    $cbu = str_replace(".","", $cbu);
+                    $excelIngreso->setCbu($cbu);
+                    $excelIngreso->setNumeroCuentaBancaria($cbu);
                     break;
                 case 'L':
                     if(!is_null($value) && !empty($value)){
-                        $excelIngreso->setNumeroCuentaBancaria($value);
+                        $cuentaBancaria = str_replace("-","", $value);
+                        $cuentaBancaria = str_replace("/","", $cuentaBancaria);
+                        $cuentaBancaria = str_replace(".","", $cuentaBancaria);
+                        $excelIngreso->setCuit(preg_replace("/[^0-9]/", "",$cuentaBancaria));
+                        $excelIngreso->setNumeroCuentaBancaria($cuentaBancaria);
                     }
                     break;
             }

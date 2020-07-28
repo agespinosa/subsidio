@@ -149,7 +149,10 @@ class RequisitoController extends AbstractController
 
             $this->logger->debug('Archivo subido y procesado correctamente '.$newFilename);
             $this->addFlash('successMessage','Archivo subido y procesado correctamente');
-            return $this->redirectToRoute('requisito_index');
+           
+           return $this->redirectToRoute('generar_archivo_subsidio_proveedores',
+                                                array('id'=> $requisito->getId()));
+           // return $this->redirectToRoute('requisito_index');
         }
 
         return $this->render('requisito/new.html.twig', [

@@ -74,10 +74,6 @@ class SubsidioService
             $this->excelIngresoRepository->findByRequisito($requisito);
 
         $this->logger->debug("Cantidad de filas excel ingreso". count($excelIngresos) .", para requisito id ".$requisito->getId());
-
-        /** @var AtributoConfiguracion $lastNumeroArchivoConfig */
-        $lastNumeroArchivoConfig =
-            $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('lastNumeroArchivo_Pago_Proveedores');
     
         /** @var AtributoConfiguracion $numeroProveedorConfig */
         $numeroProveedorConfig =
@@ -86,7 +82,7 @@ class SubsidioService
         $moneda = 'ARS';
         // Cabecera y Totales
         $cabecera =
-            $this->generarCabeceraPagoProveedores($excelIngresos);
+            $this->generarCabeceraPagoProveedores($excelIngresos, $requisito);
     
         $totales =
             $this->generarTotalesPagoProveedores($excelIngresos);
@@ -126,14 +122,13 @@ class SubsidioService
             $subsidioPagoProveedores->setMonedaCuenta($moneda);
             $subsidioPagoProveedores->setNumeroCuenta($excelIngreso->getNumeroCuentaBancaria());
             $subsidioPagoProveedores->setMonedaCuentaDebito($moneda);
-            $subsidioPagoProveedores->setMotivoPago('PagoRef#'.$requisito->getId());
             $subsidioPagoProveedores->setCodigoNovedadOrden(1);
     
             $banco = str_pad(substr($excelIngreso->getCbu(),0,3),5, "0", STR_PAD_LEFT);
             $sucursal = str_pad(substr($excelIngreso->getCbu(),3,4),35, "0", STR_PAD_LEFT);
+            
             $subsidioPagoProveedores->setBanco($banco);
             $subsidioPagoProveedores->setSucursal($sucursal);
-    
             
             $subsidiosPagoProveedores[] = $subsidioPagoProveedores;
             $this->subsidioPagoProveedoresRepository->persist($subsidioPagoProveedores);
@@ -157,16 +152,13 @@ class SubsidioService
 
     /**
      * @var ExcelIngreso[] $excelIngresos
+     * @var Requisito $requisito
      * @param ExcelIngreso[] $excelIngresos
      */
-    private function generarCabeceraPagoProveedores($excelIngresos){
+    private function generarCabeceraPagoProveedores($excelIngresos, $requisito){
         $this->logger->debug("Generando Cabecera");
         $cabecera = new Cabecera();
         $horaCreacionArchivo = new \DateTime();
-    
-        /** @var AtributoConfiguracion $lastNumeroArchivoConfig */
-        $lastNumeroArchivoConfig =
-            $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('lastNumeroArchivo_Pago_Proveedores');
 
         /** @var AtributoConfiguracion $numeroClienteNBSFConfig */
         $numeroClienteNBSFConfig =
@@ -177,8 +169,8 @@ class SubsidioService
             $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('identificacionArchivo_Pago_Proveedores');
 
 
-        if(is_null($lastNumeroArchivoConfig) || is_null($numeroClienteNBSFConfig) || is_null($identificacionArchivoConfig)){
-            throw new SimpleMessageException("Faltan configuraciones lastNumeroArchivo_Pago_Proveedores | numeroClienteNBSF_Pago_Proveedores | identificacionArchivo_Pago_Proveedores");
+        if(is_null($numeroClienteNBSFConfig) || is_null($identificacionArchivoConfig)){
+            throw new SimpleMessageException("Faltan configuraciones numeroClienteNBSF_Pago_Proveedores | identificacionArchivo_Pago_Proveedores");
         }
         /** @var ExcelIngreso $excelIngreso */
         foreach ($excelIngresos as $excelIngreso) {
@@ -187,7 +179,7 @@ class SubsidioService
             $cabecera->setFechaCreacionArchivo(new \DateTime());
             $cabecera->setRegistroId('FH');
             $cabecera->setIdentificacionArchivo($identificacionArchivoConfig->getValor());
-            $cabecera->setNumeroArchivo($lastNumeroArchivoConfig->getValor()+1);
+            $cabecera->setNumeroArchivo($requisito->getNumeroArchivoPago());
             $cabecera->setFechaHabilProcesamiento($this->getFirstDiaHabil());
             break;
         }
@@ -228,7 +220,16 @@ class SubsidioService
     public function generarArchivoTxtSubsidio(array $subsidiosPagoProveedores, Requisito $requisito){
         $directorioToSaveFile = $this->params->get('subsidio_directory');
         $subsidioDirectoryRelativePath = $this->params->get('subsidio_directory_relative_path');
-        $subsidioFileName =  'requisito.'. $subsidiosPagoProveedores[0]->getRequsito()->getId() .'-file-'.uniqid().'.txt';
+        
+        /** @var AtributoConfiguracion $numeroClienteNBSFPagoProveedoresConfig */
+        $numeroClienteNBSFPagoProveedoresConfig =
+            $this->atributoConfiguracionRepository
+                ->findAtributoConfiguracionByClave('numeroClienteNBSF_Pago_Proveedores');
+        
+        $today = new \DateTime();
+        $mesDia = $today->format('md');
+        $subsidioFileName = 'PC'.$numeroClienteNBSFPagoProveedoresConfig->getValor().'F'.$mesDia.$requisito->getNumeroArchivoPago();
+        
         $fullPath = $directorioToSaveFile.'/'.$subsidioFileName;
         $relativePath = $subsidioDirectoryRelativePath.'/'.$subsidioFileName;
 
@@ -292,16 +293,19 @@ class SubsidioService
             $subsidioPagoProveedores->getNumeroProveedor().
             $subsidioPagoProveedores->getNombreBeneficiario().
             $subsidioPagoProveedores->getCuitStr().
-            str_pad($domicilioBeneficiario, 150, " ", STR_PAD_LEFT).
+            str_pad($domicilioBeneficiario, 170, " ", STR_PAD_LEFT).
             $subsidioPagoProveedores->getMedioComunicacionStr().
             $subsidioPagoProveedores->getBanco().
             $subsidioPagoProveedores->getSucursal().
             $subsidioPagoProveedores->getTipoCuenta().
             $subsidioPagoProveedores->getMonedaCuenta().
+            str_pad($subsidioPagoProveedores->getNumeroCuenta(), 22, " ", STR_PAD_RIGHT).
+            str_pad($cuentaBancariaDelBeneficiario, 35, " ", STR_PAD_RIGHT).
             str_pad($formaDeEntregaDeCheque, 3, " ", STR_PAD_LEFT).
             str_pad($sucursalDelNBSFoDelPrestadorPostalALaCualEnviarSobre, 8, " ", STR_PAD_LEFT).
             $subsidioPagoProveedores->getMonedaCuentaDebito().
             $subsidioPagoProveedores->getCuentaDebito().
+            str_pad($subsidioPagoProveedores->getMotivoPago(),105, " ", STR_PAD_RIGHT).
             str_pad($indicacionesAdicionalesalCustomerServicedeBSF, 80, " ", STR_PAD_LEFT).
             $subsidioPagoProveedores->getConRecurso().
             $subsidioPagoProveedores->getRequiereReciboImpreso().
@@ -312,31 +316,41 @@ class SubsidioService
     public function getTotalesStringLine(Totales $totales, Requisito $requisito){
         // total de registros suma 2 por que cuenta la fila de cabecera y totales
         $totalAPagar = number_format($totales->getTotalAPagar(),2,'','');
-        return $totales->getRegistroId().
-            str_pad($totalAPagar, 25, "0", STR_PAD_LEFT).
-            str_pad($totales->getTotalRegistros()+2, 10, "0", STR_PAD_LEFT);
+        $filasCabecera = 1;
+        $filasTotales = 1;
+        return
+            str_pad(
+                $totales->getRegistroId().
+                      str_pad($totalAPagar, 25, "0", STR_PAD_LEFT).
+                      str_pad($totales->getTotalRegistros()+($filasCabecera+$filasTotales), 10, "0", STR_PAD_LEFT),
+            794, " ", STR_PAD_RIGHT);
+            
     }
     
     public function getCabeceraStringLine(Cabecera $cabecera, Requisito $requisito){
         
         $today = new \DateTime();
-        /** @var AtributoConfiguracion $lastNumeroArchivoConfig */
-        $lastNumeroArchivoConfig =
-            $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('lastNumeroArchivo_Pago_Proveedores');
-            
+        
         /** @var AtributoConfiguracion $numeroClienteOrdenanteAnteBSFConfig */
         $numeroClienteOrdenanteAnteBSFConfig =
             $this->atributoConfiguracionRepository->findAtributoConfiguracionByClave('numeroClienteOrdenante_Pago_Proveedores');
-        
+    
+        $numeroClienteOrdenanteAnteBSFValue = '0061170';
+        if(!is_null($numeroClienteOrdenanteAnteBSFConfig)){
+            $numeroClienteOrdenanteAnteBSFValue = $numeroClienteOrdenanteAnteBSFConfig->getValor();
+        }
         
         return
-            $cabecera->getRegistroId().
-            $today->format('yymd').
-            $today->format('His').
-            str_pad($lastNumeroArchivoConfig->getValor(),3, "0", STR_PAD_LEFT).
-            str_pad($numeroClienteOrdenanteAnteBSFConfig->getValor(),7, "0", STR_PAD_LEFT).
-            $cabecera->getIdentificacionArchivo().
-            $requisito->getFechaDesde()->format('yymd');
+            str_pad($cabecera->getRegistroId().
+                $today->format('yymd').
+                $today->format('His').
+                str_pad($requisito->getNumeroArchivoPago(),3, "0", STR_PAD_LEFT).
+                str_pad($numeroClienteOrdenanteAnteBSFValue,7, "0", STR_PAD_LEFT).
+                $cabecera->getIdentificacionArchivo().
+                $requisito->getFechaDesde()->format('yymd')
+                , 794, " ", STR_PAD_RIGHT);
+            
+            
         
     }
     
