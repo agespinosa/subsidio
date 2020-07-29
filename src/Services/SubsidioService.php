@@ -255,8 +255,10 @@ class SubsidioService
             fwrite($handle,$newLine);
             
             /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
+            
             foreach ($subsidiosPagoProveedores as $subsidioPagoProveedores) {
-                fwrite($handle, $this->getStringLine($subsidioPagoProveedores, $requisito));
+                $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila()+1;
+                fwrite($handle, $this->getStringLine($subsidioPagoProveedores, $numeroReferenciaClienteFila));
                 fwrite($handle,$newLine);
             }
     
@@ -275,7 +277,7 @@ class SubsidioService
         return $relativePath;
     }
 
-    public function getStringLine(SubsidioPagoProveedores $subsidioPagoProveedores, Requisito $requisito){
+    public function getStringLine(SubsidioPagoProveedores $subsidioPagoProveedores, $numeroReferenciaClienteFila){
         $domicilioBeneficiario="";
         $cuentaBancariaDelBeneficiario="";
         $formaDeEntregaDeCheque="";
@@ -286,7 +288,7 @@ class SubsidioService
         return
             $subsidioPagoProveedores->getRegistroId().
             $subsidioPagoProveedores->getTipoPago().
-            str_pad($requisito->getNumeroReferenciaClienteFila(), 16, "0", STR_PAD_LEFT).
+            str_pad($numeroReferenciaClienteFila, 16, "0", STR_PAD_LEFT).
             $subsidioPagoProveedores->getReferenciaCliente().
             $subsidioPagoProveedores->getImporteAPagarString().
             $subsidioPagoProveedores->getMonedaPago().
