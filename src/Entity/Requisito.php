@@ -71,6 +71,11 @@ class Requisito
      */
     private $numeroArchivoPago;
     
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $numeroReferenciaClienteFila;
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -221,6 +226,22 @@ class Requisito
     public function setNumeroArchivoPago($numeroArchivoPago): void
     {
         $this->numeroArchivoPago = $numeroArchivoPago;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getNumeroReferenciaClienteFila()
+    {
+        return $this->numeroReferenciaClienteFila;
+    }
+    
+    /**
+     * @param mixed $numeroReferenciaClienteFila
+     */
+    public function setNumeroReferenciaClienteFila($numeroReferenciaClienteFila): void
+    {
+        $this->numeroReferenciaClienteFila = $numeroReferenciaClienteFila;
     }
     
 }
