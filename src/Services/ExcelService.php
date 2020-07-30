@@ -83,7 +83,7 @@ class ExcelService
     }
     
     public function columnsAcceptNull():array {
-        return array('A','B','C','E','F','I','H','J');
+        return array('A','B','C','E','F','I','H','J', 'L');
     }
     
     public function createExcelIngreso(RowCellIterator $cellIterator){

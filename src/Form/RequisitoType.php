@@ -46,6 +46,9 @@ class RequisitoType extends AbstractType
             ->add('numeroArchivoPago', NumberType::class, [
                 'required' => true
             ])
+            ->add('numeroReferenciaClienteFila', NumberType::class, [
+                'required' => true
+            ])
             ->add('filename', FileType::class, [
                 'label' => 'Excel Beneficiarios',
     
