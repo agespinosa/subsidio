@@ -1,0 +1,6 @@
+"id";"clave";"valor";"created_at";"updated_at";"fecha_baja"
+4;"numeroProveedor_Pago_Proveedores";"";"0000-00-00 00:00:00";"";""
+5;"numeroClienteNBSF_Pago_Proveedores";"0061170";"0000-00-00 00:00:00";"";""
+6;"identificacionArchivo_Pago_Proveedores";"ORDENDEPAGO";"0000-00-00 00:00:00";"";""
+7;"numeroClienteOrdenante_Pago_Proveedores";"0061170";"0000-00-00 00:00:00";"";""
+8;"cuentaOrigenFondos";"59900200001448646";"0000-00-00 00:00:00";"";""

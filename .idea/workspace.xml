@@ -21,6 +21,21 @@
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/EstablecimientoFixtures.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DataFixtures/PropietarioFixtures.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200721111428.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200721141302.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200721142313.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200721163715.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200721165238.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200722135221.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200722135649.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200722143706.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200728115333.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200728135921.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200729162502.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/SubsidioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/SubsidioService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +194,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/templates/requisito" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/public/uploads/subsidio/modeloExcel" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -190,15 +205,15 @@
     <property name="settings.editor.selected.configurable" value="Symfony2.SettingsForm" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/templates/subsidioPagoProveedores" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/uploads/subsidio/modeloExcel" />
       <recent name="$PROJECT_DIR$/templates/requisito" />
       <recent name="$PROJECT_DIR$/src/Repository" />
       <recent name="$PROJECT_DIR$/src/Entity" />
       <recent name="$PROJECT_DIR$/public" />
-      <recent name="$PROJECT_DIR$/src/Controller" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates/subsidioPagoProveedores" />
     </key>
   </component>
   <component name="RunManager">
@@ -238,6 +253,7 @@
       <workItem from="1595414379150" duration="15539000" />
       <workItem from="1595932936508" duration="24000" />
       <workItem from="1595932974197" duration="15777000" />
+      <workItem from="1596111395047" duration="2155000" />
     </task>
     <servers />
   </component>
@@ -367,10 +383,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="412" y="99" width="540" height="524" key="StructurePopup/0.0.1366.728@0.0.1366.728" timestamp="1595937554907" />
-    <state x="352" y="60" width="694" height="592" key="find.popup" timestamp="1595944978579">
+    <state x="119" y="60" width="1154" height="592" key="find.popup" timestamp="1596112986674">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="352" y="60" width="694" height="592" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1595944978579" />
+    <state x="119" y="60" width="1154" height="592" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1596112986674" />
     <state x="352" y="63" width="694" height="608" key="find.popup/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593457459147" />
     <state x="345" y="12" width="672" height="641" key="search.everywhere.popup" timestamp="1595428249745">
       <screen x="0" y="0" width="1366" height="728" />

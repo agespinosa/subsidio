@@ -255,11 +255,11 @@ class SubsidioService
             fwrite($handle,$newLine);
             
             /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
-            
+            $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
             foreach ($subsidiosPagoProveedores as $subsidioPagoProveedores) {
-                $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila()+1;
                 fwrite($handle, $this->getStringLine($subsidioPagoProveedores, $numeroReferenciaClienteFila));
                 fwrite($handle,$newLine);
+                $numeroReferenciaClienteFila++;
             }
     
             fwrite($handle,
@@ -289,7 +289,6 @@ class SubsidioService
             $subsidioPagoProveedores->getRegistroId().
             $subsidioPagoProveedores->getTipoPago().
             str_pad($numeroReferenciaClienteFila, 16, "0", STR_PAD_LEFT).
-            $subsidioPagoProveedores->getReferenciaCliente().
             $subsidioPagoProveedores->getImporteAPagarString().
             $subsidioPagoProveedores->getMonedaPago().
             $subsidioPagoProveedores->getFechaEjecucionPagoStr().
