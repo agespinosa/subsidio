@@ -21,7 +21,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/ExcelService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ExcelService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -364,14 +363,14 @@
     </state>
     <state x="149" y="2" width="1100" height="725" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1595424745461" />
     <state x="149" y="2" width="1100" height="730" key="SettingsEditor/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593457415923" />
-    <state x="412" y="99" width="540" height="524" key="StructurePopup" timestamp="1595937554907">
+    <state x="412" y="99" width="540" height="524" key="StructurePopup" timestamp="1595974064828">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="412" y="99" width="540" height="524" key="StructurePopup/0.0.1366.728@0.0.1366.728" timestamp="1595937554907" />
-    <state x="352" y="60" width="694" height="592" key="find.popup" timestamp="1595944978579">
+    <state x="412" y="99" width="540" height="524" key="StructurePopup/0.0.1366.728@0.0.1366.728" timestamp="1595974064828" />
+    <state x="352" y="60" width="694" height="592" key="find.popup" timestamp="1595974109254">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="352" y="60" width="694" height="592" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1595944978579" />
+    <state x="352" y="60" width="694" height="592" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1595974109254" />
     <state x="352" y="63" width="694" height="608" key="find.popup/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593457459147" />
     <state x="345" y="12" width="672" height="641" key="search.everywhere.popup" timestamp="1595428249745">
       <screen x="0" y="0" width="1366" height="728" />
