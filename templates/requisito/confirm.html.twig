@@ -8,88 +8,84 @@
             <h5 class="card-title">Subsidios Pago a Proveedores</h5>
             <hr/>
             <div class="row">
-                <div class="col-12">
+                <div class="row col-12 mt-2">
+                    <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
+                       href="{{ path('requisito_index') }}">Volver</a>
+                </div>
+            </div>
+            <div class="row mt-2">
+                {% if validationConstraint|length > 0 %}
+                    <div class="col-6">
+                        <button class="btn btn-sm btn-warning" type="button" data-toggle="collapse"
+                                data-target="#validaciones" aria-expanded="false" aria-controls="validaciones">
+                            Ver Validaciones
+                        </button>
+                        <div class="collapse" id="validaciones">
+                            <div class="card card-body">
+                                <ul>
+                                    {% for validation in validationConstraint %}
+                                        <li>{{ validation }}</li>
+                                    {% endfor %}
+                                </ul>
 
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="col-6 text-right">
+                    <a type="button" role="button" class="btn btn-success btn-sm "
+                       href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">Generar Archivo Subsidio</a>
+                </div>
+            </div>
+            <div class="row mt-3">
+                    <div class="col-12 text-left">
+                        <div class="row align-items-center">
+                            <div class="col-3 text-right">
+
+                                <span class="font-weight-bold"> Cantidad Beneficiarios: </span> <span class="font-weight-bold text-success">
+                                    {{ excelIngresos |length }}</span>
+                                </span>
+                            </div>
+                            <div class="col-3 text-right">
+                                <span class="font-weight-bold">
+                                 Total:
+                                </span>
+                                <span class="text-danger"> {{ requisito.totalMontoPesos|format_currency('ARS', locale='es') }}</span>
+                            </div>
+                        </div>
+
+                    </div>
                     <div class="col-12">
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>Id</th>
-                                <th>Fecha Desde</th>
-                                <th>Fecha Hasta</th>
-                                <th>Motivo</th>
-                                <th>Cuenta Origen</th>
-                                <th>Total Beneficiarios</th>
-                                <th>Total Monto</th>
-                                <th>Excel</th>
-                                <th>Subsidio</th>
-                                <th>Acciones</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Cuit</th>
+                                <th>Email</th>
+                                <th>Cbu</th>
+                                <th>TipoCuenta</th>
+                                <th>Monto</th>
                             </tr>
                             </thead>
                             <tbody>
-                            {% for requisito in requisitos %}
-                                <tr >
-                                    <td>{{ requisito.id }} </td>
-                                    <td>{{ requisito.fechaDesde ? requisito.fechaDesde|date('Y-m-d') : '' }}</td>
-                                    <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
-                                    <td data-toggle="tooltip" data-placement="top"
-                                        title="{{ requisito.motivoPago }}">{{ requisito.motivoPago|slice(0,10) }}</td>
-                                    <td>{{ requisito.cuantaOrigenFodos }}</td>
-                                    <td>
-                                        {% if  requisito.totalBeneficiarios > 0 %}
-                                            <span class="badge badge-info"> {{ requisito.totalBeneficiarios }}
-                                            </span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {{ requisito.totalMontoPesos|format_currency('ARS', locale='es') }}
-                                    </td>
-                                    <td>
-                                        {% if  requisito.fileName is not null %}
-
-                                            <a type="button" role="button" class="btn btn-sm btn-primary" target="_blank"
-                                               data-toggle="tooltip" data-placement="top" title="Descargar Excel"
-                                               href="{{ relative_path(requisito.fileName) }}">
-                                                <i class="fas fa-file-excel"></i>
-                                            </a>
-
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        {% if  requisito.fileSubsidioName is not null %}
-
-
-                                            <a type="button" role="button" class="btn btn-sm btn-success" target="_blank"
-                                               data-toggle="tooltip" data-placement="top" title="Descargar Archivo Subsidio"
-                                               href="{{ relative_path(requisito.fileSubsidioName) }}">
-                                                <i class="fas fa-download"></i></a>
-
-                                        {% endif %}
-                                    </td>
-
-                                    <td colspan="4" style="width: 200px !important;">
-                                        <a type="button" role="button" class="btn btn-sm btn-success"
-                                           data-toggle="tooltip" data-placement="top" title="Generar Archivo Subsidio"
-                                           href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                        </a>
-
-                                        <a type="button" role="button" class="btn btn-sm btn-primary"
-                                           data-toggle="tooltip" data-placement="top" title="Ver"
-                                           href="{{ path('requisito_show', {'id': requisito.id}) }}"><i class="fas fa-eye"></i></a>
-                                        <a type="button" role="button" class="btn btn-sm btn-warning"
-                                           data-toggle="tooltip" data-placement="top" title="Editar"
-                                           href="{{ path('requisito_edit', {'id': requisito.id}) }}">
-                                            <i class="fas fa-pen-square"></i>
-                                        </a>
-
-                                    </td>
+                            {% for excel_ingreso in excelIngresos %}
+                                <tr>
+                                    <td>{{ excel_ingreso.id }}</td>
+                                    <td>{{ excel_ingreso.nombre }}</td>
+                                    <td>{{ excel_ingreso.apellido }}</td>
+                                    <td>{{ excel_ingreso.cuit }}</td>
+                                    <td>{{ excel_ingreso.email }}</td>
+                                    <td>{{ excel_ingreso.cbu }}</td>
+                                    <td>{{ excel_ingreso.tipoCuenta }}</td>
+                                    <td>{{ excel_ingreso.monto }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
                         </table>
                     </div>
-                    {% if  requisitos|length == 0 %}
+                    {% if  excelIngresos|length == 0 %}
                         <div class="row" >
                             <div class="col-12 alert alert-secondary" role="alert">
                                 Sin Registros
@@ -97,7 +93,6 @@
                         </div>
                     {% endif %}
                 </div>
-            </div>
         </div>
     </div>
 

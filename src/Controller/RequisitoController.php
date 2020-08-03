@@ -11,6 +11,7 @@ use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
 use App\Repository\SubsidioPagoProveedoresRepository;
 use App\Services\ExcelService;
+use App\Services\SubsidioService;
 use App\Services\ValidationService;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -54,12 +55,17 @@ class RequisitoController extends AbstractController
      * @var ValidationService
      */
     private $validationService;
+    /**
+     * @var SubsidioService
+     */
+    private $subsidioService;
     
     public function __construct(ExcelService $excelService, ExcelIngresoRepository $excelIngresoRepository,
                                 LoggerInterface $logger,
                                 RequisitoRepository $requisitoRepository,
                                 SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
-                                ValidationService $validationService)
+                                ValidationService $validationService,
+                                SubsidioService $subsidioService)
     {
         $this->excelService = $excelService;
         $this->excelIngresoRepository = $excelIngresoRepository;
@@ -67,6 +73,7 @@ class RequisitoController extends AbstractController
         $this->requisitoRepository = $requisitoRepository;
         $this->subsidioPagoProveedoresRepository = $subsidioPagoProveedoresRepository;
         $this->validationService = $validationService;
+        $this->subsidioService = $subsidioService;
     }
     
     /**
@@ -150,22 +157,18 @@ class RequisitoController extends AbstractController
                 }
             }
             
-            $validationConstraint =
-                $this->validationService->getMessageValidation($excelIngresos);
-            
-            if(!is_null($validationConstraint) && count($validationConstraint)>0) {
-                $this->logger->warning(json_encode($validationConstraint));
-            }
-            
             // Persiste Requisito y ExcelIngreso
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($requisito);
             $entityManager->flush();
 
             $this->logger->debug('Archivo subido y procesado correctamente '.$newFilename);
-            $this->addFlash('successMessage','Archivo subido y procesado correctamente');
+            $this->addFlash('successMessage','Archivo subido y procesado correctamente. Confirme la generacion');
            
-           return $this->redirectToRoute('generar_archivo_subsidio_proveedores',
+           //return $this->redirectToRoute('generar_archivo_subsidio_proveedores',
+           //                                     array('id'=> $requisito->getId()));
+    
+            return $this->redirectToRoute('requisito_confirmExcelIngreso',
                                                 array('id'=> $requisito->getId()));
            // return $this->redirectToRoute('requisito_index');
         }
@@ -175,7 +178,36 @@ class RequisitoController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+    /**
+     * @Route("confirmExcelIngreso/{id}", name="requisito_confirmExcelIngreso", methods={"GET","POST"})
+     */
+    public function confirmExcelIngreso(Request $request, Requisito $requisito): Response
+    {
+        $excelIngresos =
+            $this->excelIngresoRepository->findBy(
+                array(
+                    'requisito' => $requisito,
+                )
+            );
     
+        $validationConstraint =
+            $this->validationService->getMessageValidation($excelIngresos);
+    
+        if(!is_null($validationConstraint) && count($validationConstraint)>0) {
+            $this->logger->warning(json_encode($validationConstraint));
+        }
+        
+        $requisito->setTotalMontoPesos($this->subsidioService->getTotalAPagar($excelIngresos));
+    
+        return $this->render('requisito/confirm.html.twig', [
+            'requisito' => $requisito,
+            'validationConstraint' => $validationConstraint,
+            'excelIngresos' => $excelIngresos
+        ]);
+        
+    }
     
     /**
      * @Route("edit/{id}", name="requisito_edit", methods={"GET","POST"})

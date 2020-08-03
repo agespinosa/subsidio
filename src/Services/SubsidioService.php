@@ -206,7 +206,7 @@ class SubsidioService
         
     }
 
-    private function getTotalAPagar($excelIngresos){
+    public function getTotalAPagar($excelIngresos){
         $totalAPagar = 0;
         /** @var ExcelIngreso $excelIngreso */
         foreach ($excelIngresos as $excelIngreso) {

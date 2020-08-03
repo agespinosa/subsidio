@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ExcelIngreso{% endblock %}
+
+{% block body %}
+    <h1>ExcelIngreso</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ excel_ingreso.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ excel_ingreso.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Apellido</th>
+                <td>{{ excel_ingreso.apellido }}</td>
+            </tr>
+            <tr>
+                <th>Dni</th>
+                <td>{{ excel_ingreso.dni }}</td>
+            </tr>
+            <tr>
+                <th>Cuit</th>
+                <td>{{ excel_ingreso.cuit }}</td>
+            </tr>
+            <tr>
+                <th>RegimenIva</th>
+                <td>{{ excel_ingreso.regimenIva }}</td>
+            </tr>
+            <tr>
+                <th>CategoriaIva</th>
+                <td>{{ excel_ingreso.categoriaIva }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ excel_ingreso.email }}</td>
+            </tr>
+            <tr>
+                <th>Cbu</th>
+                <td>{{ excel_ingreso.cbu }}</td>
+            </tr>
+            <tr>
+                <th>TipoCuenta</th>
+                <td>{{ excel_ingreso.tipoCuenta }}</td>
+            </tr>
+            <tr>
+                <th>Banco</th>
+                <td>{{ excel_ingreso.banco }}</td>
+            </tr>
+            <tr>
+                <th>Monto</th>
+                <td>{{ excel_ingreso.monto }}</td>
+            </tr>
+            <tr>
+                <th>Rubro</th>
+                <td>{{ excel_ingreso.rubro }}</td>
+            </tr>
+            <tr>
+                <th>NumeroCuentaBancaria</th>
+                <td>{{ excel_ingreso.numeroCuentaBancaria }}</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>{{ excel_ingreso.estado }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ excel_ingreso.createdAt ? excel_ingreso.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ excel_ingreso.updatedAt ? excel_ingreso.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('excel_ingreso_index') }}">back to list</a>
+
+    <a href="{{ path('excel_ingreso_edit', {'id': excel_ingreso.id}) }}">edit</a>
+
+    {{ include('excel_ingreso/_delete_form.html.twig') }}
+{% endblock %}

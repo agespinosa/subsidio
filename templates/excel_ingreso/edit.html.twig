@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit ExcelIngreso{% endblock %}
+
+{% block body %}
+    <h1>Edit ExcelIngreso</h1>
+
+    {{ include('excel_ingreso/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('excel_ingreso_index') }}">back to list</a>
+
+    {{ include('excel_ingreso/_delete_form.html.twig') }}
+{% endblock %}

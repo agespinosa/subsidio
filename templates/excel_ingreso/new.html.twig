@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ExcelIngreso{% endblock %}
+
+{% block body %}
+    <h1>Create new ExcelIngreso</h1>
+
+    {{ include('excel_ingreso/_form.html.twig') }}
+
+    <a href="{{ path('excel_ingreso_index') }}">back to list</a>
+{% endblock %}
