@@ -21,9 +21,10 @@
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RequisitoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RequisitoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/SubsidioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/SubsidioService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08031" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08031" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SubsidioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SubsidioController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Services/ValidationService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ValidationService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/requisito/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/_form.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/requisito/confirm.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/confirm.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -259,7 +260,7 @@
       <workItem from="1596019358229" duration="4317000" />
       <workItem from="1596451075877" duration="627000" />
       <workItem from="1596452516127" duration="1004000" />
-      <workItem from="1596454462295" duration="7121000" />
+      <workItem from="1596454462295" duration="8038000" />
     </task>
     <servers />
   </component>

@@ -92,6 +92,7 @@ class SubsidioController extends AbstractController
                 $requisito->setFileSubsidioName($archivoGenerado);
                 $requisito->setTotalBeneficiarios($subsidio->getTotales()->getTotalRegistros());
                 $requisito->setTotalMontoPesos($subsidio->getTotales()->getTotalAPagar());
+                $requisito->setEstado(Requisito::ESTADO_PROCESADO);
             }
             // Persiste
             $entityManager = $this->getDoctrine()->getManager();

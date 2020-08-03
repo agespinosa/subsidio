@@ -59,7 +59,7 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Id</th>
+                                <th>Numero</th>
                                 <th>Nombre</th>
                                 <th>Apellido</th>
                                 <th>Cuit</th>
@@ -72,14 +72,14 @@
                             <tbody>
                             {% for excel_ingreso in excelIngresos %}
                                 <tr>
-                                    <td>{{ excel_ingreso.id }}</td>
+                                    <td>{{ loop.index }}</td>
                                     <td>{{ excel_ingreso.nombre }}</td>
                                     <td>{{ excel_ingreso.apellido }}</td>
                                     <td>{{ excel_ingreso.cuit }}</td>
                                     <td>{{ excel_ingreso.email }}</td>
                                     <td>{{ excel_ingreso.cbu }}</td>
                                     <td>{{ excel_ingreso.tipoCuenta }}</td>
-                                    <td>{{ excel_ingreso.monto }}</td>
+                                    <td>{{ excel_ingreso.monto |format_currency('ARS', locale='es')}}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
