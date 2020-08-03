@@ -257,9 +257,9 @@ class SubsidioService
             /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
             $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
             foreach ($subsidiosPagoProveedores as $subsidioPagoProveedores) {
-                $numeroReferenciaClienteFila++;
                 fwrite($handle, $this->getStringLine($subsidioPagoProveedores, $numeroReferenciaClienteFila));
                 fwrite($handle,$newLine);
+                $numeroReferenciaClienteFila++;
             }
     
             fwrite($handle,

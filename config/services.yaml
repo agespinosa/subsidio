@@ -8,6 +8,7 @@ parameters:
     subsidio_directory: '%kernel.project_dir%/public/uploads/subsidio'
     subsidio_directory_relative_path: '../uploads/subsidio'
     excel_directory_relative_path: '../uploads/files'
+    excel_modelo_directory_relative_path: '../uploads/subsidio/modeloExcel'
 
 services:
     # default configuration for services in *this* file
