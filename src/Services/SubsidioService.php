@@ -12,6 +12,7 @@ use App\Entity\Totales;
 use App\Exception\SimpleMessageException;
 use App\Repository\CabeceraRepository;
 use App\Repository\ExcelIngresoRepository;
+use App\Repository\RequisitoRepository;
 use App\Repository\SubsidioPagoProveedoresRepository;
 use App\Repository\TotalesRepository;
 use App\Entity\AtributoConfiguracion;
@@ -49,11 +50,16 @@ class SubsidioService
      * @var ParameterBagInterface
      */
     private $params;
-
+    /**
+     * @var RequisitoRepository
+     */
+    private $requisitoRepository;
+    
     public function __construct(LoggerInterface $logger, ExcelIngresoRepository $excelIngresoRepository,
                                 SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
                                 CabeceraRepository $cabeceraRepository, TotalesRepository $totalesRepository,
                                 AtributoConfiguracionRepository $atributoConfiguracionRepository,
+                                RequisitoRepository $requisitoRepository,
                                 ParameterBagInterface $params)
     {
         $this->logger = $logger;
@@ -63,6 +69,7 @@ class SubsidioService
         $this->totalesRepository = $totalesRepository;
         $this->atributoConfiguracionRepository = $atributoConfiguracionRepository;
         $this->params = $params;
+        $this->requisitoRepository = $requisitoRepository;
     }
     
     public function generarSubsidioPagoProveedores(Requisito $requisito): array {
@@ -90,7 +97,9 @@ class SubsidioService
         $this->cabeceraRepository->persist($cabecera);
         $this->totalesRepository->persist($totales);
     
-        $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
+        //$numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
+        $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
+        $numeroReferenciaClienteFila = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']);
         foreach ($excelIngresos as $excelIngreso) {
             $subsidioPagoProveedores = new SubsidioPagoProveedores();
 
@@ -133,7 +142,8 @@ class SubsidioService
             $this->subsidioPagoProveedoresRepository->persist($subsidioPagoProveedores);
             $numeroReferenciaClienteFila++;
         }
-
+    
+        $requisito->setNumeroReferenciaClienteFila($numeroReferenciaClienteFila);
         return $subsidiosPagoProveedores;
     }
 

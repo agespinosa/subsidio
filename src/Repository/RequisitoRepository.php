@@ -36,15 +36,14 @@ class RequisitoRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Requisito
+    
+    public function findMaxNumeroReferenciaCliente()
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('max(r.numeroReferenciaClienteFila) AS maxNumeroReferenciaCliente')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getScalarResult()
         ;
     }
-    */
+    
 }
