@@ -21,20 +21,12 @@
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml.orig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_BACKUP_7490.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_BACKUP_7630.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_BACKUP_7811.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_BASE_7490.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_BASE_7630.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_BASE_7811.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_LOCAL_7490.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_LOCAL_7630.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_LOCAL_7811.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_REMOTE_7490.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_REMOTE_7630.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace_REMOTE_7811.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/SubsidioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/SubsidioService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08032" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08032" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08033" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08033" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RequisitoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RequisitoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Requisito.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Requisito.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Migrations/Version20200730121905.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/ExcelService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ExcelService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +36,13 @@
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -195,6 +194,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -261,7 +261,7 @@
       <workItem from="1596019358229" duration="4317000" />
       <workItem from="1596451075877" duration="627000" />
       <workItem from="1596452516127" duration="1004000" />
-      <workItem from="1596454462295" duration="355000" />
+      <workItem from="1596454462295" duration="3849000" />
     </task>
     <servers />
   </component>
@@ -299,10 +299,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="141" y="21" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1594824100841" />
-    <state x="455" y="44" width="425" height="557" key="#com.intellij.ide.util.MemberChooser" timestamp="1596039796853">
+    <state x="455" y="44" width="425" height="557" key="#com.intellij.ide.util.MemberChooser" timestamp="1596458021196">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="455" y="44" width="425" height="557" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1596039796853" />
+    <state x="455" y="44" width="425" height="557" key="#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728" timestamp="1596458021196" />
     <state x="455" y="46" width="449" height="642" key="#com.intellij.ide.util.MemberChooser/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593780262313" />
     <state x="366" y="102" width="624" height="517" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1596452428972">
       <screen x="0" y="0" width="1366" height="728" />
@@ -312,10 +312,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="226" y="0" width="894" height="723" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1366.728@0.0.1366.728" timestamp="1595423981850" />
-    <state x="416" y="118" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1595942996533">
+    <state x="416" y="118" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1596455181084">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="416" y="118" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1595942996533" />
+    <state x="416" y="118" width="524" height="479" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/0.0.1366.728@0.0.1366.728" timestamp="1596455181084" />
     <state x="416" y="125" width="528" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1594064879860" />
     <state x="441" y="110" width="770" height="505" key="#xdebugger.evaluate" timestamp="1595418024361">
       <screen x="0" y="0" width="1366" height="728" />
@@ -378,10 +378,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1324" height="148" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1595955038185" />
-    <state x="421" y="92" width="513" height="537" key="NewPhpClassDialog" timestamp="1594991877049">
+    <state x="421" y="92" width="513" height="537" key="NewPhpClassDialog" timestamp="1596455168478">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="421" y="92" width="513" height="537" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1594991877049" />
+    <state x="421" y="92" width="513" height="537" key="NewPhpClassDialog/0.0.1366.728@0.0.1366.728" timestamp="1596455168478" />
     <state x="149" y="2" width="1100" height="725" key="SettingsEditor" timestamp="1595424745461">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

@@ -11,6 +11,7 @@ use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
 use App\Repository\SubsidioPagoProveedoresRepository;
 use App\Services\ExcelService;
+use App\Services\ValidationService;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -49,17 +50,23 @@ class RequisitoController extends AbstractController
      * @var SubsidioPagoProveedoresRepository
      */
     private $subsidioPagoProveedoresRepository;
+    /**
+     * @var ValidationService
+     */
+    private $validationService;
     
     public function __construct(ExcelService $excelService, ExcelIngresoRepository $excelIngresoRepository,
                                 LoggerInterface $logger,
                                 RequisitoRepository $requisitoRepository,
-                                SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository)
+                                SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
+                                ValidationService $validationService)
     {
         $this->excelService = $excelService;
         $this->excelIngresoRepository = $excelIngresoRepository;
         $this->logger = $logger;
         $this->requisitoRepository = $requisitoRepository;
         $this->subsidioPagoProveedoresRepository = $subsidioPagoProveedoresRepository;
+        $this->validationService = $validationService;
     }
     
     /**
@@ -84,6 +91,7 @@ class RequisitoController extends AbstractController
     public function new(Request $request): Response
     {
         $requisito = new Requisito();
+        
         $form = $this->createForm(RequisitoType::class, $requisito);
         $form->handleRequest($request);
 
@@ -140,6 +148,13 @@ class RequisitoController extends AbstractController
                     $excelIngreso->setRequisito($requisito);
                     $this->excelIngresoRepository->persist($excelIngreso);
                 }
+            }
+            
+            $validationConstraint =
+                $this->validationService->getMessageValidation($excelIngresos);
+            
+            if(!is_null($validationConstraint) && count($validationConstraint)>0) {
+                $this->logger->warning(json_encode($validationConstraint));
             }
             
             // Persiste Requisito y ExcelIngreso

@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Requisito
 {
+    
+    const ESTADO_PENDIENTE = 'PENDIENTE';
+    const ESTADO_PROCESADO = 'PROCESADO';
+    const ESTADO_ERROR = 'ERROR';
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -75,6 +80,32 @@ class Requisito
      * @ORM\Column(type="integer", nullable=true)
      */
     private $numeroReferenciaClienteFila;
+    
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $estado;
+    
+    public function __construct()
+    {
+        $this->setEstado(self::ESTADO_PENDIENTE);
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+    
+    /**
+     * @param mixed $estado
+     */
+    public function setEstado($estado): void
+    {
+        $this->estado = $estado;
+    }
     
     public function getId(): ?int
     {
