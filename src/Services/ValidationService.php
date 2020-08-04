@@ -55,7 +55,7 @@ class ValidationService
             }
             $cuitExistentes[] = $excelIngreso->getCuit();
             
-            // Length CUIT
+            // CUIT valido
             if(!$this->cuitValido($excelIngreso->getCuit())){
                 $cuitNoCumpleLength[] = $excelIngreso->getCuit();
                 if(!array_key_exists($excelIngreso->getCuit(),$messageValidation )){
