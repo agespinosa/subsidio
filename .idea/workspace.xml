@@ -21,7 +21,8 @@
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/ValidationService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ValidationService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/RequisitoType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RequisitoType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/SubsidioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/SubsidioService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +194,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../licenciacyp34" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -261,6 +262,10 @@
       <workItem from="1596539933731" duration="5000" />
       <workItem from="1596540507362" duration="1253000" />
       <workItem from="1596553161759" duration="599000" />
+      <workItem from="1596710827902" duration="17000" />
+      <workItem from="1596710853159" duration="1283000" />
+      <workItem from="1597052821809" duration="605000" />
+      <workItem from="1597243437646" duration="2126000" />
     </task>
     <servers />
   </component>

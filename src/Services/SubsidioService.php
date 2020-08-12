@@ -97,9 +97,11 @@ class SubsidioService
         $this->cabeceraRepository->persist($cabecera);
         $this->totalesRepository->persist($totales);
     
-        //$numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
-        $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
-        $numeroReferenciaClienteFila = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']);
+        $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
+        if(is_null($numeroReferenciaClienteFila) || $numeroReferenciaClienteFila == 0) {
+            $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
+            $numeroReferenciaClienteFila = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']);
+        }
         foreach ($excelIngresos as $excelIngreso) {
             $subsidioPagoProveedores = new SubsidioPagoProveedores();
 
@@ -130,7 +132,7 @@ class SubsidioService
             $subsidioPagoProveedores->setMonedaCuenta($moneda);
             $subsidioPagoProveedores->setNumeroCuenta($excelIngreso->getNumeroCuentaBancaria());
             $subsidioPagoProveedores->setMonedaCuentaDebito($moneda);
-            $subsidioPagoProveedores->setCodigoNovedadOrden(1);
+            $subsidioPagoProveedores->setCodigoNovedadOrden(0);
     
             $banco = str_pad(substr($excelIngreso->getCbu(),0,3),5, "0", STR_PAD_LEFT);
             $sucursal = str_pad(substr($excelIngreso->getCbu(),3,4),35, "0", STR_PAD_LEFT);
