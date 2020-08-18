@@ -20,9 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sanimal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sanimal.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/RequisitoType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/RequisitoType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/SubsidioService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/SubsidioService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/subsidio.tar.gz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +129,6 @@
       <path value="$PROJECT_DIR$/vendor/fzaninotto/faker" />
       <path value="$PROJECT_DIR$/vendor/symfony/translation" />
       <path value="$PROJECT_DIR$/vendor/doctrine/doctrine-migrations-bundle" />
-      <path value="$PROJECT_DIR$/vendor/symfony/templating" />
       <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
       <path value="$PROJECT_DIR$/vendor/doctrine/inflector" />
       <path value="$PROJECT_DIR$/vendor/doctrine/instantiator" />
@@ -136,11 +138,9 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/orm" />
       <path value="$PROJECT_DIR$/vendor/doctrine/persistence" />
       <path value="$PROJECT_DIR$/vendor/doctrine/reflection" />
-      <path value="$PROJECT_DIR$/vendor/jdorn/sql-formatter" />
       <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
       <path value="$PROJECT_DIR$/vendor/stof/doctrine-extensions-bundle" />
       <path value="$PROJECT_DIR$/vendor/nikic/php-parser" />
-      <path value="$PROJECT_DIR$/vendor/ocramius/package-versions" />
       <path value="$PROJECT_DIR$/vendor/ocramius/proxy-manager" />
       <path value="$PROJECT_DIR$/vendor/sensio/framework-extra-bundle" />
       <path value="$PROJECT_DIR$/vendor/knplabs/knp-paginator-bundle" />
@@ -172,11 +172,12 @@
       <path value="$PROJECT_DIR$/vendor/markbaker/complex" />
       <path value="$PROJECT_DIR$/vendor/myclabs/php-enum" />
       <path value="$PROJECT_DIR$/vendor/phpoffice/phpspreadsheet" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
-      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
-      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/vendor/twig/intl-extra" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/sql-formatter" />
     </include_path>
   </component>
   <component name="PhpXdebugProxy" ide_key="PHPSTORM" host="localhost" port="9003" />
@@ -265,7 +266,10 @@
       <workItem from="1596710827902" duration="17000" />
       <workItem from="1596710853159" duration="1283000" />
       <workItem from="1597052821809" duration="605000" />
-      <workItem from="1597243437646" duration="2126000" />
+      <workItem from="1597243437646" duration="2730000" />
+      <workItem from="1597311810458" duration="70000" />
+      <workItem from="1597407245035" duration="2128000" />
+      <workItem from="1597745503357" duration="630000" />
     </task>
     <servers />
   </component>
