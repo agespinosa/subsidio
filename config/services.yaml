@@ -28,5 +28,6 @@ services:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
 
+    WhiteOctober\TCPDFBundle\Controller\TCPDFController: '@white_october.tcpdf'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

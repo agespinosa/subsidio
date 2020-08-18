@@ -11,6 +11,7 @@ use App\Form\RequisitoType;
 use App\Repository\AtributoConfiguracionRepository;
 use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
+use App\Repository\SubsidioPagoProveedoresRepository;
 use App\Services\ExcelReaderService;
 use App\Services\SubsidioService;
 use Psr\Log\LoggerInterface;
@@ -21,6 +22,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 /**
  * @Route("/subsidio")
@@ -49,18 +51,30 @@ class SubsidioController extends AbstractController
      * @var AtributoConfiguracionRepository
      */
     private $atributoConfiguracionRepository;
+    /**
+     * @var SubsidioPagoProveedoresRepository
+     */
+    private $subsidioPagoProveedoresRepository;
+    /**
+     * @var TCPDFController
+     */
+    private $TCPDFController;
     
     public function __construct(RequisitoRepository $requisitoRepository,
                                 ExcelIngresoRepository $excelIngresoRepository,
                                 LoggerInterface $logger,
                                 AtributoConfiguracionRepository $atributoConfiguracionRepository,
-                                SubsidioService $subsidioService)
+                                SubsidioService $subsidioService,
+                                SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
+                                TCPDFController $TCPDFController)
     {
         $this->excelIngresoRepository = $excelIngresoRepository;
         $this->requisitoRepository = $requisitoRepository;
         $this->logger = $logger;
         $this->subsidioService = $subsidioService;
         $this->atributoConfiguracionRepository = $atributoConfiguracionRepository;
+        $this->subsidioPagoProveedoresRepository = $subsidioPagoProveedoresRepository;
+        $this->TCPDFController = $TCPDFController;
     }
     
     /**
@@ -114,6 +128,52 @@ class SubsidioController extends AbstractController
         }
 
         return $this->redirectToRoute('requisito_index');
+        
+    }
+    
+    /**
+     * @Route("exportBeneficiariosList/{id}", name="exportBeneficiariosList",
+     *     methods={"GET","POST"})
+     */
+    public function exportBeneficiariosList(Request $request, Requisito $requisito): Response
+    {
+        $beneficiarios =
+            $this->subsidioPagoProveedoresRepository->findBy(
+                array(
+                    'requsito' => $requisito,
+                )
+            );
+    
+        $excelIngresos =
+            $this->excelIngresoRepository->findBy(
+                array(
+                    'requisito' => $requisito,
+                )
+            );
+        
+        $requisito->setTotalMontoPesos($this->subsidioService->getTotalAPagar($excelIngresos));
+        $pdfName = $requisito->getId()."-".$requisito->getMotivoPagoStr();
+        
+        $pdf = $this->TCPDFController->create('',
+            PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf->SetAuthor('Ministerio de la Producción, Ciencia y Tecnologia');
+        $pdf->SetTitle($pdfName);
+        $pdf->SetSubject($requisito->getMotivoPagoStr());
+        $pdf->SetKeywords($requisito->getMotivoPagoStr());
+        $pdf->setFontSubsetting(true);
+        $pdf->SetFont('helvetica', '', 11, '', true);
+        $pdf->setPrintHeader(false);
+        $pdf->setPrintFooter(false);
+        $pdf->AddPage();
+        
+        // El HTML Tiene los datos de la licencia
+        $html = $this->renderView('subsidioPagoProveedores/beneficiariosList.html.twig',
+            array( 'requisito' => $requisito,
+                'beneficiarios' => $beneficiarios));
+        $pdf->writeHTML($html, true, false, true, false, 'J');
+        
+       
+        $pdf->Output($pdfName.'.pdf', 'I');
         
     }
     

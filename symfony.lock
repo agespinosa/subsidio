@@ -136,7 +136,7 @@
         "version": "2.2.3"
     },
     "php": {
-        "version": "7.2"
+        "version": "7.3"
     },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
@@ -529,6 +529,9 @@
     "symfony/yaml": {
         "version": "v4.4.7"
     },
+    "tecnickcom/tcpdf": {
+        "version": "6.3.5"
+    },
     "twig/extra-bundle": {
         "version": "v3.0.3"
     },
@@ -540,6 +543,9 @@
     },
     "webmozart/assert": {
         "version": "1.9.0"
+    },
+    "whiteoctober/tcpdf-bundle": {
+        "version": "1.1.2"
     },
     "zendframework/zend-code": {
         "version": "3.4.1"
