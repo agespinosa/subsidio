@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Requisito;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -44,6 +45,22 @@ class RequisitoRepository extends ServiceEntityRepository
             ->getQuery()
             ->getScalarResult()
         ;
+    }
+
+    /**
+     * @param null|string $term
+     */
+    public function getWithSearchQueryBuilder(?string $term):QueryBuilder
+    {
+        $qb= $this->createQueryBuilder('p');
+        if($term){
+            $qb->andWhere('p.motivoPago LIKE :term')
+                ->setParameter('term', '%' . $term . '%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('p.id', 'DESC');
     }
     
 }

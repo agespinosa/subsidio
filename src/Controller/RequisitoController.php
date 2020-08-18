@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/")
@@ -59,13 +60,26 @@ class RequisitoController extends AbstractController
      * @var SubsidioService
      */
     private $subsidioService;
-    
+
+
+
+    /**
+     * RequisitoController constructor.
+     * @param ExcelService $excelService
+     * @param ExcelIngresoRepository $excelIngresoRepository
+     * @param LoggerInterface $logger
+     * @param RequisitoRepository $requisitoRepository
+     * @param SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository
+     * @param ValidationService $validationService
+     * @param SubsidioService $subsidioService
+     */
     public function __construct(ExcelService $excelService, ExcelIngresoRepository $excelIngresoRepository,
                                 LoggerInterface $logger,
                                 RequisitoRepository $requisitoRepository,
                                 SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
                                 ValidationService $validationService,
-                                SubsidioService $subsidioService)
+                                SubsidioService $subsidioService
+                                )
     {
         $this->excelService = $excelService;
         $this->excelIngresoRepository = $excelIngresoRepository;
@@ -79,17 +93,23 @@ class RequisitoController extends AbstractController
     /**
      *  @Route("/" , name="requisito_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index( Request $request, PaginatorInterface $paginator): Response
     {
-        
-        $requisitos = $this->requisitoRepository->findBy( array(),
-            array('id' => 'DESC')
+
+        $q = $request->query->get('q');
+
+        $queryBuilder =$this->requisitoRepository->getWithSearchQueryBuilder($q);
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
         );
-        
-    
+
         return $this->render('requisito/index.html.twig', [
-            'requisitos' => $requisitos
+            'pagination' => $pagination,
         ]);
+
     }
 
     /**
