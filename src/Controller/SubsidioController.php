@@ -211,7 +211,7 @@ class SubsidioController extends AbstractController
         $sheet->setCellValue('A1','Fecha Pago:'.$fechaPago);
         $sheet->setCellValue('B1','Cantidad Beneficiarios:'.count($beneficiarios));
         $sheet->setCellValue('C1','Total:'.$requisito->getTotalMontoPesos());
-                
+
         $sheet->setCellValue('A2','ReferenciaCliente');
         $sheet->setCellValue('B2','Nombre');
         $sheet->setCellValue('C2','Cuit');
