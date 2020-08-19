@@ -20,17 +20,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sanimal.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sanimal.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RequisitoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RequisitoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08181" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08181" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/SubsidioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SubsidioController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/requisito/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/subsidioPagoProveedores/beneficiariosList.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/subsidioPagoProveedores/beneficiariosList.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,7 +272,8 @@
       <workItem from="1597407245035" duration="2128000" />
       <workItem from="1597745503357" duration="630000" />
       <workItem from="1597767130578" duration="80000" />
-      <workItem from="1597767223408" duration="1826000" />
+      <workItem from="1597767223408" duration="2400000" />
+      <workItem from="1597834029788" duration="2982000" />
     </task>
     <servers />
   </component>

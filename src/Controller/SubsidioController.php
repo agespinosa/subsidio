@@ -21,6 +21,7 @@ use Symfony\Component\ErrorHandler\Error\FatalError;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
@@ -175,6 +176,65 @@ class SubsidioController extends AbstractController
        
         $pdf->Output($pdfName.'.pdf', 'I');
         
+    }
+    
+    /**
+     * @Route("exportBeneficiariosListToExcel/{id}", name="exportBeneficiariosListToExcel",
+     *     methods={"GET","POST"})
+     */
+    public function exportBeneficiariosListToExcel(Request $request, Requisito $requisito): Response
+    {
+        $beneficiarios =
+            $this->subsidioPagoProveedoresRepository->findBy(
+                array(
+                    'requsito' => $requisito,
+                )
+            );
+        
+        $excelIngresos =
+            $this->excelIngresoRepository->findBy(
+                array(
+                    'requisito' => $requisito,
+                )
+            );
+        
+        $requisito->setTotalMontoPesos($this->subsidioService->getTotalAPagar($excelIngresos));
+        $excelName = $requisito->getId()."-".'beneficiarios'.'.xls';
+    
+        /** Create a new Spreadsheet Object **/
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+    
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle($excelName);
+    
+        $fechaPago = $requisito->getFechaDesde()->format('d/m/Y');
+        $sheet->setCellValue('A1','Fecha Pago:'.$fechaPago);
+        $sheet->setCellValue('B1','Cantidad Beneficiarios:'.count($beneficiarios));
+        $sheet->setCellValue('C1','Total:'.$requisito->getTotalMontoPesos());
+                
+        $sheet->setCellValue('A2','ReferenciaCliente');
+        $sheet->setCellValue('B2','Nombre');
+        $sheet->setCellValue('C2','Cuit');
+        $sheet->setCellValue('D2','Monto');
+        
+        $i = 2;
+        foreach ($beneficiarios as $beneficiario) {
+            $i++;
+            $sheet->setCellValue('A'.$i,$beneficiario->getReferenciaCliente());
+            $sheet->setCellValue('B'.$i,$beneficiario->getNombreBeneficiario());
+            $sheet->setCellValue('C'.$i,$beneficiario->getCuit());
+            $sheet->setCellValue('D'.$i,$beneficiario->getImporteAPagar());
+        }
+    
+        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xls($spreadsheet);
+        $tempFile = tempnam(sys_get_temp_dir(), $excelName);
+    
+        // Create the excel file in the tmp directory of the system
+        $writer->save($tempFile);
+    
+        // Return the excel file as an attachment
+        return $this->file($tempFile, $excelName, ResponseHeaderBag::DISPOSITION_INLINE);
+    
     }
     
 }

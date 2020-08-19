@@ -129,6 +129,12 @@
                                             <i class="fas fa-book"></i>
                                         </a>
 
+                                        <a type="button" role="button" class="btn btn-sm btn-success" target="_blank"
+                                           data-toggle="tooltip" data-placement="top" title="Listado Excel Beneficiarios"
+                                           href="{{ path('exportBeneficiariosListToExcel', {'id': requisito.id}) }}">
+                                            <i class="far fa-file-excel"></i>
+                                        </a>
+
                                     </td>
                                 </tr>
                             {% endfor %}
