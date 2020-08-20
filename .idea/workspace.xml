@@ -20,8 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RequisitoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RequisitoController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/requisito/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -336,6 +338,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="713" height="453" key="DebuggerActiveHint/0.0.1366.728@0.0.1366.728" timestamp="1596473354295" />
+    <state x="100" y="99" width="1166" height="528" maximized="true" key="DiffContextDialog" timestamp="1597928771353">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="100" y="99" width="1166" height="528" maximized="true" key="DiffContextDialog/0.0.1366.728@0.0.1366.728" timestamp="1597928771353" />
     <state x="466" y="118" width="424" height="479" key="FileChooserDialogImpl" timestamp="1597849425689">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -402,10 +408,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="412" y="99" width="540" height="524" key="StructurePopup/0.0.1366.728@0.0.1366.728" timestamp="1596541853175" />
-    <state x="352" y="60" width="694" height="592" key="find.popup" timestamp="1595944978579">
+    <state x="352" y="60" width="694" height="592" key="find.popup" timestamp="1597925961888">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="352" y="60" width="694" height="592" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1595944978579" />
+    <state x="352" y="60" width="694" height="592" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1597925961888" />
     <state x="352" y="63" width="694" height="608" key="find.popup/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593457459147" />
     <state x="345" y="12" width="672" height="641" key="search.everywhere.popup" timestamp="1595428249745">
       <screen x="0" y="0" width="1366" height="728" />
@@ -418,7 +424,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/src/Controller/RequisitoController.php</url>
-          <line>214</line>
+          <line>216</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
