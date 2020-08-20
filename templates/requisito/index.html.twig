@@ -30,11 +30,6 @@
                         </div>
 
                     </div>
-                    {{  asset( publicUploadsPathBase ~ '/subsidio/modeloExcel/modelo.xls') }}
-                    <br/>
-
-
-                    assets {{ asset('/subsidio/modeloExcel/modelo.xls') }}
 
                     <div class="my-3 p-3 bg-white rounded shadow-sm">
                         <h6 class="border-bottom border-gray pb-2 mb-0">Subsidios generados ({{ pagination.totalItemCount }})</h6>
@@ -95,7 +90,7 @@
 
                                             <a type="button" role="button" class="btn btn-sm btn-primary" target="_blank"
                                                data-toggle="tooltip" data-placement="top" title="Descargar Excel"
-                                               href="{{ relative_path(requisito.fileName) }}">
+                                               href="{{ asset(publicUploadsPathBase ~ requisito.fileName) }}">
                                                 <i class="fas fa-file-excel"></i>
                                             </a>
 
@@ -107,7 +102,7 @@
 
                                         <a type="button" role="button" class="btn btn-sm btn-success" target="_blank"
                                            data-toggle="tooltip" data-placement="top" title="Descargar Archivo Subsidio"
-                                           href="{{ relative_path(requisito.fileSubsidioName) }}">
+                                           href="{{ asset(publicUploadsPathBase ~ requisito.fileSubsidioName) }}">
                                             <i class="fas fa-download"></i></a>
 
                                         {% endif %}

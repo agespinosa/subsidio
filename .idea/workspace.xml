@@ -22,7 +22,6 @@
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RequisitoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RequisitoController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/requisito/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/index.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -404,10 +403,10 @@
     </state>
     <state x="149" y="2" width="1100" height="725" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1595424745461" />
     <state x="149" y="2" width="1100" height="730" key="SettingsEditor/1366.0.1920.1080/0.0.1366.768@0.0.1366.768" timestamp="1593457415923" />
-    <state x="412" y="99" width="540" height="524" key="StructurePopup" timestamp="1596541853175">
+    <state x="412" y="99" width="540" height="524" key="StructurePopup" timestamp="1597929645964">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="412" y="99" width="540" height="524" key="StructurePopup/0.0.1366.728@0.0.1366.728" timestamp="1596541853175" />
+    <state x="412" y="99" width="540" height="524" key="StructurePopup/0.0.1366.728@0.0.1366.728" timestamp="1597929645964" />
     <state x="352" y="60" width="694" height="592" key="find.popup" timestamp="1597925961888">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
