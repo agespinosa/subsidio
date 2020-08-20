@@ -138,6 +138,7 @@ class SubsidioController extends AbstractController
      */
     public function exportBeneficiariosList(Request $request, Requisito $requisito): Response
     {
+        ini_set('memory_limit', -1);
         $beneficiarios =
             $this->subsidioPagoProveedoresRepository->findBy(
                 array(
@@ -184,6 +185,7 @@ class SubsidioController extends AbstractController
      */
     public function exportBeneficiariosListToExcel(Request $request, Requisito $requisito): Response
     {
+        ini_set('memory_limit', -1);
         $beneficiarios =
             $this->subsidioPagoProveedoresRepository->findBy(
                 array(
