@@ -20,34 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb67d7dd-c744-4b3d-be22-9950efbf7df1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.history/.gitignore_20200818130147" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.history/.gitignore_20200820111002" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f283c72920cd.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f283c72920cd.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f283e23eb9e8.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f283e23eb9e8.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f283f9ec92dd.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f283f9ec92dd.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f294c3aecc70.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f294c3aecc70.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f294d7fbf277.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/2dacuotacorregidosotrosbancosandres-5f294d7fbf277.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/c1asistenciaturismodatoscorrectosandres-5f3409e3b0b9c.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/c1asistenciaturismodatoscorrectosandres-5f3409e3b0b9c.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/c1asistenciaturismodatoscorrectosandres-5f340bdcc27af.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/c1asistenciaturismodatoscorrectosandres-5f340bdcc27af.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/pago8paeecomerciointeriorandres-5f36babf865ca.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/pago8paeecomerciointeriorandres-5f36babf865ca.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/pago8paeecomerciointeriorandres-5f36c27061b4f.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/pago8paeecomerciointeriorandres-5f36c27061b4f.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/pago8paeecomerciointeriorandres-5f3baaa943be4.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/pago8paeecomerciointeriorandres-5f3baaa943be4.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/files/pagos7andres-5f283be56b734.xls" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/files/pagos7andres-5f283be56b734.xls" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08031" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08031" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08032" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08032" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08041" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08041" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08042" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08042" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08121" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08121" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08125000" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08125000" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08141" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08141" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08181" beforeDir="false" afterPath="$PROJECT_DIR$/public/uploads/subsidio/PC0061170F08181" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RequisitoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RequisitoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SubsidioController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SubsidioController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/requisito/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/requisito/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/subsidioPagoProveedores/beneficiariosList.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/subsidioPagoProveedores/beneficiariosList.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

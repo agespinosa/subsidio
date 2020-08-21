@@ -138,6 +138,8 @@ class SubsidioController extends AbstractController
      */
     public function exportBeneficiariosList(Request $request, Requisito $requisito): Response
     {
+        ini_set('memory_limit', -1);
+        ini_set('max_execution_time', 600);
         $beneficiarios =
             $this->subsidioPagoProveedoresRepository->findBy(
                 array(
@@ -184,6 +186,8 @@ class SubsidioController extends AbstractController
      */
     public function exportBeneficiariosListToExcel(Request $request, Requisito $requisito): Response
     {
+        ini_set('memory_limit', -1);
+        ini_set('max_execution_time', 600);
         $beneficiarios =
             $this->subsidioPagoProveedoresRepository->findBy(
                 array(
@@ -227,13 +231,15 @@ class SubsidioController extends AbstractController
         }
     
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xls($spreadsheet);
-        $tempFile = tempnam(sys_get_temp_dir(), $excelName);
+        
+    
+        $filePath =  $this->getParameter('subsidio_directory').'/beneficiariosxls/'.$excelName;
     
         // Create the excel file in the tmp directory of the system
-        $writer->save($tempFile);
+        $writer->save($filePath);
     
         // Return the excel file as an attachment
-        return $this->file($tempFile, $excelName, ResponseHeaderBag::DISPOSITION_INLINE);
+        return $this->file($filePath, $excelName, ResponseHeaderBag::DISPOSITION_INLINE);
     
     }
     

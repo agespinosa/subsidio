@@ -95,7 +95,8 @@ class RequisitoController extends AbstractController
      */
     public function index( Request $request, PaginatorInterface $paginator): Response
     {
-
+        $publicUploadsPathBase = $this->getParameter('public_uploads_path_base');
+        
         $q = $request->query->get('q');
 
         $queryBuilder =$this->requisitoRepository->getWithSearchQueryBuilder($q);
@@ -108,6 +109,7 @@ class RequisitoController extends AbstractController
 
         return $this->render('requisito/index.html.twig', [
             'pagination' => $pagination,
+                'publicUploadsPathBase' => $publicUploadsPathBase
         ]);
 
     }
