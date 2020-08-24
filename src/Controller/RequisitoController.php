@@ -106,10 +106,15 @@ class RequisitoController extends AbstractController
             $request->query->getInt('page', 1)/*page number*/,
             10/*limit per page*/
         );
+    
+        $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
+        $maxNumeroReferenciaCliente = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']);
+        
 
         return $this->render('requisito/index.html.twig', [
             'pagination' => $pagination,
-                'publicUploadsPathBase' => $publicUploadsPathBase
+                'publicUploadsPathBase' => $publicUploadsPathBase,
+                'maxNumeroReferenciaCliente' => $maxNumeroReferenciaCliente
         ]);
 
     }

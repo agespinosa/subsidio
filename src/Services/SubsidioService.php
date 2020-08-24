@@ -100,7 +100,7 @@ class SubsidioService
         $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
         if(is_null($numeroReferenciaClienteFila) || $numeroReferenciaClienteFila == 0) {
             $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
-            $numeroReferenciaClienteFila = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']) + 1;
+            $numeroReferenciaClienteFila = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']);
         }
         foreach ($excelIngresos as $excelIngreso) {
             $subsidioPagoProveedores = new SubsidioPagoProveedores();
@@ -118,6 +118,7 @@ class SubsidioService
             $subsidioPagoProveedores->setRequiereReciboImpreso('N');
             
             $subsidioPagoProveedores->setReferenciaCliente($numeroReferenciaClienteFila);
+            $numeroReferenciaClienteFila++;
             $subsidioPagoProveedores->setImporteAPagar($excelIngreso->getMonto());
             $subsidioPagoProveedores->setMonedaPago($moneda);
             $subsidioPagoProveedores->setFechaEjecucionPago($requisito->getFechaDesde());
@@ -142,7 +143,7 @@ class SubsidioService
             
             $subsidiosPagoProveedores[] = $subsidioPagoProveedores;
             $this->subsidioPagoProveedoresRepository->persist($subsidioPagoProveedores);
-            $numeroReferenciaClienteFila++;
+            
         }
     
         $requisito->setNumeroReferenciaClienteFila($numeroReferenciaClienteFila);
