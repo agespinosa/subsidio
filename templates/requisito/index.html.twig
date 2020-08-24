@@ -86,23 +86,28 @@
                                         {{ requisito.totalMontoPesos|format_currency('ARS', locale='es') }}
                                         </td>
                                     <td>
-                                        {% if  requisito.fileName is not null %}
+                                        {% if  requisito.fileExcelOriginalName is not null and requisito.fileExcelOriginalName != "" %}
 
                                             <a type="button" role="button" class="btn btn-sm btn-primary" target="_blank"
                                                data-toggle="tooltip" data-placement="top" title="Descargar Excel"
-                                               href="{{ asset(publicUploadsPathBase ~ requisito.fileName) }}">
+                                               href="{{ path('download_file',
+                                                            {'nameFile': requisito.fileExcelOriginalName,
+                                                             'pathFolder': 'files'} )
+                                                      }}">
                                                 <i class="fas fa-file-excel"></i>
                                             </a>
 
                                         {% endif %}
                                     </td>
                                     <td>
-                                        {% if  requisito.fileSubsidioName is not null %}
+                                        {% if  requisito.fileSubsidioName is not null and requisito.fileSubsidioName != "" %}
 
 
                                         <a type="button" role="button" class="btn btn-sm btn-success" target="_blank"
                                            data-toggle="tooltip" data-placement="top" title="Descargar Archivo Subsidio"
-                                           href="{{ asset(publicUploadsPathBase ~ requisito.fileSubsidioName) }}">
+                                           href="{{ path('download_file',
+                                               {'nameFile': requisito.fileSubsidioName, 'pathFolder': 'subsidio' } )
+                                           }}">
                                             <i class="fas fa-download"></i></a>
 
                                         {% endif %}
