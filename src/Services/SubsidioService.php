@@ -100,7 +100,7 @@ class SubsidioService
         $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
         if(is_null($numeroReferenciaClienteFila) || $numeroReferenciaClienteFila == 0) {
             $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
-            $numeroReferenciaClienteFila = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']);
+            $numeroReferenciaClienteFila = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']) + 1;
         }
         foreach ($excelIngresos as $excelIngreso) {
             $subsidioPagoProveedores = new SubsidioPagoProveedores();
