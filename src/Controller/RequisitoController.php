@@ -146,7 +146,9 @@ class RequisitoController extends AbstractController
     
                 $excelIngresosPath = $this->getParameter('excel_directory_relative_path');
                 $relativePath = $excelIngresosPath.'/'.$newFilename;
-                $requisito->setFileName($relativePath);
+                $requisito->setFileExcelOriginalPath($relativePath);
+                $requisito->setFileExcelOriginalName($newFilename);
+                
                 $filePath =  $this->getParameter('files_directory').'/'.$newFilename;
 
                 $excelIngresos = array();
@@ -187,12 +189,10 @@ class RequisitoController extends AbstractController
             $this->logger->debug('Archivo subido y procesado correctamente '.$newFilename);
             $this->addFlash('successMessage','Archivo subido y procesado correctamente. Confirme la generacion');
            
-           //return $this->redirectToRoute('generar_archivo_subsidio_proveedores',
-           //                                     array('id'=> $requisito->getId()));
-    
+         
             return $this->redirectToRoute('requisito_confirmExcelIngreso',
                                                 array('id'=> $requisito->getId()));
-           // return $this->redirectToRoute('requisito_index');
+         
         }
 
         return $this->render('requisito/new.html.twig', [

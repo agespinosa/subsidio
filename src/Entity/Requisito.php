@@ -39,8 +39,20 @@ class Requisito
     /**
      * @ORM\Column(type="string")
      */
-    private $fileName;
+    private $fileExcelOriginalPath;
+    
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $fileExcelOriginalName;
 
+    /**
+     * @var string |null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $fileSubsidioPath;
+    
     /**
      * @var string |null
      * @ORM\Column(type="string", nullable=true)
@@ -148,20 +160,15 @@ class Requisito
         return $this;
     }
     
-    public function getFileName()
-    {
-        return $this->fileName;
-    }
-
-    public function setFileName($fileName): void
-    {
-        $this->fileName = $fileName;
-    }
-
     /**
      * @return string|null
      */
     public function getFileSubsidioName(): ?string
+    {
+        return $this->fileSubsidioName;
+    }
+    
+    public function getFileSubsidioNameWithOutExtension(): ?string
     {
         return $this->fileSubsidioName;
     }
@@ -273,6 +280,54 @@ class Requisito
     public function setNumeroReferenciaClienteFila($numeroReferenciaClienteFila): void
     {
         $this->numeroReferenciaClienteFila = $numeroReferenciaClienteFila;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getFileExcelOriginalPath()
+    {
+        return $this->fileExcelOriginalPath;
+    }
+    
+    /**
+     * @param mixed $fileExcelOriginalPath
+     */
+    public function setFileExcelOriginalPath($fileExcelOriginalPath): void
+    {
+        $this->fileExcelOriginalPath = $fileExcelOriginalPath;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getFileSubsidioPath(): ?string
+    {
+        return $this->fileSubsidioPath;
+    }
+    
+    /**
+     * @param string|null $fileSubsidioPath
+     */
+    public function setFileSubsidioPath(?string $fileSubsidioPath): void
+    {
+        $this->fileSubsidioPath = $fileSubsidioPath;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getFileExcelOriginalName()
+    {
+        return $this->fileExcelOriginalName;
+    }
+    
+    /**
+     * @param mixed $fileExcelOriginalName
+     */
+    public function setFileExcelOriginalName($fileExcelOriginalName): void
+    {
+        $this->fileExcelOriginalName = $fileExcelOriginalName;
     }
     
 }

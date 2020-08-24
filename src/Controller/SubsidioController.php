@@ -102,9 +102,9 @@ class SubsidioController extends AbstractController
             if(!is_null($subsidioPagoProveedores) && count($subsidioPagoProveedores)>0){
                 /** @var SubsidioPagoProveedores $subsidio */
                 $subsidio = $subsidioPagoProveedores[0];
-                
-                $archivoGenerado = $this->subsidioService->generarArchivoTxtSubsidio($subsidioPagoProveedores,$requisito);
-                $requisito->setFileSubsidioName($archivoGenerado);
+    
+                $requisito = $this->subsidioService->generarArchivoTxtSubsidio($subsidioPagoProveedores,$requisito);
+              
                 $requisito->setTotalBeneficiarios($subsidio->getTotales()->getTotalRegistros());
                 $requisito->setTotalMontoPesos($subsidio->getTotales()->getTotalAPagar());
                 $requisito->setEstado(Requisito::ESTADO_PROCESADO);
@@ -155,7 +155,7 @@ class SubsidioController extends AbstractController
             );
         
         $requisito->setTotalMontoPesos($this->subsidioService->getTotalAPagar($excelIngresos));
-        $pdfName = $requisito->getId()."-".$requisito->getMotivoPagoStr();
+        $pdfName = $requisito->getFileSubsidioName().'.pdf';
         
         $pdf = $this->TCPDFController->create('',
             PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
@@ -176,7 +176,7 @@ class SubsidioController extends AbstractController
         $pdf->writeHTML($html, true, false, true, false, 'J');
         
        
-        $pdf->Output($pdfName.'.pdf', 'I');
+        $pdf->Output($pdfName, 'I');
         
     }
     
@@ -203,7 +203,7 @@ class SubsidioController extends AbstractController
             );
         
         $requisito->setTotalMontoPesos($this->subsidioService->getTotalAPagar($excelIngresos));
-        $excelName = $requisito->getId()."-".'beneficiarios'.'.xls';
+        $excelName = $requisito->getFileSubsidioName().'.xls';
     
         /** Create a new Spreadsheet Object **/
         $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
