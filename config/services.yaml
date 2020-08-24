@@ -9,7 +9,7 @@ parameters:
     subsidio_directory: '%kernel.project_dir%/public/uploads/subsidio'
     subsidio_directory_relative_path: '/subsidio'
     excel_directory_relative_path: '/files'
-    excel_modelo_directory_relative_path: '/subsidio/modeloExcel'
+    excel_modelo_directory_relative_path: '%kernel.project_dir%/public/modeloExcel/modelo.xls'
 
 services:
     # default configuration for services in *this* file

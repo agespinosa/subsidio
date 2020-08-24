@@ -52,4 +52,17 @@ class FileManagerController
         $fullPath = $this->parameterBag->get('public_uploads_path_base').'/'.$pathFolder.'/'.$nameFile;
         return $this->fileManagerService->downloadFile($fullPath, $nameFile);
     }
+    
+    /**
+     *
+     * @Route("/excelModelo",
+     *      name="download_excel_modelo", methods={"GET"},
+     *      )
+     * )
+     */
+    public function downloadExcelModelo(){
+        
+        $fullPath = $this->parameterBag->get('excel_modelo_directory_relative_path');
+        return $this->fileManagerService->downloadFile($fullPath, 'modeloExcel.xls');
+    }
 }
