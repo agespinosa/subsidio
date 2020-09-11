@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class SecurityController extends AbstractController
 {
@@ -45,16 +46,18 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/register", name="app_register")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function register(Request $request, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $formAuthenticator){
         if($request->isMethod('POST')){
             $user= new User();
+            $user->setFirstname($request->request->get('firstName'));
             $user->setEmail($request->request->get('email'));
-            $user->setFirstname('Misterio');
+            $user->setRoles([$request->request->get('rol')]);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
-                $request->request->get('password'))
-            );
+                $request->request->get('password')
+            ));
             $em= $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();

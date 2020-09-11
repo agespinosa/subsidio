@@ -27,7 +27,7 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 /**
  * @Route("/subsidio")
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_USER")
  */
 class SubsidioController extends AbstractController
 {

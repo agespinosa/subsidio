@@ -12,8 +12,8 @@ security:
                 property: email
 
     role_hierarchy:
-        ROLE_ADMIN: [ROLE_ADMIN_PROPIETARIO, ROLE_ADMIN_ESTABLECIMIENTO]
-
+        ROLE_ADMIN: [ROLE_USER, ROLE_TESORERIA]
+        ROLE_TESORERIA: [ROLE_TESORERIA]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

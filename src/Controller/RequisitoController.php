@@ -27,7 +27,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/")
- * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_USER")
  */
 class RequisitoController extends AbstractController
 {
