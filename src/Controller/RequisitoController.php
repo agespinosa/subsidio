@@ -11,6 +11,8 @@ use App\Repository\ExcelIngresoRepository;
 use App\Repository\RequisitoRepository;
 use App\Repository\SubsidioPagoProveedoresRepository;
 use App\Services\ExcelService;
+use App\Services\SubsidioService;
+use App\Services\ValidationService;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -21,6 +23,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @Route("/")
@@ -49,33 +52,71 @@ class RequisitoController extends AbstractController
      * @var SubsidioPagoProveedoresRepository
      */
     private $subsidioPagoProveedoresRepository;
-    
+    /**
+     * @var ValidationService
+     */
+    private $validationService;
+    /**
+     * @var SubsidioService
+     */
+    private $subsidioService;
+
+
+
+    /**
+     * RequisitoController constructor.
+     * @param ExcelService $excelService
+     * @param ExcelIngresoRepository $excelIngresoRepository
+     * @param LoggerInterface $logger
+     * @param RequisitoRepository $requisitoRepository
+     * @param SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository
+     * @param ValidationService $validationService
+     * @param SubsidioService $subsidioService
+     */
     public function __construct(ExcelService $excelService, ExcelIngresoRepository $excelIngresoRepository,
                                 LoggerInterface $logger,
                                 RequisitoRepository $requisitoRepository,
-                                SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository)
+                                SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
+                                ValidationService $validationService,
+                                SubsidioService $subsidioService
+                                )
     {
         $this->excelService = $excelService;
         $this->excelIngresoRepository = $excelIngresoRepository;
         $this->logger = $logger;
         $this->requisitoRepository = $requisitoRepository;
         $this->subsidioPagoProveedoresRepository = $subsidioPagoProveedoresRepository;
+        $this->validationService = $validationService;
+        $this->subsidioService = $subsidioService;
     }
     
     /**
      *  @Route("/" , name="requisito_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index( Request $request, PaginatorInterface $paginator): Response
     {
+        $publicUploadsPathBase = $this->getParameter('public_uploads_path_base');
         
-        $requisitos = $this->requisitoRepository->findBy( array(),
-            array('id' => 'DESC')
+        $q = $request->query->get('q');
+
+        $queryBuilder =$this->requisitoRepository->getWithSearchQueryBuilder($q);
+
+        $pagination = $paginator->paginate(
+            $queryBuilder, /* query NOT result */
+            $request->query->getInt('page', 1)/*page number*/,
+            10/*limit per page*/
         );
-        
     
+        $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
+        $maxNumeroReferenciaCliente = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']);
+        
+
         return $this->render('requisito/index.html.twig', [
-            'requisitos' => $requisitos
+            'pagination' => $pagination,
+                'publicUploadsPathBase' => $publicUploadsPathBase,
+                'maxNumeroReferenciaCliente' => $maxNumeroReferenciaCliente
         ]);
+
     }
 
     /**
@@ -84,6 +125,7 @@ class RequisitoController extends AbstractController
     public function new(Request $request): Response
     {
         $requisito = new Requisito();
+        
         $form = $this->createForm(RequisitoType::class, $requisito);
         $form->handleRequest($request);
 
@@ -109,7 +151,9 @@ class RequisitoController extends AbstractController
     
                 $excelIngresosPath = $this->getParameter('excel_directory_relative_path');
                 $relativePath = $excelIngresosPath.'/'.$newFilename;
-                $requisito->setFileName($relativePath);
+                $requisito->setFileExcelOriginalPath($relativePath);
+                $requisito->setFileExcelOriginalName($newFilename);
+                
                 $filePath =  $this->getParameter('files_directory').'/'.$newFilename;
 
                 $excelIngresos = array();
@@ -148,11 +192,12 @@ class RequisitoController extends AbstractController
             $entityManager->flush();
 
             $this->logger->debug('Archivo subido y procesado correctamente '.$newFilename);
-            $this->addFlash('successMessage','Archivo subido y procesado correctamente');
+            $this->addFlash('successMessage','Archivo subido y procesado correctamente. Confirme la generacion');
            
-           return $this->redirectToRoute('generar_archivo_subsidio_proveedores',
+         
+            return $this->redirectToRoute('requisito_confirmExcelIngreso',
                                                 array('id'=> $requisito->getId()));
-           // return $this->redirectToRoute('requisito_index');
+         
         }
 
         return $this->render('requisito/new.html.twig', [
@@ -160,6 +205,37 @@ class RequisitoController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+
+    /**
+     * @Route("confirmExcelIngreso/{id}", name="requisito_confirmExcelIngreso", methods={"GET","POST"})
+     */
+    public function confirmExcelIngreso(Request $request, Requisito $requisito): Response
+    {
+        $excelIngresos =
+            $this->excelIngresoRepository->findBy(
+                array(
+                    'requisito' => $requisito,
+                )
+            );
+    
+        $validationConstraint =
+            $this->validationService->getMessageValidation($excelIngresos);
+    
+        if(!is_null($validationConstraint) && count($validationConstraint)>0) {
+            $this->logger->warning(json_encode($validationConstraint));
+        }
+        
+        $requisito->setTotalMontoPesos($this->subsidioService->getTotalAPagar($excelIngresos));
+    
+        return $this->render('requisito/confirm.html.twig', [
+            'requisito' => $requisito,
+            'validationConstraint' => $validationConstraint,
+            'excelIngresos' => $excelIngresos
+        ]);
+        
+    }
+    
     
     
     /**

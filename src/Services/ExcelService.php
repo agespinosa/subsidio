@@ -47,6 +47,7 @@ class ExcelService
         $activeSheet = $spreadsheet->getActiveSheet();
         $excelIngreso = null;
         $filasProcesadas = 0;
+        
         foreach ($activeSheet->getRowIterator(2) as $row) {
             $this->logger->info('Leyendo fila '.$row->getRowIndex());
             $cellIterator = $row->getCellIterator();

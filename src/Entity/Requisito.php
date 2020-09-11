@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Requisito
 {
+    
+    const ESTADO_PENDIENTE = 'PENDIENTE';
+    const ESTADO_PROCESADO = 'PROCESADO';
+    const ESTADO_ERROR = 'ERROR';
+    
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -34,8 +39,20 @@ class Requisito
     /**
      * @ORM\Column(type="string")
      */
-    private $fileName;
+    private $fileExcelOriginalPath;
+    
+    
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $fileExcelOriginalName;
 
+    /**
+     * @var string |null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    private $fileSubsidioPath;
+    
     /**
      * @var string |null
      * @ORM\Column(type="string", nullable=true)
@@ -75,6 +92,32 @@ class Requisito
      * @ORM\Column(type="integer", nullable=true)
      */
     private $numeroReferenciaClienteFila;
+    
+    /**
+     * @ORM\Column(type="string", nullable=false)
+     */
+    private $estado;
+    
+    public function __construct()
+    {
+        $this->setEstado(self::ESTADO_PENDIENTE);
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+    
+    /**
+     * @param mixed $estado
+     */
+    public function setEstado($estado): void
+    {
+        $this->estado = $estado;
+    }
     
     public function getId(): ?int
     {
@@ -117,20 +160,15 @@ class Requisito
         return $this;
     }
     
-    public function getFileName()
-    {
-        return $this->fileName;
-    }
-
-    public function setFileName($fileName): void
-    {
-        $this->fileName = $fileName;
-    }
-
     /**
      * @return string|null
      */
     public function getFileSubsidioName(): ?string
+    {
+        return $this->fileSubsidioName;
+    }
+    
+    public function getFileSubsidioNameWithOutExtension(): ?string
     {
         return $this->fileSubsidioName;
     }
@@ -242,6 +280,54 @@ class Requisito
     public function setNumeroReferenciaClienteFila($numeroReferenciaClienteFila): void
     {
         $this->numeroReferenciaClienteFila = $numeroReferenciaClienteFila;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getFileExcelOriginalPath()
+    {
+        return $this->fileExcelOriginalPath;
+    }
+    
+    /**
+     * @param mixed $fileExcelOriginalPath
+     */
+    public function setFileExcelOriginalPath($fileExcelOriginalPath): void
+    {
+        $this->fileExcelOriginalPath = $fileExcelOriginalPath;
+    }
+    
+    /**
+     * @return string|null
+     */
+    public function getFileSubsidioPath(): ?string
+    {
+        return $this->fileSubsidioPath;
+    }
+    
+    /**
+     * @param string|null $fileSubsidioPath
+     */
+    public function setFileSubsidioPath(?string $fileSubsidioPath): void
+    {
+        $this->fileSubsidioPath = $fileSubsidioPath;
+    }
+    
+    /**
+     * @return mixed
+     */
+    public function getFileExcelOriginalName()
+    {
+        return $this->fileExcelOriginalName;
+    }
+    
+    /**
+     * @param mixed $fileExcelOriginalName
+     */
+    public function setFileExcelOriginalName($fileExcelOriginalName): void
+    {
+        $this->fileExcelOriginalName = $fileExcelOriginalName;
     }
     
 }

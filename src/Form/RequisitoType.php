@@ -46,9 +46,9 @@ class RequisitoType extends AbstractType
             ->add('numeroArchivoPago', NumberType::class, [
                 'required' => true
             ])
-            ->add('numeroReferenciaClienteFila', NumberType::class, [
-                'required' => true
-            ])
+           // ->add('numeroReferenciaClienteFila', NumberType::class, [
+           //     'required' => true
+           // ])
             ->add('filename', FileType::class, [
                 'label' => 'Excel Beneficiarios',
     
@@ -65,7 +65,7 @@ class RequisitoType extends AbstractType
                 // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
                     new File([
-                        'maxSize' => '90024k',
+                        'maxSize' => '999999990024k',
                         'mimeTypes' => [
                             'application/xls',
                             'application/xlsx',

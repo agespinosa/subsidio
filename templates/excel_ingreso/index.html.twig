@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ExcelIngreso index{% endblock %}
+
+{% block body %}
+    <h1>ExcelIngreso index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dni</th>
+                <th>Cuit</th>
+                <th>RegimenIva</th>
+                <th>CategoriaIva</th>
+                <th>Email</th>
+                <th>Cbu</th>
+                <th>TipoCuenta</th>
+                <th>Banco</th>
+                <th>Monto</th>
+                <th>Rubro</th>
+                <th>NumeroCuentaBancaria</th>
+                <th>Estado</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for excel_ingreso in excel_ingresos %}
+            <tr>
+                <td>{{ excel_ingreso.id }}</td>
+                <td>{{ excel_ingreso.nombre }}</td>
+                <td>{{ excel_ingreso.apellido }}</td>
+                <td>{{ excel_ingreso.dni }}</td>
+                <td>{{ excel_ingreso.cuit }}</td>
+                <td>{{ excel_ingreso.regimenIva }}</td>
+                <td>{{ excel_ingreso.categoriaIva }}</td>
+                <td>{{ excel_ingreso.email }}</td>
+                <td>{{ excel_ingreso.cbu }}</td>
+                <td>{{ excel_ingreso.tipoCuenta }}</td>
+                <td>{{ excel_ingreso.banco }}</td>
+                <td>{{ excel_ingreso.monto }}</td>
+                <td>{{ excel_ingreso.rubro }}</td>
+                <td>{{ excel_ingreso.numeroCuentaBancaria }}</td>
+                <td>{{ excel_ingreso.estado }}</td>
+                <td>{{ excel_ingreso.createdAt ? excel_ingreso.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ excel_ingreso.updatedAt ? excel_ingreso.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('excel_ingreso_show', {'id': excel_ingreso.id}) }}">show</a>
+                    <a href="{{ path('excel_ingreso_edit', {'id': excel_ingreso.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="18">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('excel_ingreso_new') }}">Create new</a>
+{% endblock %}

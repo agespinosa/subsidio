@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Requisito;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -36,15 +37,30 @@ class RequisitoRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Requisito
+    
+    public function findMaxNumeroReferenciaCliente()
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('max(r.numeroReferenciaClienteFila) AS maxNumeroReferenciaCliente')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getScalarResult()
         ;
     }
-    */
+
+    /**
+     * @param null|string $term
+     */
+    public function getWithSearchQueryBuilder(?string $term):QueryBuilder
+    {
+        $qb= $this->createQueryBuilder('p');
+        if($term){
+            $qb->andWhere('p.motivoPago LIKE :term')
+                ->setParameter('term', '%' . $term . '%')
+            ;
+        }
+
+        return $qb
+            ->orderBy('p.id', 'DESC');
+    }
+    
 }

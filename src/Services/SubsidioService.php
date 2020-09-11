@@ -12,6 +12,7 @@ use App\Entity\Totales;
 use App\Exception\SimpleMessageException;
 use App\Repository\CabeceraRepository;
 use App\Repository\ExcelIngresoRepository;
+use App\Repository\RequisitoRepository;
 use App\Repository\SubsidioPagoProveedoresRepository;
 use App\Repository\TotalesRepository;
 use App\Entity\AtributoConfiguracion;
@@ -49,11 +50,16 @@ class SubsidioService
      * @var ParameterBagInterface
      */
     private $params;
-
+    /**
+     * @var RequisitoRepository
+     */
+    private $requisitoRepository;
+    
     public function __construct(LoggerInterface $logger, ExcelIngresoRepository $excelIngresoRepository,
                                 SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
                                 CabeceraRepository $cabeceraRepository, TotalesRepository $totalesRepository,
                                 AtributoConfiguracionRepository $atributoConfiguracionRepository,
+                                RequisitoRepository $requisitoRepository,
                                 ParameterBagInterface $params)
     {
         $this->logger = $logger;
@@ -63,6 +69,7 @@ class SubsidioService
         $this->totalesRepository = $totalesRepository;
         $this->atributoConfiguracionRepository = $atributoConfiguracionRepository;
         $this->params = $params;
+        $this->requisitoRepository = $requisitoRepository;
     }
     
     public function generarSubsidioPagoProveedores(Requisito $requisito): array {
@@ -89,11 +96,14 @@ class SubsidioService
     
         $this->cabeceraRepository->persist($cabecera);
         $this->totalesRepository->persist($totales);
-        
-        $index = 0;
+    
+        $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
+        if(is_null($numeroReferenciaClienteFila) || $numeroReferenciaClienteFila == 0) {
+            $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
+            $numeroReferenciaClienteFila = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']);
+        }
         foreach ($excelIngresos as $excelIngreso) {
             $subsidioPagoProveedores = new SubsidioPagoProveedores();
-            $index++;
 
             $subsidioPagoProveedores->setCabecera($cabecera);
             $subsidioPagoProveedores->setTotales($totales);
@@ -107,7 +117,8 @@ class SubsidioService
             $subsidioPagoProveedores->setConRecurso('N');
             $subsidioPagoProveedores->setRequiereReciboImpreso('N');
             
-            $subsidioPagoProveedores->setReferenciaCliente($index);
+            $subsidioPagoProveedores->setReferenciaCliente($numeroReferenciaClienteFila);
+            $numeroReferenciaClienteFila++;
             $subsidioPagoProveedores->setImporteAPagar($excelIngreso->getMonto());
             $subsidioPagoProveedores->setMonedaPago($moneda);
             $subsidioPagoProveedores->setFechaEjecucionPago($requisito->getFechaDesde());
@@ -122,7 +133,7 @@ class SubsidioService
             $subsidioPagoProveedores->setMonedaCuenta($moneda);
             $subsidioPagoProveedores->setNumeroCuenta($excelIngreso->getNumeroCuentaBancaria());
             $subsidioPagoProveedores->setMonedaCuentaDebito($moneda);
-            $subsidioPagoProveedores->setCodigoNovedadOrden(1);
+            $subsidioPagoProveedores->setCodigoNovedadOrden(0);
     
             $banco = str_pad(substr($excelIngreso->getCbu(),0,3),5, "0", STR_PAD_LEFT);
             $sucursal = str_pad(substr($excelIngreso->getCbu(),3,4),35, "0", STR_PAD_LEFT);
@@ -132,9 +143,10 @@ class SubsidioService
             
             $subsidiosPagoProveedores[] = $subsidioPagoProveedores;
             $this->subsidioPagoProveedoresRepository->persist($subsidioPagoProveedores);
-
+            
         }
-
+    
+        $requisito->setNumeroReferenciaClienteFila($numeroReferenciaClienteFila);
         return $subsidiosPagoProveedores;
     }
 
@@ -207,7 +219,7 @@ class SubsidioService
         
     }
 
-    private function getTotalAPagar($excelIngresos){
+    public function getTotalAPagar($excelIngresos){
         $totalAPagar = 0;
         /** @var ExcelIngreso $excelIngreso */
         foreach ($excelIngresos as $excelIngreso) {
@@ -216,68 +228,8 @@ class SubsidioService
 
         return $totalAPagar;
     }
-
-    public function generarArchivoTxtSubsidio(array $subsidiosPagoProveedores, Requisito $requisito){
-        $directorioToSaveFile = $this->params->get('subsidio_directory');
-        $subsidioDirectoryRelativePath = $this->params->get('subsidio_directory_relative_path');
-        
-        /** @var AtributoConfiguracion $numeroClienteNBSFPagoProveedoresConfig */
-        $numeroClienteNBSFPagoProveedoresConfig =
-            $this->atributoConfiguracionRepository
-                ->findAtributoConfiguracionByClave('numeroClienteNBSF_Pago_Proveedores');
-        
-        $today = new \DateTime();
-        $mesDia = $today->format('md');
-        $subsidioFileName = 'PC'.$numeroClienteNBSFPagoProveedoresConfig->getValor().'F'.$mesDia.$requisito->getNumeroArchivoPago();
-        
-        $fullPath = $directorioToSaveFile.'/'.$subsidioFileName;
-        $relativePath = $subsidioDirectoryRelativePath.'/'.$subsidioFileName;
-
-        $this->logger->debug("Creando TXT File ".$subsidioFileName);
-        $handle = null;
-        try {
-            $handle = fopen($fullPath, 'w');
-        } catch (FileException | \RuntimeException $e) {
-            $message = "Error Creando TXT File ".$e->getMessage();
-            $this->logger->error($message);
-            $this->addFlash('errorMessage', $message);
-        }
-
-        if(!$handle || is_null($handle))
-        {
-            throw new SimpleMessageException("No se pudo generar el archivo txt de salida. ".$subsidioFileName);
-        }
-        try{
-            $newLine = "\n";
     
-            fwrite($handle,
-                $this->getCabeceraStringLine($subsidiosPagoProveedores[0]->getCabecera(), $requisito));
-            fwrite($handle,$newLine);
-            
-            /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
-            $numeroReferenciaClienteFila = $requisito->getNumeroReferenciaClienteFila();
-            foreach ($subsidiosPagoProveedores as $subsidioPagoProveedores) {
-                fwrite($handle, $this->getStringLine($subsidioPagoProveedores, $numeroReferenciaClienteFila));
-                fwrite($handle,$newLine);
-                $numeroReferenciaClienteFila++;
-            }
-    
-            fwrite($handle,
-                $this->getTotalesStringLine($subsidioPagoProveedores->getTotales(), $requisito));
-            fwrite($handle,$newLine);
-            
-        }catch (\Exception | \RuntimeException $exception){
-            fclose($handle);
-            $message = "Error procesando TXT File ".$e->getMessage();
-            $this->logger->error($message);
-            $this->addFlash('errorMessage', $message);
-        }
-
-        fclose($handle);
-        return $relativePath;
-    }
-
-    public function getStringLine(SubsidioPagoProveedores $subsidioPagoProveedores, $numeroReferenciaClienteFila){
+    public function getStringLine(SubsidioPagoProveedores $subsidioPagoProveedores){
         $domicilioBeneficiario="";
         $cuentaBancariaDelBeneficiario="";
         $formaDeEntregaDeCheque="";
@@ -288,7 +240,7 @@ class SubsidioService
         return
             $subsidioPagoProveedores->getRegistroId().
             $subsidioPagoProveedores->getTipoPago().
-            str_pad($numeroReferenciaClienteFila, 16, "0", STR_PAD_LEFT).
+            str_pad($subsidioPagoProveedores->getReferenciaCliente(), 16, "0", STR_PAD_LEFT).
             $subsidioPagoProveedores->getImporteAPagarString().
             $subsidioPagoProveedores->getMonedaPago().
             $subsidioPagoProveedores->getFechaEjecucionPagoStr().
@@ -314,6 +266,68 @@ class SubsidioService
             str_pad($nrodelinstrumentodepago, 15, " ", STR_PAD_LEFT).
             $subsidioPagoProveedores->getCodigoNovedadOrden();
 
+    }
+    
+    public function generarArchivoTxtSubsidio(array $subsidiosPagoProveedores, Requisito $requisito){
+        $directorioToSaveFile = $this->params->get('subsidio_directory');
+        $subsidioDirectoryRelativePath = $this->params->get('subsidio_directory_relative_path');
+        
+        /** @var AtributoConfiguracion $numeroClienteNBSFPagoProveedoresConfig */
+        $numeroClienteNBSFPagoProveedoresConfig =
+            $this->atributoConfiguracionRepository
+                ->findAtributoConfiguracionByClave('numeroClienteNBSF_Pago_Proveedores');
+        
+        $today = new \DateTime();
+        $mesDia = $today->format('md');
+        $subsidioFileName = 'PC'.$numeroClienteNBSFPagoProveedoresConfig->getValor().'F'.$mesDia.$requisito->getNumeroArchivoPago().'.txt';
+        
+        $fullPath = $directorioToSaveFile.'/'.$subsidioFileName;
+        $relativePath = $subsidioDirectoryRelativePath.'/'.$subsidioFileName;
+        
+        $this->logger->debug("Creando TXT File ".$subsidioFileName);
+        $handle = null;
+        try {
+            $handle = fopen($fullPath, 'w');
+        } catch (FileException | \RuntimeException $e) {
+            $message = "Error Creando TXT File ".$e->getMessage();
+            $this->logger->error($message);
+            $this->addFlash('errorMessage', $message);
+        }
+        
+        if(!$handle || is_null($handle))
+        {
+            throw new SimpleMessageException("No se pudo generar el archivo txt de salida. ".$subsidioFileName);
+        }
+        try{
+            $newLine = "\n";
+            
+            fwrite($handle,
+                $this->getCabeceraStringLine($subsidiosPagoProveedores[0]->getCabecera(), $requisito));
+            fwrite($handle,$newLine);
+            
+            /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
+            foreach ($subsidiosPagoProveedores as $subsidioPagoProveedores) {
+                fwrite($handle, $this->getStringLine($subsidioPagoProveedores));
+                fwrite($handle,$newLine);
+            }
+            
+            fwrite($handle,
+                $this->getTotalesStringLine($subsidioPagoProveedores->getTotales(), $requisito));
+            fwrite($handle,$newLine);
+            
+        }catch (\Exception | \RuntimeException $exception){
+            fclose($handle);
+            $message = "Error procesando TXT File ".$e->getMessage();
+            $this->logger->error($message);
+            $this->addFlash('errorMessage', $message);
+        }
+        
+        fclose($handle);
+    
+        $requisito->setFileSubsidioPath($relativePath);
+        $requisito->setFileSubsidioName($subsidioFileName);
+        
+        return $requisito;
     }
     public function getTotalesStringLine(Totales $totales, Requisito $requisito){
         // total de registros suma 2 por que cuenta la fila de cabecera y totales
