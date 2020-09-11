@@ -4,6 +4,11 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    files_directory: '%kernel.project_dir%/public/uploads/files'
+    subsidio_directory: '%kernel.project_dir%/public/uploads/subsidio'
+    subsidio_directory_relative_path: '../uploads/subsidio'
+    excel_directory_relative_path: '../uploads/files'
+    excel_modelo_directory_relative_path: '../uploads/subsidio/modeloExcel'
 
 services:
     # default configuration for services in *this* file

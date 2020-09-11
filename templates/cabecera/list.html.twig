@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Cabecera {% endblock %}
+
+{% block body %}
+    <h1>Listado Cabecera</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>RegistroId</th>
+                <th>Fecha Creacion Archivo</th>
+                <th>Hora Creacion Archivo</th>
+                <th>Numero Archivo</th>
+                <th>Numero Cliente</th>
+                <th>Identificacion Archivo</th>
+                <th>FechaHabil Procesamiento</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cabecera in cabeceras %}
+            <tr>
+                <td>{{ cabecera.id }}</td>
+                <td>{{ cabecera.registroId }}</td>
+                <td>{{ cabecera.fechaCreacionArchivo ? cabecera.fechaCreacionArchivo|date('Y-m-d') : '' }}</td>
+                <td>{{ cabecera.horaCreacionArchivo ? cabecera.horaCreacionArchivo|date('H:i:s') : '' }}</td>
+                <td>{{ cabecera.numeroArchivo }}</td>
+                <td>{{ cabecera.numeroCliente }}</td>
+                <td>{{ cabecera.identificacionArchivo }}</td>
+                <td>{{ cabecera.fechaHabilProcesamiento ? cabecera.fechaHabilProcesamiento|date('Y-m-d') : '' }}</td>
+                <td>{{ cabecera.createdAt ? cabecera.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ cabecera.updatedAt ? cabecera.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="actions">
+                    {#<!--a  onclick="return confirm('Esta Seguro!');" title="Borrar" class="btn btn-danger btn-sm" href="{{ path('licencia_by_id_delete', { 'id': licencium.id}) }}">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </a -->#}
+                    <a title='Ver' class="btn btn-info btn-sm"
+                       href="{{ path('cabecera_show', {'id': cabecera.id}) }}">
+                        <i class="icon-eye-open"></i>
+                    </a>
+                    <a  title='Editar' class="btn btn-primary btn-sm"
+                        href="{{ path('cabecera_edit', {'id': cabecera.id}) }}">
+                        <i class="icon-pencil"></i>
+                    </a>
+                </td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('cabecera_new') }}">Create new</a>
+{% endblock %}
