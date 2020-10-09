@@ -27,7 +27,7 @@ class UserFixture extends BaseFixtures
                 ->setFirstName($this->faker->firstName);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
-                'gustavo')
+                'coordinacion')
             );
             $apiToken1= new ApiToken($user);
             $apiToken2= new ApiToken($user);
