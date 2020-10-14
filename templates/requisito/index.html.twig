@@ -7,6 +7,7 @@
     <div class="card-body">
         <h5 class="card-title">Subsidios Pago a Proveedores</h5>
         <hr/>
+        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TESORERIA') %}
             <div class="row">
                 <div class="col-12">
 
@@ -160,7 +161,19 @@
                     {{ knp_pagination_render(pagination) }}
                 </div>
             </div>
+        {% else %}
+        <div class="row">
+            <div class="col-6">
+                <a type="button" role="button" class="btn btn-success btn-sm"
+                   href="{{ path('validar_excel_new_requisito') }}">Validar Archivo</a>
+            </div>
+            <div class="col-6 text-right">
+                <a type="button" role="button" class="btn btn-success btn-sm"
+                 href="{{ path('download_excel_modelo') }}">Download Modelo Excel</a>
+            </div>
         </div>
+        {% endif %}
     </div>
+</div>
 
 {% endblock %}

@@ -5,7 +5,10 @@
 {% block body %}
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Alta Subsidio</h5>
+        <h5 class="card-title">Alta Subsidio </h5>
+        {% if testMode %}
+            <h6 class="text-danger">TEST MODE</h6>
+        {% endif %}
         <div class="row col-12 mt-2">
             <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
                href="{{ path('requisito_index') }}">Volver</a>

@@ -8,7 +8,7 @@
 {% block body %}
     <form class="form-signin" method="post">
         {#  Remplazar con un Symfony Form #}
-        <h1 class="h3 mb-3 font-weight-normal">Registrar</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Registrar Nuevo Usuario</h1>
 
         <label for="inputEmail" class="sr-only">Email</label>
         <input type="email"  name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
@@ -24,6 +24,7 @@
         <select name="rol" class="form-control">
               <option value="ROLE_ADMIN" selected>Administrador</option>
               <option value="ROLE_TESORERIA">Tesoreria</option>
+            <option value="ROLE_AGENTE">Agente</option>
         </select>
         </br>
         <div class="checkbox mb-3">

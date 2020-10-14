@@ -91,6 +91,100 @@ class RequisitoController extends AbstractController
     }
     
     /**
+     *  @Route("/validar-excel" , name="validar_excel_new_requisito", methods={"GET", "POST"})
+     */
+    public function validarExcel( Request $request, PaginatorInterface $paginator): Response
+    {
+        $requisito = new Requisito();
+    
+        $form = $this->createForm(RequisitoType::class, $requisito);
+        $form->handleRequest($request);
+    
+        $this->logger->debug("RequisitoController, generar nuevo subsidio ");
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $file */
+            $file = $form->get('filename')->getData();
+            if ($file) {
+                $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+                $this->logger->debug("Subiendo Excel , nuevo subsidio ".$newFilename);
+                try {
+                    $file->move(
+                        $this->getParameter('files_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    $message = "Error Subiendo Excel , nuevo subsidio ".$e->getMessage();
+                    $this->logger->error($message);
+                    $this->addFlash('errorMessage', $message);
+                }
+            
+                $excelIngresosPath = $this->getParameter('excel_directory_relative_path');
+                $relativePath = $excelIngresosPath.'/'.$newFilename;
+                $requisito->setFileExcelOriginalPath($relativePath);
+                $requisito->setFileExcelOriginalName($newFilename);
+            
+                $filePath =  $this->getParameter('files_directory').'/'.$newFilename;
+            
+                $excelIngresos = array();
+                try{
+                    // Leo el excel y genero el/los ExcelIngreso, uno por cada fila del Excel
+                    $excelIngresos = $this->excelService->readFile($filePath);
+                
+                }catch (\Exception | FatalError | \RuntimeException $exception){
+                    $message = "Error Leyendo Excel ".$exception->getMessage();
+                    $this->logger->error($message);
+                    $this->addFlash('errorMessage', $message);
+                    return $this->render('requisito/new.html.twig', [
+                        'requisito' => $requisito,
+                        'form' => $form->createView()
+                    ]);
+                }catch (SimpleMessageException $sm){
+                    $message = "Error Leyendo Excel ".$sm->getMessage();
+                    $this->logger->error($message);
+                    $this->addFlash('errorMessage', $message);
+                    return $this->render('requisito/new.html.twig', [
+                        'requisito' => $requisito,
+                        'form' => $form->createView()
+                    ]);
+                }
+            
+                /** @var ExcelIngreso $excelIngreso */
+                foreach ($excelIngresos as $excelIngreso) {
+                    $excelIngreso->setRequisito($requisito);
+                    $this->excelIngresoRepository->persist($excelIngreso);
+                }
+            }
+            
+            $this->logger->debug('Archivo subido y procesado correctamente '.$newFilename);
+            $this->addFlash('successMessage','Archivo subido y procesado correctamente. Confirme la generacion');
+    
+            $validationConstraint =
+                $this->validationService->getMessageValidation($excelIngresos);
+    
+            if(!is_null($validationConstraint) && count($validationConstraint)>0) {
+                $this->logger->warning(json_encode($validationConstraint));
+            }
+    
+            $requisito->setTotalMontoPesos($this->subsidioService->getTotalAPagar($excelIngresos));
+    
+            return $this->render('requisito/confirm.html.twig', [
+                'requisito' => $requisito,
+                'validationConstraint' => $validationConstraint,
+                'excelIngresos' => $excelIngresos
+            ]);
+           
+        
+        }
+    
+        return $this->render('requisito/new.html.twig', [
+            'requisito' => $requisito,
+            'testMode' => true,
+            'form' => $form->createView(),
+        ]);
+    }
+    /**
      *  @Route("/" , name="requisito_index", methods={"GET"})
      */
     public function index( Request $request, PaginatorInterface $paginator): Response
@@ -202,6 +296,7 @@ class RequisitoController extends AbstractController
 
         return $this->render('requisito/new.html.twig', [
             'requisito' => $requisito,
+            'testMode' => false,
             'form' => $form->createView(),
         ]);
     }

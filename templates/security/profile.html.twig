@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Cabecera {% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
+                       href="{{ path('app_login') }}"  >
+                        <i class="fas fa-arrow-alt-circle-left"></i>
+                    </a>
+                    <h5 class="card-title ml-2 text-center">Editar Profile {{ currentUser.username }}</h5>
+                </div>
+            </div>
+
+            <div class="row mt-2 align-items-center">
+                <div class="col-9  offset-2  show-border-blue my-auto">
+                    {{ form_start(form) }}
+
+                    {{ form_widget(form) }}
+                    <p>
+                        <button type="submit" class="btn btn-sm btn-block btn-primary">
+                            <span class="fa fa-check" aria-hidden="true"></span> Guardar
+                        </button>
+                    </p>
+                    {{ form_end(form) }}
+
+                    <hr/>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

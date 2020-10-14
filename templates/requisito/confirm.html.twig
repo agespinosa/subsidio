@@ -32,10 +32,12 @@
                         </div>
                     </div>
                 {% endif %}
-                <div class="col-6 text-right">
-                    <a type="button" role="button" class="btn btn-success btn-sm "
-                       href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">Generar Archivo Subsidio</a>
-                </div>
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TESORERIA') %}
+                    <div class="col-6 text-right">
+                        <a type="button" role="button" class="btn btn-success btn-sm "
+                           href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">Generar Archivo Subsidio</a>
+                    </div>
+                {% endif %}
             </div>
             <div class="row mt-3">
                     <div class="col-12 text-left">
