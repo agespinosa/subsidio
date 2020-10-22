@@ -6,7 +6,7 @@
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Alta Subsidio </h5>
-        {% if testMode %}
+        {% if testMode is defined and testMode  %}
             <h6 class="text-danger">TEST MODE</h6>
         {% endif %}
         <div class="row col-12 mt-2">
