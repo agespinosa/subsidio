@@ -57,6 +57,10 @@ class ValidarExcelController extends AbstractController
      * @var SubsidioService
      */
     private $subsidioService;
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
     
     
     /**
@@ -74,6 +78,7 @@ class ValidarExcelController extends AbstractController
                                 RequisitoRepository $requisitoRepository,
                                 SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
                                 ValidationService $validationService,
+                                PaginatorInterface $paginator,
                                 SubsidioService $subsidioService
     )
     {
@@ -85,6 +90,7 @@ class ValidarExcelController extends AbstractController
         $this->subsidioPagoProveedoresRepository = $subsidioPagoProveedoresRepository;
         $this->validationService = $validationService;
         $this->subsidioService = $subsidioService;
+        $this->paginator = $paginator;
     }
     /**
      *  @Route("/" , name="validar_excel", methods={"GET"})
@@ -92,21 +98,30 @@ class ValidarExcelController extends AbstractController
     public function index( Request $request, PaginatorInterface $paginator): Response
     {
         $publicUploadsPathBase = $this->getParameter('public_uploads_path_base');
-        
-        $q = $request->query->get('q');
-        
-        $queryBuilder =$this->requisitoRepository->getWithSearchQueryBuilder($q);
-        
-        $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
+    
+        $query = $request->query->get('q');
+        $size = $request->query->get('size');
+        $page = $request->query->getInt('page', 1);
+        $reset = $request->query->get('reset');
+        if(!is_null($reset) && $reset === 'reset'
+            && (is_null($size)
+                && $query)){
+            $query = null;
+            $size = 10;
+            $page = 1;
+        }
+    
+        $queryBuilder =$this->requisitoRepository->getWithSearchQueryBuilder($query);
+    
+        $pagination =$this->paginator->paginate(
+            $queryBuilder,
+            $page,
+            $size ? $size : 10
         );
-        
+    
         $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
         $maxNumeroReferenciaCliente = abs($maxReferenciaClienteFila[0]['maxNumeroReferenciaCliente']);
-        
-        
+    
         return $this->render('validar_excel/index.html.twig', [
             'pagination' => $pagination,
             'publicUploadsPathBase' => $publicUploadsPathBase,

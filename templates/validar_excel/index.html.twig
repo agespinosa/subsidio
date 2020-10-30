@@ -59,25 +59,25 @@
                 <div class="align-middle">
                     <select class="form-control" onchange="window.location = this.value;"
                             name="cantidadPaginas" id="cantidadPaginas">
-                        <option value='{{ path('requisito_index', app.request.query.all|merge({'size': '0'})) }}' {% if app.request.get('size') == null %} selected {% endif %}>
+                        <option value='{{ path('validar_excel', app.request.query.all|merge({'size': '0'})) }}' {% if app.request.get('size') == null %} selected {% endif %}>
                             Cantidad x Pagina
                         </option>
-                        <option value='{{ path('requisito_index', app.request.query.all|merge({'size': '5'})) }}' {% if app.request.get('size') == 5 %} selected {% endif %}>
+                        <option value='{{ path('validar_excel', app.request.query.all|merge({'size': '5'})) }}' {% if app.request.get('size') == 5 %} selected {% endif %}>
                             5
                         </option>
-                        <option value='{{ path('requisito_index', app.request.query.all|merge({'size': '10'})) }}' {% if app.request.get('size') == 10 %} selected {% endif %}>
+                        <option value='{{ path('validar_excel', app.request.query.all|merge({'size': '10'})) }}' {% if app.request.get('size') == 10 %} selected {% endif %}>
                             10
                         </option>
-                        <option value='{{ path('requisito_index', app.request.query.all|merge({'size': '20'})) }}' {% if app.request.get('size') == 20 %} selected {% endif %}>
+                        <option value='{{ path('validar_excel', app.request.query.all|merge({'size': '20'})) }}' {% if app.request.get('size') == 20 %} selected {% endif %}>
                             20
                         </option>
-                        <option value='{{ path('requisito_index', app.request.query.all|merge({'size': '50'})) }}' {% if app.request.get('size') == 50 %} selected {% endif %}>
+                        <option value='{{ path('validar_excel', app.request.query.all|merge({'size': '50'})) }}' {% if app.request.get('size') == 50 %} selected {% endif %}>
                             50
                         </option>
-                        <option value='{{ path('requisito_index', app.request.query.all|merge({'size': '100'})) }}' {% if app.request.get('size') == 100 %} selected {% endif %}>
+                        <option value='{{ path('validar_excel', app.request.query.all|merge({'size': '100'})) }}' {% if app.request.get('size') == 100 %} selected {% endif %}>
                             100
                         </option>
-                        <option value='{{ path('requisito_index', app.request.query.all|merge({'size': '500'})) }}' {% if app.request.get('size') == 500 %} selected {% endif %}>
+                        <option value='{{ path('validar_excel', app.request.query.all|merge({'size': '500'})) }}' {% if app.request.get('size') == 500 %} selected {% endif %}>
                             500
                         </option>
                     </select>
