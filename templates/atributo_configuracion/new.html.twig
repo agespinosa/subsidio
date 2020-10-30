@@ -1,0 +1,19 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %}Nuevo Parametro{% endblock %}
+
+{% block content_body %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Nuevo Parametro </h5>
+
+            <div class="row col-12 mt-2">
+                <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
+                   href="{{ path('atributo_configuracion_index') }}">Volver</a>
+            </div>
+
+            {{ include('atributo_configuracion/_form.html.twig') }}
+
+        </div>
+    </div>
+{% endblock %}

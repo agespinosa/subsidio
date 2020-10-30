@@ -232,7 +232,6 @@ class SubsidioController extends AbstractController
     
         $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xls($spreadsheet);
         
-    
         $filePath =  $this->getParameter('subsidio_directory').'/beneficiariosxls/'.$excelName;
     
         // Create the excel file in the tmp directory of the system

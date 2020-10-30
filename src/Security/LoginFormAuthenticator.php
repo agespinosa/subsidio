@@ -22,16 +22,22 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
     private $repository;
     private $csrfTokenManager;
     private $passwordEncoder;
+    /**
+     * @var Security
+     */
+    private $security;
     use TargetPathTrait;
 
     public function __construct(UserRepository $repository, RouterInterface $router,
                                 CsrfTokenManagerInterface $csrfTokenManager,
+                                Security $security,
                                 UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->repository = $repository;
         $this->router = $router;
         $this->csrfTokenManager = $csrfTokenManager;
         $this->passwordEncoder = $passwordEncoder;
+        $this->security = $security;
     }
 
     public function supports(Request $request)
@@ -72,10 +78,17 @@ class LoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
-            return new RedirectResponse($targetPath);
+        
+        // Default target for unknown roles. Everyone else go there.
+        $url = 'validar_excel';
+    
+        if($this->security->isGranted('ROLE_ADMIN') ||
+            $this->security->isGranted('ROLE_TESORERIA') ) {
+            $url = 'requisito_index';
         }
-        return new RedirectResponse($this->router->generate('requisito_index'));
+        
+        
+        return new RedirectResponse($this->router->generate($url));
     }
 
     protected function getLoginUrl()

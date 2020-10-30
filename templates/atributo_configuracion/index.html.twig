@@ -1,0 +1,141 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %}{{ parent() }} - Parametros{% endblock %}
+
+{% block content_body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="card-title"> Parametros </h5>
+                </div>
+                <div class="col-6">
+
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <a type="button" role="button" class="btn btn-success btn-sm"
+                               href="{{ path('atributo_configuracion_new') }}">
+                                <span class="fa fa-file"> Nuevo Parametro</span>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="text"
+                                   id="q"
+                                   name="q"
+                                   class="form-control"
+                                   value="{{ app.request.query.get('q') }}"
+                                   placeholder="Buscar..."
+                            >
+                            <div class="input-group-append">
+                                <button type="submit"
+                                        class="btn btn-outline-secondary">
+                                    <span class="fa fa-search"></span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-6">
+
+                    <div class="align-middle">
+                        <select class = "form-control"  onchange="window.location = this.value;"
+                                name="cantidadPaginas" id="cantidadPaginas" >
+                            <option value='{{ path('atributo_configuracion_index', app.request.query.all|merge({'size': '0'})) }}' {% if app.request.get('size') == null %} selected {% endif %}>Cantidad Paginas</option>
+                            <option value='{{ path('atributo_configuracion_index', app.request.query.all|merge({'size': '5'})) }}' {% if app.request.get('size') == 5 %} selected {% endif %}>5</option>
+                            <option value='{{ path('atributo_configuracion_index', app.request.query.all|merge({'size': '10'})) }}' {% if app.request.get('size') == 10 %} selected {% endif %}>10</option>
+                            <option value='{{ path('atributo_configuracion_index', app.request.query.all|merge({'size': '20'})) }}' {% if app.request.get('size') == 20 %} selected {% endif %}>20</option>
+                            <option value='{{ path('atributo_configuracion_index', app.request.query.all|merge({'size': '50'})) }}' {% if app.request.get('size') == 50 %} selected {% endif %}>50</option>
+                            <option value='{{ path('atributo_configuracion_index', app.request.query.all|merge({'size': '100'})) }}' {% if app.request.get('size') == 100 %} selected {% endif %}>100</option>
+                            <option value='{{ path('atributo_configuracion_index', app.request.query.all|merge({'size': '500'})) }}' {% if app.request.get('size') == 500 %} selected {% endif %}>500</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 input-group mb-3">
+                    <a class="btn btn-info btn-sm btn-block colorSantaFe" href="{{ path('atributo_configuracion_index', {'reset': 'reset'}) }}">
+                        Limpiar filtros
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row mt-1 mb-1">
+                <div class="col-12 text-right">
+                    <button type="button" class="btn btn-primary btn-sm ">
+                        Cantidad Registros <span class="badge badge-light">{{ pagination.totalItemCount }}</span>
+                    </button>
+                </div>
+            </div>
+            <table class="table table-striped show-border-blue">
+                <thead>
+
+                <tr>
+                    <th>{{ knp_pagination_sortable(pagination, 'Id', 'atributo_configuracion.id') }}</th>
+                    <th>Clave</th>
+                    <th>Valor</th>
+                    <th{% if pagination.isSorted(['atributo_configuracion.createdAt']) %} class="sorted" {% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Fecha Alta', ['atributo_configuracion.createdAt']) }}
+                    </th>
+                    <th{% if pagination.isSorted(['atributo_configuracion.updatedAt']) %} class="sorted" {% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Fecha Act.', ['atributo_configuracion.updatedAt']) }}
+                    </th>
+                    <th{% if pagination.isSorted(['atributo_configuracion.fechaBaja']) %} class="sorted" {% endif %}>
+                        {{ knp_pagination_sortable(pagination, 'Fecha Baja.', ['atributo_configuracion.fechaBaja']) }}
+                    </th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for atributo_configuracion in pagination %}
+                    <tr>
+                        <td>{{ atributo_configuracion.id }}</td>
+                        <td>{{ atributo_configuracion.clave }}</td>
+                        <td>{{ atributo_configuracion.valor |truncate(20)  }}</td>
+                        <td>{{ atributo_configuracion.fechaBaja ? atributo_configuracion.fechaBaja|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ atributo_configuracion.createdAt ? atributo_configuracion.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>{{ atributo_configuracion.updatedAt ? atributo_configuracion.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>
+                            <a type="button" role="button" class="btn btn-sm btn-primary"
+                               data-toggle="tooltip" data-placement="top" title="Ver"
+                               href="{{ path('atributo_configuracion_show', {'id': atributo_configuracion.id}) }}"><i class="fas fa-eye"></i></a>
+                            <a type="button" role="button" class="btn btn-sm btn-warning"
+                               data-toggle="tooltip" data-placement="top" title="Editar"
+                               href="{{ path('atributo_configuracion_edit', {'id': atributo_configuracion.id}) }}">
+                                <i class="fas fa-pen-square"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+            {% if  pagination.totalItemCount== 0 %}
+                <div class="row" >
+                    <div class="col-12 alert alert-secondary" role="alert">
+                        Sin Registros
+                    </div>
+                </div>
+            {% endif %}
+            {# display navigation #}
+            <div class="navigation">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+

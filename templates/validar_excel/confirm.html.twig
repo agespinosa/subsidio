@@ -6,11 +6,12 @@
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Subsidios Pago a Proveedores</h5>
+            <h5 class="card-title bg-danger text-white text-center">Validar Subsidio </h5>
             <hr/>
             <div class="row">
                 <div class="row col-12 mt-2">
                     <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
-                       href="{{ path('requisito_index') }}">Volver</a>
+                       href="{{ path('validar_excel') }}">Volver</a>
                 </div>
             </div>
             <div class="row mt-2">
@@ -32,11 +33,6 @@
                         </div>
                     </div>
                 {% endif %}
-
-                <div class="col-6 text-right">
-                   <a type="button" role="button" class="btn btn-success btn-sm "
-                           href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">Generar Archivo Subsidio</a>
-                </div>
 
             </div>
             <div class="row mt-3">

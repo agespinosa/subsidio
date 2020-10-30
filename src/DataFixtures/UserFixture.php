@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\ApiToken;
 use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -25,16 +24,13 @@ class UserFixture extends BaseFixtures
             $user = new User();
             $user->setEmail(sprintf('usuario%d@santafe.gov.ar', $i))
                 ->setFirstName($this->faker->firstName);
+            $user->setEnabled(true);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
-                'coordinacion')
+                'gustavo')
             );
-            $apiToken1= new ApiToken($user);
-            $apiToken2= new ApiToken($user);
-            $manager->persist($apiToken1);
-            $manager->persist($apiToken2);
-
-            return $user;
+           
+           return $user;
         });
 
         $this->createMany(3, 'admin_users', function($i) {
@@ -42,6 +38,7 @@ class UserFixture extends BaseFixtures
             $user->setEmail(sprintf('admin%d@santafe.gov.ar', $i))
                 ->setFirstName($this->faker->firstName);
             $user->setRoles(['ROLE_ADMIN']);
+            $user->setEnabled(true);
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
                 'gustavo'

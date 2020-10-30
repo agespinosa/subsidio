@@ -1,11 +1,10 @@
-{% extends 'base.html.twig' %}
-
+{% extends 'content_base.html.twig' %}
 {% block title %}Registro!{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href=" {{ asset('css/login.css')  }}">
 {% endblock %}
-{% block body %}
+{% block content_body %}
     <form class="form-signin" method="post">
         {#  Remplazar con un Symfony Form #}
         <h1 class="h3 mb-3 font-weight-normal">Registrar Nuevo Usuario</h1>

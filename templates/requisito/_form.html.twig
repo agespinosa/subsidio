@@ -1,4 +1,10 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-    <button class="btn btn-primary btn-sm btn-block">{{ button_label|default('Guardar') }}</button>
+    {% if button_label is defined and button_label != "" and button_label =='Validar'%}
+        <button class="btn btn-secondary btn-sm btn-block">
+            {{ button_label|default('Validar') }}</button>
+    {% else %}
+         <button class="btn btn-primary btn-sm btn-block">
+          {{ button_label|default('Guardar') }}</button>
+    {% endif %}
 {{ form_end(form) }}

@@ -1,8 +1,8 @@
-{% extends 'base.html.twig' %}
+{% extends 'content_base.html.twig' %}
 
 {% block title %}Requisito{% endblock %}
 
-{% block body %}
+{% block content_body %}
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">Subsidio</h5>
@@ -15,6 +15,10 @@
                     <tr>
                         <th>Id</th>
                         <td>{{ requisito.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Motivo</th>
+                        <td>{{ requisito.motivoPagoStr }}</td>
                     </tr>
                     <tr>
                         <th>Fecha Pago</th>
@@ -37,12 +41,8 @@
 
 
 
-            <div class="row">
-                <button class="btn btn-primary btn-sm btn-block"
-                        href="{{ path('requisito_edit', {'id': requisito.id}) }}">Editar</button>
-            </div>
 
-            {{ include('requisito/_delete_form.html.twig') }}
+
     </div>
 </div>
 {% endblock %}
