@@ -59,13 +59,21 @@
                             <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="nav-profile-img rounded-circle"
                                      src="{{ asset('images/profile-ico.png') }}">
+                                <span>{{ app.user.username }}</span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ path('app_account_index') }}">Profile</a>
-                                <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                                <a class="dropdown-item" href="{{ path('app_account_index') }}">
+                                    <i class="far fa-address-card"></i>Profile</a>
                                 {% if is_granted("ROLE_ADMIN") %}
-                                    <a class="dropdown-item" href="{{ path('atributo_configuracion_index') }}">Configuraciones</a>
+                                    <a class="dropdown-item" href="{{ path('atributo_configuracion_index') }}">
+                                        <i class="fas fa-cog"></i>Configuraciones</a>
                                 {% endif %}
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    <a class="dropdown-item" href="{{ path('app_register') }}">
+                                        <i class="fas fa-user-plus"></i>Nuevo User</a>
+                                {% endif %}
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">
+                                    <i class="fas fa-sign-out-alt"></i>Logout</a>
 
                             </div>
 
