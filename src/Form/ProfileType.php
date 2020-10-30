@@ -17,7 +17,8 @@ class ProfileType extends AbstractType
             [
                 'ROLE_ADMIN' => 'ROLE_ADMIN',
                 'ROLE_TESORERIA'=> 'ROLE_TESORERIA',
-                'ROLE_AGENTE' => 'ROLE_AGENTE'
+                'ROLE_AGENTE' => 'ROLE_AGENTE',
+                'ROLE_SUPER_ADMIN' => 'ROLE_SUPER_ADMIN'
             ];
         $builder
             ->add('email')

@@ -20,10 +20,13 @@
         <label for="inputEmail" class="sr-only">Nombre</label>
         <input type="text"  name="firstName" id="firstName" class="form-control" placeholder="Nombre Usuario" required autofocus>
         </br>
-        <select name="rol" class="form-control">
-              <option value="ROLE_ADMIN" selected>Administrador</option>
+        <select name="rol" class="form-control" required>
+            <option value="" selected>Seleccione</option>
+            <option value="ROLE_SUPER_ADMIN" >Super Administrador</option>
+              <option value="ROLE_ADMIN" >Administrador</option>
               <option value="ROLE_TESORERIA">Tesoreria</option>
             <option value="ROLE_AGENTE">Agente</option>
+
         </select>
         </br>
         <div class="checkbox mb-3">
