@@ -106,7 +106,6 @@
             <tr>
                 <th>Id</th>
                 <th>Fecha Pago</th>
-                <th>Fecha Hasta</th>
                 <th>Motivo</th>
                 <th>Cuenta Origen</th>
                 <th>Total Beneficiarios</th>
@@ -121,7 +120,6 @@
                 <tr>
                     <td>{{ requisito.id }} </td>
                     <td>{{ requisito.fechaDesde ? requisito.fechaDesde|date('Y-m-d') : '' }}</td>
-                    <td>{{ requisito.fechaHasta ? requisito.fechaHasta|date('Y-m-d') : '' }}</td>
                     <td data-toggle="tooltip" data-placement="top"
                         title="{{ requisito.motivoPago }}">{{ requisito.motivoPago|slice(0,10) }}</td>
                     <td>{{ requisito.cuantaOrigenFodos }}</td>
