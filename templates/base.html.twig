@@ -9,20 +9,17 @@
     <link rel="icon" href="https://www.santafe.gob.ar/assets/standard/images/favicon.ico">
 
     {% block stylesheets %}
-        <!-- Font Awesome    -->
-        <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}" type="text/css">
 
-        <!-- css custom theme -->
-        <link rel="stylesheet" href="{{ asset('stgtheme/css/custom.css') }}" type="text/css">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}" type="text/css">
 
         <!-- assets fonts -->
         <link rel="stylesheet" href="https://www.santafe.gob.ar/assets/standard/css/fonts.css" type="text/css">
 
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-              rel="stylesheet">
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <link rel="stylesheet" href="{{ asset('css/font-awesome.css') }}">
+        <link rel="stylesheet" href="">
+
+        <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet"> <!--load all styles -->
 
         <link rel="stylesheet"
               type="text/css"
@@ -32,153 +29,157 @@
 
 <body>
     {% block nav %}
-    <div class="container-fluid mb-5">
-        <nav class="navbar navbar-expand-md navbar-light fixed-top">
-            <a class="navbar-brand" href="#"><img
-                        src="https://www.santafe.gob.ar/assets/standard/images/gob-santafe.png"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-                    aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        {% set route_name = app.request.attributes.get('_route') %}
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-1" id="navbar">
+            <a class="navbar-brand space-brand" href="#">Subsidios</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <ul class="navbar-nav mr-auto">
+            {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav mr-auto">
 
-                    {% block navItems %}
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TESORERIA') %}
+                            <li class="nav-item  {{ route_name == 'requisito_index' ? 'active' }}">
+                                <a class="nav-link" href="{{ path('requisito_index') }}">
+                                    Pago Proveedores
+                                </a>
+                            </li>
+                        {% endif %}
 
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{{ path('requisito_index') }}">Pago Proveedores <span class="sr-only">(current)</span></a>
+                        <li class="nav-item {{ route_name == 'validar_excel' ? 'active' }}">
+                           <a class="nav-link" href="{{ path('validar_excel') }}">Validar Excel <span class="sr-only">(current)</span></a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Punta Caja</a>
-                        </li>
 
 
-                    {% endblock %}
+                    </ul>
+                    <ul class="navbar-nav ml-auto mr-5">
+                        {% if is_granted("IS_AUTHENTICATED_FULLY") %}
+                        <li class="nav-item dropdown" style="margin-right: 35px;">
+                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img class="nav-profile-img rounded-circle"
+                                     src="{{ asset('images/profile-ico.png') }}">
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="{{ path('app_account_index') }}">Profile</a>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">Logout</a>
+                                {% if is_granted("ROLE_ADMIN") %}
+                                    <a class="dropdown-item" href="{{ path('atributo_configuracion_index') }}">Configuraciones</a>
+                                {% endif %}
 
-                </ul>
-                {% block searchTop %}
-
-                {% endblock %}
-
-                {% block iconsSystem %}
-                    <ul class="list-inline custom-icon-middle">
-                        <li class="list-inline-item">
-
-                            <a href="#" class="dropdown-toggle" id="dropdownMenuLinkPerson" data-toggle="dropdown"
-                               aria-haspopup="true"
-                               aria-expanded="false" title="Usuario logeado"><i class="material-icons">person</i></a>
-
-                            <div class="dropdown-menu custom-dropdown-menu-right" aria-labelledby="dropdownMenuLinkPerson">
-                                <a class="dropdown-item" href="#">Perfil</a>
-                                <a class="dropdown-item" href="#">Configuración</a>
-                                <a class="dropdown-item" href="#">Acerca de</a>
                             </div>
 
                         </li>
-
-                        <li class="list-inline-item"><a href="{{ path('app_logout') }}" title="Salir">
-                                <i class="material-icons">exit_to_app</i></a>
+                        {% else %}
+                        <li class="nav-item">
+                            <a style="color: #fff;" class="nav-link" href="{{ path('app_login') }}">Login</a>
                         </li>
-
                     </ul>
 
-                {% endblock %}
-
-            </div>
+                    {% endif %}
+                </div>
+            {% endif %}
         </nav>
-    </div>
     {% endblock %}
 
+
     <div class="container-fluid">
-        <div style="margin-top: 55px !important;">
+        {% if app.session.flashBag.has('successMessage') %}
+            <div class="alert alert-success fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {% for msg in app.session.flashBag.get('successMessage') %}
+                    {{ msg }}
+                {% endfor %}
 
-            {% if app.session.flashBag.has('successMessage') %}
-                <div class="alert alert-success">
-                    {% for msg in app.session.flashBag.get('successMessage') %}
-                        {{ msg }}
-                    {% endfor %}
+            </div>
+        {% endif %}
 
-                </div>
-            {% endif %}
+        {% if app.session.flashBag.has('errorMessage') %}
+            <div class="alert alert-danger fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {% for msg in app.session.flashBag.get('errorMessage') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
 
-            {% if app.session.flashBag.has('errorMessage') %}
-                <div class="alert alert-danger">
-                    {% for msg in app.session.flashBag.get('errorMessage') %}
-                        {{ msg }}
-                    {% endfor %}
-                </div>
-            {% endif %}
 
-            {% block body %}{% endblock %}
+        <div class="container-fluid mb-auto">
+            {% block body %}
+            {% endblock %}
         </div>
+
     </div>
 
     {% block footer %}
+        <div class="row ">
+            <footer class="footer text-muted" >
+                <div class="container-fluid">
+                    <div class="row">
 
-        <footer class="footer text-muted" style="margin-top: 55px !important;
-                    position:relative !important; overflow:hidden !important;">
-            <div class="container-fluid">
-                <div class="row">
-
-                    <div class="offset-md-2 col-md-3">
-                        <div class="sociales">
-                            <p><a href="/index.php/web/content/view/full/117678">RSS / SUSCRIPCIÓN A NOTICIAS</a></p>
-                            <ul class="list-inline footer-ul">
-                                <li class="list-inline-item"><a target="_blank" href="http://www.twitter.com/GobSantaFe"><i
-                                                class="icon-footertwitter"></i></a></li>
-                                <li class="list-inline-item"><a target="_blank" href="http://www.facebook.com/GobSantaFe"><i
-                                                class="icon-footerfacebook"></i></a>
-                                </li>
-                                <li class="list-inline-item"><a target="_blank" href="http://gplus.to/GobSantaFe"><i
-                                                class="icon-footerg"></i></a></li>
-                                <li class="list-inline-item"><a target="_blank" href="http://gobsantafe.tumblr.com/"><i
-                                                class="icon-footertumblr"></i></a>
-                                </li>
-                                <li class="list-inline-item"><a target="_blank" href="http://www.youtube.com/GobSantaFe"><i
-                                                class="icon-footeryoutube"></i></a></li>
-                                <li class="list-inline-item"><a target="_blank" href="http://instagram.com/gobsantafe"><i
-                                                class="icon-footerinstagram"></i></a></li>
-                                <li class="list-inline-item"><a target="_blank" href="https://es.foursquare.com/gobsantafe"><i
-                                                class="icon-footerfoursquare"></i></a></li>
-                                <li class="list-inline-item"><a target="_blank" href="https://storify.com/GobSantaFe"><i
-                                                class="icon-footerstorify"></i></a>
-                                </li>
-                                <li class="list-inline-item"><a target="_blank"
-                                                                href="http://www.linkedin.com/company/gobierno-de-la-provincia-de-santa-fe"><i
-                                                class="icon-footerlinkedin"></i></a></li>
-                            </ul>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-3">
-
-                        <div class="marca">
-                            <img src="https://www.santafe.gob.ar/assets/app/portal/imgs/marca-footer.png" alt="Santa Fe">
-                            <p>Atención telefónica: 0800-777-0801 </p>
-                            <p>Lunes a viernes de 8 a 18 hs </p>
-                            <p><span class="cc">c</span> Atribución-CompartirIgual 2.5 Argentina</p>
-                        </div>
-
-
-                    </div>
-
-                    <div class="col-md-3">
-
-                        <div class="stg-logos-contenedor">
-                            <div class="stg-logos">
-                                <a href="https://www.santafe.gob.ar/tecnologias" target="_blank"><span
-                                            class="stg-logos-logo-tec-stg"></span></a>
+                        <div class="offset-md-2 col-3">
+                            <div class="sociales">
+                                <p><a href="/index.php/web/content/view/full/117678">RSS / SUSCRIPCIÓN A NOTICIAS</a></p>
+                                <ul class="list-inline footer-ul">
+                                    <li class="list-inline-item"><a target="_blank" href="http://www.twitter.com/GobSantaFe"><i
+                                                    class="icon-footertwitter"></i></a></li>
+                                    <li class="list-inline-item"><a target="_blank" href="http://www.facebook.com/GobSantaFe"><i
+                                                    class="icon-footerfacebook"></i></a>
+                                    </li>
+                                    <li class="list-inline-item"><a target="_blank" href="http://gplus.to/GobSantaFe"><i
+                                                    class="icon-footerg"></i></a></li>
+                                    <li class="list-inline-item"><a target="_blank" href="http://gobsantafe.tumblr.com/"><i
+                                                    class="icon-footertumblr"></i></a>
+                                    </li>
+                                    <li class="list-inline-item"><a target="_blank" href="http://www.youtube.com/GobSantaFe"><i
+                                                    class="icon-footeryoutube"></i></a></li>
+                                    <li class="list-inline-item"><a target="_blank" href="http://instagram.com/gobsantafe"><i
+                                                    class="icon-footerinstagram"></i></a></li>
+                                    <li class="list-inline-item"><a target="_blank" href="https://es.foursquare.com/gobsantafe"><i
+                                                    class="icon-footerfoursquare"></i></a></li>
+                                    <li class="list-inline-item"><a target="_blank" href="https://storify.com/GobSantaFe"><i
+                                                    class="icon-footerstorify"></i></a>
+                                    </li>
+                                    <li class="list-inline-item"><a target="_blank"
+                                                                    href="http://www.linkedin.com/company/gobierno-de-la-provincia-de-santa-fe"><i
+                                                    class="icon-footerlinkedin"></i></a></li>
+                                </ul>
                             </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="marca">
+                                <img src="https://www.santafe.gob.ar/assets/app/portal/imgs/marca-footer.png" alt="Santa Fe">
+                                <p>Atención telefónica: 0800-777-0801 </p>
+                                <p>Lunes a viernes de 8 a 18 hs </p>
+                                <p><span class="cc">c</span> Atribución-CompartirIgual 2.5 Argentina</p>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="stg-logos-contenedor">
+                                <div class="stg-logos">
+                                    <a href="https://www.santafe.gob.ar/tecnologias" target="_blank"><span
+                                                class="stg-logos-logo-tec-stg"></span></a>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
 
                 </div>
-
-            </div>
-        </footer>
-
+            </footer>
+        </div>
     {% endblock %}
 
     {% block javascripts %}
@@ -199,8 +200,17 @@
                     dateFormat: 'dd/mm/yy'
                 });
                 $('[data-toggle="tooltip"]').tooltip();
+
             });
+
+
         </script>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+        <script type="text/javascript"
+                src="{{ asset('js/moment.js') }}"></script>
+
     {% endblock %}
 
 

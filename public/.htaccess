@@ -1,7 +1,8 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteRule ^(.*)$ /mprod-subsidio/index.php
+  RewriteRule ^(.*)$ /mprod-subsidio/public/index.php
   php_value upload_max_filesize 5M
   php_value post_max_size 8M
+  php_value memory_limit -1
 </IfModule>

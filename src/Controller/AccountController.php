@@ -2,35 +2,38 @@
 
 namespace App\Controller;
 
+use App\Security\LoginFormAuthentication;
 use Psr\Log\LoggerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 /**
  * @IsGranted("ROLE_USER")
  */
-class AccountController extends BaseController
+class AccountController extends AbstractController
 {
     /**
-     * @Route("/account", name="app_account")
+     * @var LoggerInterface
      */
-    public function index( LoggerInterface $logger)
-    {
-        $logger->debug('Checking account page for '.$this->getUser()->getEmail());
-        return $this->render('account/index.html.twig', [
+    private $logger;
 
-        ]);
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+
     }
 
     /**
-     * @Route("/api/account", name="api_account")
+     * @Route("/account", name="app_account_index")
      */
-    public function accountApi()
+    public function index()
     {
-        $user= $this->getUser();
-
-        return $this->json($user, 200, [],
-            ['groups'=>'main']
-        );
+        $this->logger->debug("Account manage access by ". $this->getUser()->getEmail());
+        return $this->render('account/index.html.twig', [
+            'controller_name' => 'AccountController',
+        ]);
     }
 }

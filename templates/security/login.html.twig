@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'content_base.html.twig' %}
 
 {% block title %}Login!{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href=" {{ asset('css/login.css')  }}">
 {% endblock %}
-{% block body %}
+{% block content_body %}
     <form class="form-signin" method="post">
         {% if error %}
             <div class="alert alert-danger" >{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -24,6 +24,12 @@
                 <input type="checkbox" name="_remember_me"> Recordarme
             </label>
         </div>
+
+        <div class="row mb-4 px-3">
+                <small class="font-weight-bold">No recueda su clave?
+                    <a class="text-danger" href="{{ path('app_forgot_password_request') }}">Recuperar</a></small>
+        </div>
+
         <button class="btn btn-lg btn-primary btn-block" type="submit">
             Iniciar Sesión
         </button>

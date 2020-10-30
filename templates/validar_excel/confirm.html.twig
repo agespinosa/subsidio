@@ -1,0 +1,97 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %}Subsidios Pago a Proveedores{% endblock %}
+
+{% block content_body %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Subsidios Pago a Proveedores</h5>
+            <h5 class="card-title bg-danger text-white text-center">Validar Subsidio </h5>
+            <hr/>
+            <div class="row">
+                <div class="row col-12 mt-2">
+                    <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
+                       href="{{ path('validar_excel') }}">Volver</a>
+                </div>
+            </div>
+            <div class="row mt-2">
+                {% if validationConstraint|length > 0 %}
+                    <div class="col-6">
+                        <button class="btn btn-sm btn-warning" type="button" data-toggle="collapse"
+                                data-target="#validaciones" aria-expanded="false" aria-controls="validaciones">
+                            Ver Validaciones
+                        </button>
+                        <div class="collapse" id="validaciones">
+                            <div class="card card-body">
+                                <ul>
+                                    {% for validation in validationConstraint %}
+                                        <li>{{ validation }}</li>
+                                    {% endfor %}
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+            </div>
+            <div class="row mt-3">
+                    <div class="col-12 text-left">
+                        <div class="row align-items-center">
+                            <div class="col-3 text-right">
+
+                                <span class="font-weight-bold"> Cantidad Beneficiarios: </span> <span class="font-weight-bold text-success">
+                                    {{ excelIngresos |length }}</span>
+                                </span>
+                            </div>
+                            <div class="col-3 text-right">
+                                <span class="font-weight-bold">
+                                 Total:
+                                </span>
+                                <span class="text-danger"> {{ requisito.totalMontoPesos|format_currency('ARS', locale='es') }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Numero</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Cuit</th>
+                                <th>Email</th>
+                                <th>Cbu</th>
+                                <th>TipoCuenta</th>
+                                <th>Monto</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for excel_ingreso in excelIngresos %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ excel_ingreso.nombre }}</td>
+                                    <td>{{ excel_ingreso.apellido }}</td>
+                                    <td>{{ excel_ingreso.cuit }}</td>
+                                    <td>{{ excel_ingreso.email }}</td>
+                                    <td>{{ excel_ingreso.cbu }}</td>
+                                    <td>{{ excel_ingreso.tipoCuenta }}</td>
+                                    <td>{{ excel_ingreso.monto |format_currency('ARS', locale='es')}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% if  excelIngresos|length == 0 %}
+                        <div class="row" >
+                            <div class="col-12 alert alert-secondary" role="alert">
+                                Sin Registros
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+
+{% endblock %}

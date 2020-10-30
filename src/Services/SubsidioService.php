@@ -152,7 +152,7 @@ class SubsidioService
 
     private function getTipoCuenta(ExcelIngreso $excelIngreso){
         $tipoCuenta = 'CA';
-        if(strpos($excelIngreso->   getTipoCuenta(), 'Cte') === TRUE ||
+        if(strpos($excelIngreso->getTipoCuenta(), 'Cte') === TRUE ||
             strpos($excelIngreso->getTipoCuenta(), 'Cta') === TRUE ||
             strpos($excelIngreso->getTipoCuenta(), 'Corriente') === TRUE){
             $tipoCuenta = 'CC';

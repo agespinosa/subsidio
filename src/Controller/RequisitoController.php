@@ -28,6 +28,7 @@ use Knp\Component\Pager\PaginatorInterface;
 /**
  * @Route("/")
  * @IsGranted("ROLE_ADMIN")
+ * @IsGranted("ROLE_TESORERIA")
  */
 class RequisitoController extends AbstractController
 {
@@ -60,9 +61,12 @@ class RequisitoController extends AbstractController
      * @var SubsidioService
      */
     private $subsidioService;
-
-
-
+    /**
+     * @var PaginatorInterface
+     */
+    private $paginator;
+    
+    
     /**
      * RequisitoController constructor.
      * @param ExcelService $excelService
@@ -78,7 +82,8 @@ class RequisitoController extends AbstractController
                                 RequisitoRepository $requisitoRepository,
                                 SubsidioPagoProveedoresRepository $subsidioPagoProveedoresRepository,
                                 ValidationService $validationService,
-                                SubsidioService $subsidioService
+                                SubsidioService $subsidioService,
+                                PaginatorInterface $paginator
                                 )
     {
         $this->excelService = $excelService;
@@ -88,23 +93,35 @@ class RequisitoController extends AbstractController
         $this->subsidioPagoProveedoresRepository = $subsidioPagoProveedoresRepository;
         $this->validationService = $validationService;
         $this->subsidioService = $subsidioService;
+        $this->paginator = $paginator;
     }
     
+   
     /**
      *  @Route("/" , name="requisito_index", methods={"GET"})
      */
     public function index( Request $request, PaginatorInterface $paginator): Response
     {
         $publicUploadsPathBase = $this->getParameter('public_uploads_path_base');
+    
+        $query = $request->query->get('q');
+        $size = $request->query->get('size');
+        $page = $request->query->getInt('page', 1);
+        $reset = $request->query->get('reset');
+        if(!is_null($reset) && $reset === 'reset'
+            && (is_null($size)
+                && $query)){
+            $query = null;
+            $size = 10;
+            $page = 1;
+        }
         
-        $q = $request->query->get('q');
-
-        $queryBuilder =$this->requisitoRepository->getWithSearchQueryBuilder($q);
-
-        $pagination = $paginator->paginate(
-            $queryBuilder, /* query NOT result */
-            $request->query->getInt('page', 1)/*page number*/,
-            10/*limit per page*/
+        $queryBuilder =$this->requisitoRepository->getWithSearchQueryBuilder($query);
+    
+        $pagination =$this->paginator->paginate(
+            $queryBuilder,
+            $page,
+            $size ? $size : 10
         );
     
         $maxReferenciaClienteFila = $this->requisitoRepository->findMaxNumeroReferenciaCliente();
