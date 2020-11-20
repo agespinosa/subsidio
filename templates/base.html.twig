@@ -31,24 +31,27 @@
     {% block nav %}
         {% set route_name = app.request.attributes.get('_route') %}
         <nav class="navbar navbar-expand-lg navbar-dark navbar-bg mb-1" id="navbar">
-            <a class="navbar-brand space-brand" href="#">Subsidios</a>
+            <a href="https://www.santafe.gob.ar" class="brand-logo mr-5">
+                <img class="logo logo--sf-big" src="http://www.santafe.gov.ar/assets/standard/images/gob-santafe.png">
+            </a>
+            <a class="navbar-brand space-brand fontColorSantaFe" href="#">Subsidios</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                 <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav mr-auto">
+                    <ul class="navbar-nav mr-auto ">
 
                         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_TESORERIA') %}
-                            <li class="nav-item  {{ route_name == 'requisito_index' ? 'active' }}">
-                                <a class="nav-link" href="{{ path('requisito_index') }}">
+                            <li class="nav-item {{ route_name == 'requisito_index' ? 'active' }}">
+                                <a class="nav-link fontColorSantaFe" href="{{ path('requisito_index') }}">
                                     Pago Proveedores
                                 </a>
                             </li>
                         {% endif %}
 
                         <li class="nav-item {{ route_name == 'validar_excel' ? 'active' }}">
-                           <a class="nav-link" href="{{ path('validar_excel') }}">Validar Excel <span class="sr-only">(current)</span></a>
+                           <a class="nav-link fontColorSantaFe" href="{{ path('validar_excel') }}">Validar Excel <span class="sr-only">(current)</span></a>
                         </li>
 
 
@@ -56,13 +59,13 @@
                     <ul class="navbar-nav ml-auto mr-5">
                         {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                         <li class="nav-item dropdown" style="margin-right: 35px;">
-                            <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle fontColorSantaFe" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img class="nav-profile-img rounded-circle"
                                      src="{{ asset('images/profile-ico.png') }}">
                                 <span>{{ app.user.username }}</span>
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="{{ path('app_account_index') }}">
+                                <a class="dropdown-item fontColorSantaFe" href="{{ path('app_account_index') }}">
                                     <i class="far fa-address-card"></i>Profile</a>
                                 {% if is_granted("ROLE_ADMIN") %}
                                     <a class="dropdown-item" href="{{ path('atributo_configuracion_index') }}">
@@ -79,7 +82,7 @@
 
                         </li>
                         {% else %}
-                        <li class="nav-item">
+                        <li class="nav-item fontColorSantaFe">
                             <a style="color: #fff;" class="nav-link" href="{{ path('app_login') }}">Login</a>
                         </li>
                     </ul>

@@ -32,12 +32,16 @@ html {
 }
 
 #navbar{
-    background-color: #267ABD !important;
+    background-color: #E3E1E2 !important;
 }
 
 .colorSantaFe{
-    background-color: #267ABD !important;
+    background-color: #203F7A !important;
 
+}
+
+.fontColorSantaFe{
+    color: #203F7A !important;
 }
 
 .border-right-blue{

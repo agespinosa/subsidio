@@ -138,6 +138,11 @@ class ExcelService
                             $email = $emailDefaultPagoProveedoresConfig->getValor();
                         }
                     }
+    
+                    $email = trim($email);
+                    $email = strip_tags($email);
+                    $email = preg_replace('/\%/','',$email);
+                    
                     $excelIngreso->setEmail($email);
                     break;
                     
