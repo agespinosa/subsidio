@@ -614,7 +614,7 @@ class SubsidioPagoProveedores
     }
 
     public function getFechaEjecucionPagoStr(): string {
-        return $this->getFechaEjecucionPago()->format('yymd');
+        return $this->getFechaEjecucionPago()->format('Ymd');
     }
     
     public function getCuitStr(): ?string

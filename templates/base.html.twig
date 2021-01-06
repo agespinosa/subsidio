@@ -67,11 +67,11 @@
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <a class="dropdown-item fontColorSantaFe" href="{{ path('app_account_index') }}">
                                     <i class="far fa-address-card"></i>Profile</a>
-                                {% if is_granted("ROLE_ADMIN") %}
+                                {% if is_granted("ROLE_SUPER_ADMIN") %}
                                     <a class="dropdown-item" href="{{ path('atributo_configuracion_index') }}">
                                         <i class="fas fa-cog"></i>Configuraciones</a>
                                 {% endif %}
-                                {% if is_granted("ROLE_ADMIN") %}
+                                {% if is_granted("ROLE_SUPER_ADMIN") %}
                                     <a class="dropdown-item" href="{{ path('app_register') }}">
                                         <i class="fas fa-user-plus"></i>Nuevo User</a>
                                 {% endif %}

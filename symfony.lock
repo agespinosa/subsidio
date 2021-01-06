@@ -377,6 +377,9 @@
     "symfony/orm-pack": {
         "version": "v1.0.8"
     },
+    "symfony/polyfill-intl-grapheme": {
+        "version": "v1.20.0"
+    },
     "symfony/polyfill-intl-icu": {
         "version": "v1.17.1"
     },
@@ -456,6 +459,9 @@
     },
     "symfony/stopwatch": {
         "version": "v4.4.7"
+    },
+    "symfony/string": {
+        "version": "v5.1.8"
     },
     "symfony/translation": {
         "version": "3.3",
@@ -561,6 +567,9 @@
     },
     "twig/intl-extra": {
         "version": "v3.0.4"
+    },
+    "twig/string-extra": {
+        "version": "v3.1.1"
     },
     "twig/twig": {
         "version": "v3.0.3"

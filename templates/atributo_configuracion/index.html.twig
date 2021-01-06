@@ -103,7 +103,7 @@
                     <tr>
                         <td>{{ atributo_configuracion.id }}</td>
                         <td>{{ atributo_configuracion.clave }}</td>
-                        <td>{{ atributo_configuracion.valor |truncate(20)  }}</td>
+                        <td>{{ atributo_configuracion.valor |u.truncate(20)  }}</td>
                         <td>{{ atributo_configuracion.fechaBaja ? atributo_configuracion.fechaBaja|date('Y-m-d H:i:s') : '' }}</td>
                         <td>{{ atributo_configuracion.createdAt ? atributo_configuracion.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                         <td>{{ atributo_configuracion.updatedAt ? atributo_configuracion.updatedAt|date('Y-m-d H:i:s') : '' }}</td>

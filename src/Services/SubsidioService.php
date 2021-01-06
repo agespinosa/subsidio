@@ -358,12 +358,12 @@ class SubsidioService
         
         return
             str_pad($cabecera->getRegistroId().
-                $today->format('yymd').
+                $today->format('Ymd').
                 $today->format('His').
                 str_pad($requisito->getNumeroArchivoPago(),3, "0", STR_PAD_LEFT).
                 str_pad($numeroClienteOrdenanteAnteBSFValue,7, "0", STR_PAD_LEFT).
                 $cabecera->getIdentificacionArchivo().
-                $requisito->getFechaDesde()->format('yymd')
+                $requisito->getFechaDesde()->format('Ymd')
                 , 794, " ", STR_PAD_RIGHT);
             
             
