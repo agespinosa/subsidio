@@ -1,0 +1,53 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %}Punta Caja Pago{% endblock %}
+
+{% block content_body %}
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Punta Caja Pago</h5>
+        <div class="row col-12 mt-2">
+            <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
+               href="{{ path('punta_caja_pago_index') }}">Volver</a>
+        </div>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ punta_caja_pago.id }}</td>
+                </tr>
+                <tr>
+                    <th>FechaDesde</th>
+                    <td>{{ punta_caja_pago.fechaDesde ? punta_caja_pago.fechaDesde|date('Y-m-d') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>FechaHasta</th>
+                    <td>{{ punta_caja_pago.fechaHasta ? punta_caja_pago.fechaHasta|date('Y-m-d') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>MotivoPago</th>
+                    <td>{{ punta_caja_pago.motivoPago }}</td>
+                </tr>
+                <tr>
+                    <th>MontoTotal</th>
+                    <td>{{ punta_caja_pago.montoTotal }}</td>
+                </tr>
+                <tr>
+                    <th>CodigoBanco</th>
+                    <td>{{ punta_caja_pago.codigoBanco }}</td>
+                </tr>
+                <tr>
+                    <th>CantidadRegistros</th>
+                    <td>{{ punta_caja_pago.cantidadRegistros }}</td>
+                </tr>
+                <tr>
+                    <th>TipoSoporte</th>
+                    <td>{{ punta_caja_pago.tipoSoporte }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+{% endblock %}

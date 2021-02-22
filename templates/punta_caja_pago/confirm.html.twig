@@ -1,0 +1,95 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %}Subsidios Punta Caja{% endblock %}
+
+{% block content_body %}
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Subsidios Punta Caja</h5>
+            <hr/>
+            <div class="row">
+                <div class="row col-12 mt-2">
+                    <a type="button" role="button" class="mb-2 btn btn-sm btn-secondary"
+                       href="{{ path('punta_caja_pago_index') }}">Volver</a>
+                </div>
+            </div>
+            <div class="row mt-2">
+                {% if validationConstraint|length > 0 %}
+                    <div class="col-6">
+                        <button class="btn btn-sm btn-warning" type="button" data-toggle="collapse"
+                                data-target="#validaciones" aria-expanded="false" aria-controls="validaciones">
+                            Ver Validaciones
+                        </button>
+                        <div class="collapse" id="validaciones">
+                            <div class="card card-body">
+                                <ul>
+                                    {% for validation in validationConstraint %}
+                                        <li>{{ validation }}</li>
+                                    {% endfor %}
+                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="col-6 text-right">
+                   <a type="button" role="button" class="btn btn-success btn-sm "
+                           href="{{ path('generar_archivo_subsidio_puntaCaja', {'id': puntaCajaPago.id}) }}">Generar Archivo Punta Caja</a>
+                </div>
+
+            </div>
+            <div class="row mt-3">
+                    <div class="col-12 text-left">
+                        <div class="row align-items-center">
+                            <div class="col-3 text-right">
+
+                                <span class="font-weight-bold"> Cantidad Beneficiarios: </span> <span class="font-weight-bold text-success">
+                                    {{ excelIngresos |length }}</span>
+                                </span>
+                            </div>
+                            <div class="col-3 text-right">
+                                <span class="font-weight-bold">
+                                 Total:
+                                </span>
+                                <span class="text-danger"> {{ puntaCajaPago.montoTotal|format_currency('ARS', locale='es') }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-12">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Numero</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>DNI</th>
+                                <th>Monto</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for excel_ingreso in excelIngresos %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ excel_ingreso.nombre }}</td>
+                                    <td>{{ excel_ingreso.apellido }}</td>
+                                    <td>{{ excel_ingreso.dni }}</td>
+                                    <td>{{ excel_ingreso.monto |format_currency('ARS', locale='es')}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% if  excelIngresos|length == 0 %}
+                        <div class="row" >
+                            <div class="col-12 alert alert-secondary" role="alert">
+                                Sin Registros
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\AtributoConfiguracion;
 use App\Entity\ExcelIngreso;
+use App\Entity\PuntaCajaPago;
 use App\Entity\Requisito;
 use App\Entity\SubsidioPagoProveedores;
 use App\Exception\SimpleMessageException;
@@ -78,6 +79,57 @@ class SubsidioController extends AbstractController
         $this->TCPDFController = $TCPDFController;
     }
     
+    /**
+     * @Route("/generarPagoPuntaCaja/{id}", name="generar_archivo_subsidio_puntaCaja", methods={"GET","POST"})
+     */
+    public function generarPagoPuntaCaja(PuntaCajaPago $puntaCajaPago): Response
+    {
+        $this->logger->info("Entro a generar archivo de pago Punta Caja - PuntaCajaPago: ".$puntaCajaPago->getId());
+    
+        /** @var AtributoConfiguracion $cuentaOrigenFondosConfig */
+        $cuentaOrigenFondosConfig =
+            $this->atributoConfiguracionRepository
+                ->findAtributoConfiguracionByClave('cuentaOrigenFondos');
+    
+        $puntaCajaPago->setCuantaOrigenFodos($cuentaOrigenFondosConfig->getValor());
+    
+        /** @var SubsidioPagoProveedores $subsidioPagoProveedores */
+        try{
+            $subsidioPagoProveedores =
+                $this->subsidioService->generarSubsidioPagoProveedores($puntaCajaPago);
+        
+            $archivoGenerado = null;
+            if(!is_null($subsidioPagoProveedores) && count($subsidioPagoProveedores)>0){
+                /** @var SubsidioPagoProveedores $subsidio */
+                $subsidio = $subsidioPagoProveedores[0];
+            
+                $requisito = $this->subsidioService->generarArchivoTxtSubsidio($subsidioPagoProveedores,$puntaCajaPago);
+            
+                $requisito->setTotalBeneficiarios($subsidio->getTotales()->getTotalRegistros());
+                $requisito->setTotalMontoPesos($subsidio->getTotales()->getTotalAPagar());
+                $requisito->setEstado(Requisito::ESTADO_PROCESADO);
+            }
+            // Persiste
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->flush();
+        
+            $message = "Termino de generar archivo de Subsidio - Requisito: ".$requisito->getId();
+            $this->logger->info($message);
+            $this->addFlash('successMessage', $message);
+        }catch (\Exception | FatalError | \RuntimeException $exception){
+            $message = "Error formateando archivo ".$exception->getMessage();
+            $this->logger->error($message);
+            $this->addFlash('errorMessage', $message);
+            $this->redirectToRoute('requisito_index');
+        }catch (SimpleMessageException $sm){
+            $message = "Error formateando archivo ".$sm->getMessage();
+            $this->logger->error($message);
+            $this->addFlash('errorMessage', $message);
+            $this->redirectToRoute('requisito_index');
+        }
+    
+        return $this->redirectToRoute('requisito_index');
+    }
     /**
      * @Route("/generarPagoProveedores/{id}", name="generar_archivo_subsidio_proveedores", methods={"GET","POST"})
      */

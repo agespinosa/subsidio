@@ -10,6 +10,8 @@ parameters:
     subsidio_directory_relative_path: '/subsidio'
     excel_directory_relative_path: '/files'
     excel_modelo_directory_relative_path: '%kernel.project_dir%/public/modeloExcel/modelo.xls'
+    excel_puntacaja_directory_relative_path: '/pagosPuntaCaja'
+    files_puntacaja_directory: '%kernel.project_dir%/public/uploads/filesPuntaCaja'
 
 services:
     # default configuration for services in *this* file

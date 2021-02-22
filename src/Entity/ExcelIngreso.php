@@ -111,6 +111,21 @@ class ExcelIngreso
      * @ORM\Column(type="string", length=100)
      */
     private $estado;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $localidad;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $nodo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=PuntaCajaPago::class, inversedBy="excelIngresos")
+     */
+    private $puntaCajaPago;
     
     public function __construct()
     {
@@ -370,6 +385,42 @@ class ExcelIngreso
     public function getFullName(): ?string
     {
         return $this->getApellido().' '.$this->getNombre();
+    }
+
+    public function getLocalidad(): ?string
+    {
+        return $this->localidad;
+    }
+
+    public function setLocalidad(?string $localidad): self
+    {
+        $this->localidad = $localidad;
+
+        return $this;
+    }
+
+    public function getNodo(): ?string
+    {
+        return $this->nodo;
+    }
+
+    public function setNodo(?string $nodo): self
+    {
+        $this->nodo = $nodo;
+
+        return $this;
+    }
+
+    public function getPuntaCajaPago(): ?PuntaCajaPago
+    {
+        return $this->puntaCajaPago;
+    }
+
+    public function setPuntaCajaPago(?PuntaCajaPago $puntaCajaPago): self
+    {
+        $this->puntaCajaPago = $puntaCajaPago;
+
+        return $this;
     }
 
     

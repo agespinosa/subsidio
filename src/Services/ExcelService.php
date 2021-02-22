@@ -83,10 +83,73 @@ class ExcelService
         return true;
     }
     
-    public function columnsAcceptNull():array {
+    private function isValidFilePuntaCaja(RowCellIterator $cellIterator){
+        foreach ($cellIterator as $cell) {
+            $value = $cell->getValue();
+            $columnName = $cell->getColumn();
+            $rowNumber = $cell->getRow();
+            $message = 'Columna ' . $columnName . " fila ".$rowNumber ." valor " . $value;
+            
+            if(!in_array($columnName, $this->columnsAcceptNullPuntaCaja()) && ($value === null || empty($value))) {
+                $this->logger->info($message);
+                throw new SimpleMessageException($message . 'Value is null or empty');
+            }
+        }
+        
+        return true;
+    }
+    
+    public function columnsAcceptNullPuntaCaja():array {
         return array('A','B','C','E','F','I','H','J', 'L');
     }
     
+    public function columnsAcceptNull():array {
+        return array('A','B','C','E','F','I','H','J', 'L');
+    }
+
+    public function createExcelIngresoPuntaCaja(RowCellIterator $cellIterator){
+        $excelIngreso = new ExcelIngreso();
+        foreach ($cellIterator as $cell) {
+            $value = trim($cell->getValue());
+            $columnName = $cell->getColumn();
+            $this->logger->info('ExcelIngreso para columna '.$columnName. " valor ".$value);
+            $filaNumber = $cell->getRow();
+        
+            //if($filaNumber === 144 || $filaNumber === 143){
+            //    $this->logger->debug('ExcelIngreso para columna '.$columnName. " valor ".$value);
+            // }
+        
+            switch ($columnName) {
+                case 'A':
+                    $excelIngreso->setApellido($value);
+                    break;
+                case 'B':
+                    $excelIngreso->setNombre($value);
+                    break;
+                case 'C':
+                    $dni = str_replace("-","", $value);
+                    $dni = str_replace("/","", $dni);
+                    $dni = str_replace(".","", $dni);
+                    $excelIngreso->setDni(preg_replace("/[^0-9]/", "",$dni));
+                    break;
+                case 'D':
+                    $excelIngreso->setMonto($value);
+                    break;
+                case 'E':
+                    $localidad = $value;
+    
+                    $localidad = trim($localidad);
+                    $localidad = strip_tags($localidad);
+                    $localidad = preg_replace('/\%/','',$localidad);
+                
+                    $excelIngreso->setLocalidad($localidad);
+                    break;
+                    
+            }
+        }
+    
+        return $excelIngreso;
+    }
     public function createExcelIngreso(RowCellIterator $cellIterator){
         $excelIngreso = new ExcelIngreso();
         foreach ($cellIterator as $cell) {
@@ -173,4 +236,36 @@ class ExcelService
         
         return $excelIngreso;
     }
+    
+    
+    public function readFilePuntaCaja($filePath){
+        $this->logger->info('Leyendo excel punta caja '.$filePath);
+        
+        $this->logger->info('Comienzo lectura');
+        $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReaderForFile($filePath);
+        $reader->setReadDataOnly(TRUE);
+        $spreadsheet = $reader->load($filePath);
+        $activeSheet = $spreadsheet->getActiveSheet();
+        $excelIngreso = null;
+        $filasProcesadas = 0;
+        
+        foreach ($activeSheet->getRowIterator(2) as $row) {
+            $this->logger->info('Leyendo fila '.$row->getRowIndex());
+            $cellIterator = $row->getCellIterator();
+            $cellIterator->setIterateOnlyExistingCells(FALSE);
+            
+            $this->logger->info('Genero Fila ExcelIngreso para fila '.$row->getRowIndex());
+            if($this->isValidFilePuntaCaja($cellIterator)){
+                $excelIngresos[] = $this->createExcelIngresoPuntaCaja($cellIterator);
+            }
+            
+            $filasProcesadas++;
+        }
+        
+        $this->logger->info('Cantidad de Filas Procesadas '.$filasProcesadas);
+        $this->logger->info('Cantidad de ExcelIngreso Creados '.count($excelIngresos));
+        
+        return $excelIngresos;
+    }
+    
 }

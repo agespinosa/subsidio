@@ -48,6 +48,11 @@
                                     Pago Proveedores
                                 </a>
                             </li>
+                            <li class="nav-item {{ route_name == 'punta_caja_pago_index' ? 'active' }}">
+                                <a class="nav-link fontColorSantaFe" href="{{ path('punta_caja_pago_index') }}">
+                                    Pago Punta Caja
+                                </a>
+                            </li>
                         {% endif %}
 
                         <li class="nav-item {{ route_name == 'validar_excel' ? 'active' }}">

@@ -1,0 +1,185 @@
+{% extends 'content_base.html.twig' %}
+
+{% block title %}Pagos Punta Caja{% endblock %}
+
+{% block content_body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="row">
+                <div class="col-6">
+                    <h5 class="card-title"> Pagos Punta Caja</h5>
+                </div>
+                <div class="col-6">
+                    <div class="col text-right">
+                        <a type="button" role="button" class="btn btn-success btn-sm"
+                           href="{{ path('download_excel_modelo') }}">Download Modelo Excel</a>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                    <div class="row align-items-center">
+                        <div class="col-3">
+                            <a type="button" role="button" class="btn btn-success btn-sm"
+                               href="{{ path('punta_caja_pago_new') }}">
+                                <span class="fa fa-file"> Nuevo Pago Punta Caja</span>
+                            </a>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <form>
+                        <div class="input-group mb-3">
+                            <input type="text"
+                                   id="q"
+                                   name="q"
+                                   class="form-control"
+                                   value="{{ app.request.query.get('q') }}"
+                                   placeholder="Buscar..."
+                            >
+                            <div class="input-group-append">
+                                <button type="submit"
+                                        class="btn btn-outline-secondary">
+                                    <span class="fa fa-search"></span>
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+                </div>
+                <div class="col-6">
+
+                    <div class="align-middle">
+                        <select class="form-control" onchange="window.location = this.value;"
+                                name="cantidadPaginas" id="cantidadPaginas">
+                            <option value='{{ path('punta_caja_pago_index', app.request.query.all|merge({'size': '0'})) }}' {% if app.request.get('size') == null %} selected {% endif %}>
+                                Cantidad x Pagina
+                            </option>
+                            <option value='{{ path('punta_caja_pago_index', app.request.query.all|merge({'size': '5'})) }}' {% if app.request.get('size') == 5 %} selected {% endif %}>
+                                5
+                            </option>
+                            <option value='{{ path('punta_caja_pago_index', app.request.query.all|merge({'size': '10'})) }}' {% if app.request.get('size') == 10 %} selected {% endif %}>
+                                10
+                            </option>
+                            <option value='{{ path('punta_caja_pago_index', app.request.query.all|merge({'size': '20'})) }}' {% if app.request.get('size') == 20 %} selected {% endif %}>
+                                20
+                            </option>
+                            <option value='{{ path('punta_caja_pago_index', app.request.query.all|merge({'size': '50'})) }}' {% if app.request.get('size') == 50 %} selected {% endif %}>
+                                50
+                            </option>
+                            <option value='{{ path('punta_caja_pago_index', app.request.query.all|merge({'size': '100'})) }}' {% if app.request.get('size') == 100 %} selected {% endif %}>
+                                100
+                            </option>
+                            <option value='{{ path('punta_caja_pago_index', app.request.query.all|merge({'size': '500'})) }}' {% if app.request.get('size') == 500 %} selected {% endif %}>
+                                500
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 input-group mb-3">
+                    <a class="btn btn-info btn-sm btn-block colorSantaFe"
+                       href="{{ path('punta_caja_pago_index', {'reset': 'reset'}) }}">
+                        Limpiar filtros
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="row mt-1 mb-1">
+                <div class="col-12 text-right">
+                    <button type="button" class="btn btn-primary btn-sm ">
+                        Cantidad Registros <span class="badge badge-light">{{ pagination.totalItemCount }}</span>
+                    </button>
+                </div>
+            </div>
+            <h6 class="border-bottom border-gray pb-2 mb-0">Pagos Punta caja generados ({{ pagination.totalItemCount }}
+                )</h6>
+            <table class="table table-striped show-border-blue">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>FechaDesde</th>
+                    <th>FechaHasta</th>
+                    <th>MotivoPago</th>
+                    <th>MontoTotal</th>
+                    <th>CodigoBanco</th>
+                    <th>CantidadRegistros</th>
+                    <th>TipoSoporte</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for punta_caja_pago in pagination %}
+                    <tr>
+                        <td>{{ punta_caja_pago.id }}</td>
+                        <td>{{ punta_caja_pago.fechaDesde ? punta_caja_pago.fechaDesde|date('Y-m-d') : '' }}</td>
+                        <td>{{ punta_caja_pago.fechaHasta ? punta_caja_pago.fechaHasta|date('Y-m-d') : '' }}</td>
+                        <td>{{ punta_caja_pago.motivoPago }}</td>
+                        <td>{{ punta_caja_pago.montoTotal }}</td>
+                        <td>{{ punta_caja_pago.codigoBanco }}</td>
+                        <td>{{ punta_caja_pago.cantidadRegistros }}</td>
+                        <td>{{ punta_caja_pago.tipoSoporte }}</td>
+                        <td colspan="4" style="width: 200px !important;">
+                            <a type="button" role="button" class="btn btn-sm btn-success"
+                               data-toggle="tooltip" data-placement="top" title="Generar Archivo Subsidio"
+                               href="{{ path('generar_archivo_subsidio_proveedores', {'id': requisito.id}) }}">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </a>
+
+                            <a type="button" role="button" class="btn btn-sm btn-primary"
+                               data-toggle="tooltip" data-placement="top" title="Ver"
+                               href="{{ path('punta_caja_pago_show', {'id': requisito.id}) }}"><i
+                                        class="fas fa-eye"></i></a>
+                            <a type="button" role="button" class="btn btn-sm btn-warning"
+                               data-toggle="tooltip" data-placement="top" title="Editar"
+                               href="{{ path('punta_caja_pago_edit', {'id': requisito.id}) }}">
+                                <i class="fas fa-pen-square"></i>
+                            </a>
+
+                            <a type="button" role="button" class="btn btn-sm btn-primary" target="_blank"
+                               data-toggle="tooltip" data-placement="top" title="Listado Beneficiarios"
+                               href="{{ path('exportBeneficiariosList', {'id': requisito.id}) }}">
+                                <i class="fas fa-book"></i>
+                            </a>
+
+                            <a type="button" role="button" class="btn btn-sm btn-success" target="_blank"
+                               data-toggle="tooltip" data-placement="top" title="Listado Excel Beneficiarios"
+                               href="{{ path('exportBeneficiariosListToExcel', {'id': requisito.id}) }}">
+                                <i class="far fa-file-excel"></i>
+                            </a>
+
+                        </td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        {% if  pagination.totalItemCount== 0 %}
+            <div class="row col-12">
+                <div class="col-12 alert alert-secondary" role="alert">
+                    Sin Registros
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    </div>
+
+    </div>
+    </div>
+
+{% endblock %}
