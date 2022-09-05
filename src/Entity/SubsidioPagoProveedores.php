@@ -53,7 +53,7 @@ class SubsidioPagoProveedores
     private $referenciaCliente;
 
     /**
-     * @ORM\Column(type="decimal", precision=13, scale=2, nullable=true)
+     * @ORM\Column(type="decimal", precision=23, scale=2, nullable=true)
      */
     private $importeAPagar;
 
